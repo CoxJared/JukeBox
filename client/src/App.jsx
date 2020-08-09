@@ -25,21 +25,21 @@ const appStyles = {
 function App(props) {
   return (
     <MuiThemeProvider theme={theme}>
-      <Grid container spacing={4} style={appStyles.container}>
-        <Grid item sm={2}>
-          <Logo />
-          <NavBar />
-        </Grid>
-        <Grid item sm={8}>
-          <SearchBar />
-          <Router className="App">
+      <Router className="App">
+        <Grid container spacing={4} style={appStyles.container}>
+          <Grid item sm={2}>
+            <Logo />
+            <NavBar />
+          </Grid>
+          <Grid item sm={8}>
+            <SearchBar />
             <Switch>
               <Route exact path="/" component={home} />
               <Route path="/artist/:mbid" component={artist} />
             </Switch>
-          </Router>
+          </Grid>
         </Grid>
-      </Grid>
+      </Router>
     </MuiThemeProvider>
   );
 }
