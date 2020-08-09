@@ -35,7 +35,7 @@ function App(props) {
           <Router className="App">
             <Switch>
               <Route exact path="/" component={home} />
-          <Route path="/artist/:mbid" component={artist} />
+              <Route path="/artist/:mbid" component={artist} />
             </Switch>
           </Router>
         </Grid>
