@@ -1,11 +1,56 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import Grid from '@material-ui/core/Grid';
+// import GridList from '@material-ui/core/GridLIst';
+import {GridList, GridListTile} from '@material-ui/core';
+import withStyles from '@material-ui/core/styles/withStyles';
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
-const _band_name = 'Radiohead'; // FIXME should this be passed using props?
 
-console.log(_api_key)
-export default class artist extends Component {
+const styles = (theme) => ({
+  ...theme.styleSpreading,
+  container: {
+    margin: ' 20px auto 0 auto',
+    justifyContent: 'center'
+  }
+});
+
+const albumStyles = {
+  container: {
+    marginTop: 40
+  },
+  title: {
+    fontSize: 35,
+    fontWeight: 300,
+    color: '#aaa',
+    margin: '20px 0'
+  },
+  albums: {
+    height: 180,
+    display: 'flex'
+  },
+  album: {
+    height: '100%',
+    margin: '0 25px 0 0'
+  },
+  albumImage: {
+    objectFit: 'cover',
+    height: '100%'
+  },
+  albumName: {
+    fontSize: 15,
+    color: '#fff',
+    fontWeight: 300,
+    margin: '2px 0'
+  },
+  albumArtist: {
+    fontSize: 15,
+    fontWeight: 500,
+    color: '#b9b950'
+  }
+};
+
+export class artist extends Component {
     constructor(props) {
         super(props);
         this.state = {
@@ -130,41 +175,44 @@ export default class artist extends Component {
     }
 
   render() {
+    const { classes } = this.props;
       let {hasLoaded} = this.state;
       let ArtistInfo;
+      let AlbumElements;
       if (hasLoaded){
+            AlbumElements = this.state.albums.map((album) =>(
+                <GridListTile cols={1} style={{height: 'auto'}}>
+                    <img src={album.image[2]['#text']}/>
+                    <h1 style={albumStyles.albumName}>{album.name}</h1>
+                </GridListTile>
+            ))
+
             ArtistInfo = (<div>
-        
-                {this.state.name ? <h3>{this.state.name}</h3> : <h3>Loading...</h3>}
-                
-                {/* {this.state.images[0] ? <img src={this.state.images[0].url}/> : null} */}
-                <p>{this.state.bio}</p>
-                
-                {/* {this.state.albums.map( album => <img src={album.images[0].url} width={album.images[0].width} height={album.images[0].height}/>)} */} 
-                {/* {this.state.albums.map( album => <img src={album.image[3]['#text']}/>)}  */}
-                {/* 3rd index is largerst image */}
-
-                {/* Display all top albums */}
-                <ul>
-                    {this.state.albums.map( album => 
-                    <li>{album.name}
-                    <img src={album.image[3]['#text']}/>
-                    </li>)}
-                </ul>
-
-                {/* Display all top tracks */}
-                <ul>
+                {this.state.name ? <h3 style={albumStyles.title}>{this.state.name}</h3> : <h3>Loading...</h3>}
+                <p style={{color: 'white'}}>{this.state.bio}</p>
+                {/* <ul>
                     {this.state.top_tracks.map( track => <li>{track}</li>)}
-                </ul>     
+                </ul>      */}
           </div>);
       } else {
           ArtistInfo = <h1>Is loading....</h1>
       }
 
     return (
-        <div style={{color: 'white'}}>
+
+      <Grid container spacing={1} className={classes.container} direction="column"
+        justify="center">
+        <Grid item sm={12}>
             {ArtistInfo}
-        </div>
+            <div style={albumStyles.container}>
+            </div>
+               <h1 style={albumStyles.title}>Top Albums </h1> 
+                <GridList className={classes.gridList} cols={3}>
+                    {AlbumElements}
+                </GridList>
+        </Grid>
+      </Grid>
     );
   }
 }
+export default withStyles(styles)(artist);
