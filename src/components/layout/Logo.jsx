@@ -22,7 +22,7 @@ function Logo() {
   return (
     <div style={logoStyles.container}>
       <img src={logo} style={logoStyles.image} />
-      <span style={logoStyles.name}>DiscoMe</span>
+      <span style={logoStyles.name}>JukeBox</span>
     </div>
   );
 }
