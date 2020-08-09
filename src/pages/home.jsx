@@ -8,17 +8,20 @@ import AlbumShowcase from '../components/albums/AlbumShowcase';
 import Logo from '../components/layout/Logo';
 import withStyles from '@material-ui/core/styles/withStyles';
 
-const homeStyles = {
+const styles = (theme) => ({
+  ...theme.styleSpreading,
   container: {
     margin: ' 20px auto 0 auto',
     justifyContent: 'center'
   }
-};
+});
 
 export class home extends Component {
   render() {
+    const { classes } = this.props;
+
     return (
-      <Grid container spacing={5} style={homeStyles.container}>
+      <Grid container spacing={5} className={classes.container}>
         <Grid item sm={2}>
           <Logo />
           <NavBar />
@@ -32,4 +35,4 @@ export class home extends Component {
   }
 }
 
-export default home;
+export default withStyles(styles)(home);
