@@ -20,18 +20,7 @@ export class home extends Component {
   render() {
     const { classes } = this.props;
 
-    return (
-      <Grid container spacing={5} className={classes.container}>
-        <Grid item sm={2}>
-          <Logo />
-          <NavBar />
-        </Grid>
-        <Grid item sm={8}>
-          <SearchBar />
-          <AlbumShowcase />
-        </Grid>
-      </Grid>
-    );
+    return <AlbumShowcase />;
   }
 }
 
