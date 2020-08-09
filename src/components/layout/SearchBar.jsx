@@ -12,8 +12,8 @@ const searchbarStyles = {
     '&:hover': {
       backgroundColor: '#f00'
     },
-    margin: '0 auto',
-    width: '50%',
+    margin: '0  auto 0 500px',
+    width: 500,
     display: 'flex',
     color: '#fff'
 

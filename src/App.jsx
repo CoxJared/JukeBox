@@ -5,10 +5,10 @@ import home from './pages/home';
 function App() {
   return (
     <Router className="App">
-      <link
+      {/* <link
         href="https://fonts.googleapis.com/css2?family=Istok+Web&display=swap"
         rel="stylesheet"
-      />
+      /> */}
       <Switch>
         <Route exact path="/" component={home} />
       </Switch>

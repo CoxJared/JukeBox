@@ -9,12 +9,12 @@ const col = '#FFF05E';
 const navbarStyle = {
   container: {
     // borderRight: '1px solid #FFF05E'
-    marginTop: 170
+    marginTop: 150
   },
   button: {
-    color: '#eee',
+    color: '#888',
     fontSize: 20,
-    margin: '10px 0'
+    margin: '5px 0'
   }
 };
 
@@ -32,6 +32,8 @@ export class NavBar extends Component {
         <Button style={navbarStyle.button}>explore</Button>
         <Button style={navbarStyle.button}>lists</Button>
         <Button style={navbarStyle.button}>activity</Button>
+        <Button style={navbarStyle.button}>concerts</Button>
+        <Button style={navbarStyle.button}></Button>
       </Grid>
     );
   }
