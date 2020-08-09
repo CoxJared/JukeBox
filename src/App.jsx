@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import home from './pages/home';
+import artist from './pages/artist';
 import themeObject from './util/theme';
 
 //MUI
@@ -15,6 +16,7 @@ function App() {
       <Router className="App">
         <Switch>
           <Route exact path="/" component={home} />
+          <Route path="/artist" component={artist} />
         </Switch>
       </Router>
     </MuiThemeProvider>
