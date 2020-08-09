@@ -19,7 +19,9 @@ export default class artist extends Component {
         }
     }
 
-    componentDidMount(){
+    async componentDidMount(){
+        const {mbid} = this.props.match.params;
+        await this.setState({mbid})
         // this.search_album();
         this.get_artist_info();
         this.get_top_albums();
@@ -75,7 +77,8 @@ export default class artist extends Component {
 
     /// Functions for LastFM grabbing
     async get_artist_info() {
-        const ARTIST_URL = this.return_url(_band_name,'getinfo');
+        const ARTIST_URL = this.return_url('getinfo');
+        console.log(ARTIST_URL)
 
         axios.get(ARTIST_URL)
         .then(res => {
@@ -93,7 +96,7 @@ export default class artist extends Component {
     }
 
     async get_top_albums() {
-        const ARTIST_URL = this.return_url(_band_name,'getTopAlbums');
+        const ARTIST_URL = this.return_url('getTopAlbums');
 
         axios.get(ARTIST_URL)
         .then(res => {
@@ -105,7 +108,7 @@ export default class artist extends Component {
     }
 
     async get_top_tracks() {
-        const ARTIST_URL = this.return_url(_band_name,'gettoptracks');
+        const ARTIST_URL = this.return_url('gettoptracks');
 
         axios.get(ARTIST_URL)
         .then(res => {
@@ -119,9 +122,10 @@ export default class artist extends Component {
     
 
 
-    return_url(artist_name, method) {
+    return_url( method) {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
-        const ARTIST_URL = ROOT_URL + '/2.0/?method=artist.'+ method +'&artist='+ artist_name +'&api_key=' + _api_key +'&format=json';
+        //const ARTIST_URL = ROOT_URL + '/2.0/?method=artist.'+ method +'&artist='+ artist_name +'&api_key=' + _api_key +'&format=json';
+        const ARTIST_URL = ROOT_URL + '/2.0/?method=artist.'+ method +'&mbid='+ this.state.mbid +'&api_key=' + _api_key +'&format=json';
         return ARTIST_URL;
     }
 

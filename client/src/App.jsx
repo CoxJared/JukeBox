@@ -16,7 +16,7 @@ function App() {
       <Router className="App">
         <Switch>
           <Route exact path="/" component={home} />
-          <Route path="/artist" component={artist} />
+          <Route path="/artist/:mbid" component={artist} />
         </Switch>
       </Router>
     </MuiThemeProvider>
