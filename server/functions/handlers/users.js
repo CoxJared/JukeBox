@@ -5,6 +5,8 @@ const config = require('../util/config');
 const firebase = require('firebase');
 firebase.initializeApp(config);
 
+const { validateSignupData, validateLoginData } = require('../util/validators');
+
 exports.signup = (request, response) => {
   const newUser = {
     email: request.body.email,
@@ -13,7 +15,11 @@ exports.signup = (request, response) => {
     handle: request.body.handle
   };
 
-  const error = {};
+  const { errors, valid } = validateSignupData(newUser);
+
+  if (!valid) {
+    return response.status(400).json(errors);
+  }
 
   const noImg = 'no-image.png';
 
@@ -62,5 +68,34 @@ exports.signup = (request, response) => {
           general: 'Something went wrong, please try again'
         });
       }
+    });
+};
+
+exports.login = (request, response) => {
+  const user = {
+    email: request.body.email,
+    password: request.body.password
+  };
+
+  const { errors, valid } = validateLoginData(user);
+  if (!valid) {
+    return response.status(400).json(errors);
+  }
+
+  firebase
+    .auth()
+    .signInWithEmailAndPassword(user.email, user.password)
+    .then((data) => {
+      return data.user.getIdToken();
+    })
+    .then((idToken) => {
+      return response.json({
+        token: idToken
+      });
+    })
+    .catch((err) => {
+      return response.status(403).json({
+        general: 'wrong credentails, please try again'
+      });
     });
 };
