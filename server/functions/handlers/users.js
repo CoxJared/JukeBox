@@ -31,6 +31,10 @@ exports.signup = (request, response) => {
           .createUserWithEmailAndPassword(newUser.email, newUser.password);
       }
     })
+    .then((data) => {
+      userId = data.user.uid;
+      return data.user.getIdToken();
+    })
     .then((idToken) => {
       token = idToken;
       const userCredentials = {
