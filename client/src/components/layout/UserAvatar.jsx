@@ -17,6 +17,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -29,6 +30,10 @@ const styles = (theme) => ({
         width: 80,
         height: 80,
         margin: ' 80px auto 20px auto'
+    },
+    handle: {
+        color: '#fff',
+        textAlign: 'center'
     },
     signupButton: {
         margin: '5px',
@@ -135,7 +140,6 @@ class UserAvatar extends Component {
             UI: { loading },
             user: { credentials }
         } = this.props;
-        console.log('user', credentials);
         const { errors } = this.state;
 
         return (
@@ -165,11 +169,22 @@ class UserAvatar extends Component {
                         </Grid>
                     </Grid>
                 ) : (
-                    <Avatar
-                        // style={{ color: 'blue' }}
-                        src={credentials.imageUrl}
-                        className={classes.avatar}
-                    />
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                        classes={styles.container}
+                    >
+                        <Avatar
+                            style={{ color: 'blue' }}
+                            src={credentials.imageUrl}
+                            className={classes.avatar}
+                        />
+                        <Typography className={classes.handle}>
+                            {credentials.handle}
+                        </Typography>
+                    </Grid>
                 )}
 
                 <Dialog open={this.state.signupOpen} className={classes.dialog}>
