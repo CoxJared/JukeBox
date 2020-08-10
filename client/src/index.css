@@ -16,12 +16,14 @@ body {
   max-width: 100%;
   overflow: hidden;
 }
+
 h1,
 h2,
 h3,
 p {
   color: '#fff';
 }
+
 code {
   font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
     monospace;
