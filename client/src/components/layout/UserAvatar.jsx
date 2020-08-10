@@ -6,7 +6,11 @@ import PropTypes from 'prop-types';
 
 //redux
 import { connect } from 'react-redux';
-import { loginUser, uploadImage } from '../../redux/actions/userActions';
+import {
+    loginUser,
+    uploadImage,
+    signupUser
+} from '../../redux/actions/userActions';
 
 //MUI
 import Avatar from '@material-ui/core/Avatar';
@@ -108,26 +112,15 @@ class UserAvatar extends Component {
 
     handleSignup = (event) => {
         event.preventDefault();
-        this.setState({
-            loading: true
-        });
         const newUserData = {
             email: this.state.email,
             password: this.state.password,
             confirmPassword: this.state.confirmPassword,
             handle: this.state.handle
         };
-
-        axios
-            .post('/signup', newUserData)
-            .then((response) => {
-                setAuthorizationHeader(response.data.token);
-                this.setState({ loggedIn: true });
-                this.handleClose();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        this.props.signupUser(newUserData);
+        this.setState({ loggedIn: true });
+        this.handleClose();
     };
 
     handleLogin = (event) => {
@@ -357,6 +350,7 @@ class UserAvatar extends Component {
 UserAvatar.propTypes = {
     classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
+    signupUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired,
     uploadImage: PropTypes.func.isRequired
@@ -369,6 +363,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     loginUser,
+    signupUser,
     uploadImage
 };
 
