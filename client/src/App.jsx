@@ -37,7 +37,7 @@ function App(props) {
             <SearchBar />
             <Switch>
               <Route exact path="/" component={home} />
-              <Route path="/artist/:mbid" component={artist} />
+              <Route exact path="/artist/:mbid" component={artist} />
             </Switch>
           </Grid>
         </Grid>
