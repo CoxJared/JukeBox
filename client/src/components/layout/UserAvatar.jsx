@@ -58,7 +58,8 @@ export class UserAvatar extends Component {
         confirmPassword: '',
         handle: '',
         errors: {},
-        loading: false
+        loading: false,
+        userInfo: {}
     };
 
     openSignupDialog = () => {
@@ -76,6 +77,12 @@ export class UserAvatar extends Component {
         });
     };
 
+    handleChange = (event) => {
+        this.setState({
+            [event.target.name]: event.target.value
+        });
+    };
+
     handleSignup = (event) => {
         event.preventDefault();
         this.setState({
@@ -88,13 +95,10 @@ export class UserAvatar extends Component {
             handle: this.state.handle
         };
 
-        console.log(newUserData);
-
         axios
             .post('/signup', newUserData)
             .then((response) => {
                 setAuthorizationHeader(response.data.token);
-                console.log(response.data.token);
                 this.setState({ loggedIn: true });
                 this.handleClose();
             })
@@ -114,7 +118,6 @@ export class UserAvatar extends Component {
             .post('/login', userData)
             .then((response) => {
                 setAuthorizationHeader(response.data.token);
-                console.log(response.data.token);
                 this.setState({ loggedIn: true });
                 this.handleClose();
             })
@@ -123,11 +126,7 @@ export class UserAvatar extends Component {
             });
     };
 
-    handleChange = (event) => {
-        this.setState({
-            [event.target.name]: event.target.value
-        });
-    };
+    addUserDataToState = () => {};
 
     render() {
         const { classes } = this.props;
@@ -135,33 +134,36 @@ export class UserAvatar extends Component {
 
         return (
             <div>
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                    classes={styles.container}
-                >
+                {!this.state.loggedIn ? (
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                        classes={styles.container}
+                    >
+                        <Avatar alt="no image" className={classes.avatar} />
+                        <Grid>
+                            <Button
+                                className={classes.signupButton}
+                                onClick={this.openSignupDialog}
+                            >
+                                Sign Up
+                            </Button>
+                            <Button
+                                className={classes.loginButton}
+                                onClick={this.openLoginDialog}
+                            >
+                                Login
+                            </Button>
+                        </Grid>
+                    </Grid>
+                ) : (
                     <Avatar
-                        alt="no image"
-                        src={noImage}
+                        style={{ color: 'blue' }}
                         className={classes.avatar}
                     />
-                    <Grid>
-                        <Button
-                            className={classes.signupButton}
-                            onClick={this.openSignupDialog}
-                        >
-                            Sign Up
-                        </Button>
-                        <Button
-                            className={classes.loginButton}
-                            onClick={this.openLoginDialog}
-                        >
-                            Login
-                        </Button>
-                    </Grid>
-                </Grid>
+                )}
 
                 <Dialog open={this.state.signupOpen} className={classes.dialog}>
                     <DialogTitle className={classes.dialogContent}>
