@@ -17,33 +17,37 @@ import UserAvatar from './components/layout/UserAvatar';
 const theme = createMuiTheme(themeObject);
 
 const appStyles = {
-  container: {
-    margin: ' 20px auto 0 auto',
-    justifyContent: 'center'
-  }
+    container: {
+        margin: ' 20px auto 0 auto',
+        justifyContent: 'center'
+    }
 };
 
 function App(props) {
-  return (
-    <MuiThemeProvider theme={theme}>
-      <Router className="App">
-        <Grid container spacing={4} style={appStyles.container}>
-          <Grid item sm={2}>
-            <Logo />
-            <UserAvatar />
-            <NavBar />
-          </Grid>
-          <Grid item sm={8}>
-            <SearchBar />
-            <Switch>
-              <Route exact path="/" component={home} />
-              <Route exact path="/artist/:mbid" component={artist} />
-            </Switch>
-          </Grid>
-        </Grid>
-      </Router>
-    </MuiThemeProvider>
-  );
+    return (
+        <MuiThemeProvider theme={theme}>
+            <Router className="App">
+                <Grid container spacing={4} style={appStyles.container}>
+                    <Grid item sm={2}>
+                        <Logo />
+                        <UserAvatar />
+                        <NavBar />
+                    </Grid>
+                    <Grid item sm={8}>
+                        <SearchBar />
+                        <Switch>
+                            <Route exact path="/" component={home} />
+                            <Route
+                                exact
+                                path="/artist/:mbid"
+                                component={artist}
+                            />
+                        </Switch>
+                    </Grid>
+                </Grid>
+            </Router>
+        </MuiThemeProvider>
+    );
 }
 
 export default App;

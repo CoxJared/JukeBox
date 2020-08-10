@@ -9,19 +9,19 @@ import Logo from '../components/layout/Logo';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = (theme) => ({
-  ...theme.styleSpreading,
-  container: {
-    margin: ' 20px auto 0 auto',
-    justifyContent: 'center'
-  }
+    ...theme.styleSpreading,
+    container: {
+        margin: ' 20px auto 0 auto',
+        justifyContent: 'center'
+    }
 });
 
 export class home extends Component {
-  render() {
-    const { classes } = this.props;
+    render() {
+        const { classes } = this.props;
 
-    return <AlbumShowcase />;
-  }
+        return <AlbumShowcase />;
+    }
 }
 
 export default withStyles(styles)(home);
