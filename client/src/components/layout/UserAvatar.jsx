@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 //redux
 import { connect } from 'react-redux';
-import { loginUser } from '../../redux/actions/userActions';
+import { loginUser, uploadImage } from '../../redux/actions/userActions';
 
 //MUI
 import Avatar from '@material-ui/core/Avatar';
@@ -26,10 +26,16 @@ const styles = (theme) => ({
         justify: 'center',
         alignItems: 'center'
     },
-    avatar: {
+    tempAvatar: {
         width: 80,
         height: 80,
         margin: ' 80px auto 20px auto'
+    },
+    avatar: {
+        width: 80,
+        height: 80,
+        margin: ' 80px auto 20px auto',
+        cursor: 'pointer'
     },
     handle: {
         color: '#fff',
@@ -134,6 +140,20 @@ class UserAvatar extends Component {
         this.setState({ loggedIn: true });
     };
 
+    handleEditPicture = () => {
+        const fileInput = document.getElementById('imageInput');
+        fileInput.click();
+    };
+
+    handleImageChange = (event) => {
+        const image = event.target.files[0];
+        const formData = new FormData();
+
+        formData.append('image', image, image.name);
+
+        this.props.uploadImage(formData);
+    };
+
     render() {
         const {
             classes,
@@ -152,7 +172,7 @@ class UserAvatar extends Component {
                         alignItems="center"
                         classes={styles.container}
                     >
-                        <Avatar alt="no image" className={classes.avatar} />
+                        <Avatar alt="no image" className={classes.tempAvatar} />
                         <Grid>
                             <Button
                                 className={classes.signupButton}
@@ -176,10 +196,17 @@ class UserAvatar extends Component {
                         alignItems="center"
                         classes={styles.container}
                     >
+                        <input
+                            type="file"
+                            id="imageInput"
+                            hidden="hidden"
+                            onChange={this.handleImageChange}
+                        />
                         <Avatar
                             style={{ color: 'blue' }}
                             src={credentials.imageUrl}
                             className={classes.avatar}
+                            onClick={this.handleEditPicture}
                         />
                         <Typography className={classes.handle}>
                             {credentials.handle}
@@ -331,7 +358,8 @@ UserAvatar.propTypes = {
     classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    UI: PropTypes.object.isRequired
+    UI: PropTypes.object.isRequired,
+    uploadImage: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({
@@ -340,7 +368,8 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = {
-    loginUser
+    loginUser,
+    uploadImage
 };
 
 export default connect(
