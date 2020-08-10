@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import {
     loginUser,
+    logoutUser,
     uploadImage,
     signupUser
 } from '../../redux/actions/userActions';
@@ -72,7 +73,6 @@ class UserAvatar extends Component {
     constructor() {
         super();
         this.state = {
-            loggedIn: false,
             signupOpen: false,
             loginOpen: false,
             email: '',
@@ -119,7 +119,6 @@ class UserAvatar extends Component {
             handle: this.state.handle
         };
         this.props.signupUser(newUserData);
-        this.setState({ loggedIn: true });
         this.handleClose();
     };
 
@@ -130,7 +129,11 @@ class UserAvatar extends Component {
             password: this.state.password
         };
         this.props.loginUser(userData);
-        this.setState({ loggedIn: true });
+        this.handleClose();
+    };
+
+    handleLogout = () => {
+        this.props.logoutUser();
     };
 
     handleEditPicture = () => {
@@ -157,7 +160,7 @@ class UserAvatar extends Component {
 
         return (
             <div>
-                {!this.state.loggedIn ? (
+                {!credentials.handle ? (
                     <Grid
                         container
                         direction="column"
@@ -204,6 +207,12 @@ class UserAvatar extends Component {
                         <Typography className={classes.handle}>
                             {credentials.handle}
                         </Typography>
+                        <Button
+                            className={classes.loginButton}
+                            onClick={this.handleLogout}
+                        >
+                            Logout
+                        </Button>
                     </Grid>
                 )}
 
@@ -350,6 +359,7 @@ class UserAvatar extends Component {
 UserAvatar.propTypes = {
     classes: PropTypes.object.isRequired,
     loginUser: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired,
     signupUser: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     UI: PropTypes.object.isRequired,
@@ -363,6 +373,7 @@ const mapStateToProps = (state) => ({
 
 const mapActionsToProps = {
     loginUser,
+    logoutUser,
     signupUser,
     uploadImage
 };
