@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import home from './pages/home';
+import search from './pages/search';
 import artist from './pages/artist';
 import themeObject from './util/theme';
 import Logo from './components/layout/Logo';
@@ -38,6 +39,8 @@ function App(props) {
             <Switch>
               <Route exact path="/" component={home} />
               <Route path="/artist/:mbid" component={artist} />
+              <Route path="/search/:search_query" component={search} />
+
             </Switch>
           </Grid>
         </Grid>

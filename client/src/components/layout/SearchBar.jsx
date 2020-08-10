@@ -87,8 +87,9 @@ export class SearchBar extends Component {
   render() {
       const {hasSearched} = this.state;
       if (hasSearched && (this.state.mbid != '')) {
+        const url = '/search/' + this.state.search_query;
+        // const url= '/artist/' + this.state.mbid;
 
-        const url= '/artist/' + this.state.mbid;
         return <Redirect to={url}/>;
       }
     return (
