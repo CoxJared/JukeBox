@@ -5,11 +5,10 @@ import {
   LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
-  MARK_NOTIFICATIONS_READ
 } from '../types';
 import axios from 'axios';
 
-export const loginUser = (userData, history) => (dispatch) => {
+export const loginUser = (userData) => (dispatch) => {
   dispatch({
     type: LOADING_UI
   });
@@ -21,9 +20,9 @@ export const loginUser = (userData, history) => (dispatch) => {
       dispatch({
         type: CLEAR_ERRORS
       });
-      history.push('/');
     })
     .catch((err) => {
+      console.log('hi', err);
       dispatch({
         type: SET_ERRORS,
         payload: err.response.data
@@ -31,7 +30,7 @@ export const loginUser = (userData, history) => (dispatch) => {
     });
 };
 
-export const signupUser = (newUserData, history) => (dispatch) => {
+export const signupUser = (newUserData) => (dispatch) => {
   dispatch({
     type: LOADING_UI
   });
@@ -43,7 +42,6 @@ export const signupUser = (newUserData, history) => (dispatch) => {
       dispatch({
         type: CLEAR_ERRORS
       });
-      history.push('/');
     })
     .catch((err) => {
       dispatch({
@@ -70,6 +68,7 @@ export const getUserData = () => (dispatch) => {
   axios
     .get('/user')
     .then((response) => {
+      console.log(response);
       dispatch({
         type: SET_USER,
         payload: response.data

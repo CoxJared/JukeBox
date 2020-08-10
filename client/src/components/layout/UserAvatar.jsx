@@ -2,6 +2,11 @@ import React, { Component, Fragment } from 'react';
 import noImage from '../../images/no-image.png';
 import axios from 'axios';
 import { setAuthorizationHeader } from '../../util/userActions';
+import PropTypes from 'prop-types';
+
+//redux
+import { connect } from 'react-redux';
+import { loginUser } from '../../redux/actions/userActions';
 
 //MUI
 import Avatar from '@material-ui/core/Avatar';
@@ -48,19 +53,26 @@ const styles = (theme) => ({
     }
 });
 
-export class UserAvatar extends Component {
-    state = {
-        loggedIn: false,
-        signupOpen: false,
-        loginOpen: false,
-        email: '',
-        password: '',
-        confirmPassword: '',
-        handle: '',
-        errors: {},
-        loading: false,
-        userInfo: {}
-    };
+class UserAvatar extends Component {
+    constructor() {
+        super();
+        this.state = {
+            loggedIn: false,
+            signupOpen: false,
+            loginOpen: false,
+            email: '',
+            password: '',
+            confirmPassword: '',
+            handle: '',
+            errors: {}
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.erros) {
+            this.setState({ errors: nextProps.UI.errors });
+        }
+    }
 
     openSignupDialog = () => {
         this.setState({ signupOpen: true });
@@ -113,24 +125,18 @@ export class UserAvatar extends Component {
             email: this.state.email,
             password: this.state.password
         };
-
-        axios
-            .post('/login', userData)
-            .then((response) => {
-                setAuthorizationHeader(response.data.token);
-                this.setState({ loggedIn: true });
-                this.handleClose();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        this.props.loginUser(userData);
+        this.setState({ loggedIn: true });
     };
 
-    addUserDataToState = () => {};
-
     render() {
-        const { classes } = this.props;
-        const { errors, loading } = this.state;
+        const {
+            classes,
+            UI: { loading },
+            user: { credentials }
+        } = this.props;
+        console.log('user', credentials);
+        const { errors } = this.state;
 
         return (
             <div>
@@ -160,7 +166,8 @@ export class UserAvatar extends Component {
                     </Grid>
                 ) : (
                     <Avatar
-                        style={{ color: 'blue' }}
+                        // style={{ color: 'blue' }}
+                        src={credentials.imageUrl}
                         className={classes.avatar}
                     />
                 )}
@@ -226,7 +233,7 @@ export class UserAvatar extends Component {
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                disabled={loading}
+                                // disabled={loading}
                                 onClick={this.handleClose}
                             >
                                 Close
@@ -236,7 +243,7 @@ export class UserAvatar extends Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
-                                disabled={loading}
+                                // disabled={loading}
                                 onClick={this.handleSignup}
                             >
                                 Signup
@@ -282,7 +289,7 @@ export class UserAvatar extends Component {
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                disabled={loading}
+                                // disabled={loading}
                                 onClick={this.handleClose}
                             >
                                 Close
@@ -292,7 +299,7 @@ export class UserAvatar extends Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
-                                disabled={loading}
+                                // disabled={loading}
                                 onClick={this.handleLogin}
                             >
                                 Login
@@ -305,4 +312,23 @@ export class UserAvatar extends Component {
     }
 }
 
-export default withStyles(styles)(UserAvatar);
+UserAvatar.propTypes = {
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+
+const mapActionsToProps = {
+    loginUser
+};
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(withStyles(styles)(UserAvatar));
