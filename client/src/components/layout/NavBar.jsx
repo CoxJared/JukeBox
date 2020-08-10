@@ -34,7 +34,7 @@ export class NavBar extends Component {
                 </Button>
                 <Button style={navbarStyle.button}>explore</Button>
                 <Button style={navbarStyle.button}>lists</Button>
-                <Button style={navbarStyle.button}>activity</Button>
+                <Button style={navbarStyle.button} component={Link} to="/activity">activity</Button>
                 <Button style={navbarStyle.button}>concerts</Button>
                 <Button style={navbarStyle.button}></Button>
             </Grid>
