@@ -64,6 +64,11 @@ export class UserAvatar extends Component {
     openSignupDialog = () => {
         this.setState({ signupOpen: true });
     };
+
+    openLoginDialog = () => {
+        this.setState({ loginOpen: true });
+    };
+
     handleClose = () => {
         this.setState({
             signupOpen: false,
@@ -71,7 +76,7 @@ export class UserAvatar extends Component {
         });
     };
 
-    handleSubmit = (event) => {
+    handleSignup = (event) => {
         event.preventDefault();
         this.setState({
             loading: true
@@ -87,6 +92,26 @@ export class UserAvatar extends Component {
 
         axios
             .post('/signup', newUserData)
+            .then((response) => {
+                setAuthorizationHeader(response.data.token);
+                console.log(response.data.token);
+                this.setState({ loggedIn: true });
+                this.handleClose();
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+    };
+
+    handleLogin = (event) => {
+        event.preventDefault();
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
+        };
+
+        axios
+            .post('/login', userData)
             .then((response) => {
                 setAuthorizationHeader(response.data.token);
                 console.log(response.data.token);
@@ -129,7 +154,12 @@ export class UserAvatar extends Component {
                         >
                             Sign Up
                         </Button>
-                        <Button className={classes.loginButton}>Login </Button>
+                        <Button
+                            className={classes.loginButton}
+                            onClick={this.openLoginDialog}
+                        >
+                            Login
+                        </Button>
                     </Grid>
                 </Grid>
 
@@ -138,7 +168,7 @@ export class UserAvatar extends Component {
                         Signup
                     </DialogTitle>
                     <DialogContent className={classes.dialogContent}>
-                        <form noValidate onSubmit={this.handleSubmit}>
+                        <form noValidate onSubmit={this.handleSignup}>
                             <TextField
                                 id="email"
                                 name="email"
@@ -189,11 +219,6 @@ export class UserAvatar extends Component {
                                 onChange={this.handleChange}
                                 fullWidth
                             />
-                            {/* {errors.general && (
-                <Typography variant="body2" className={classes.customError}>
-                  {errors.general}
-                </Typography>
-              )} */}
                             <Button
                                 type="submit"
                                 variant="contained"
@@ -210,9 +235,65 @@ export class UserAvatar extends Component {
                                 color="primary"
                                 className={classes.button}
                                 disabled={loading}
-                                onClick={this.handleSubmit}
+                                onClick={this.handleSignup}
                             >
                                 Signup
+                            </Button>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog open={this.state.loginOpen} className={classes.dialog}>
+                    <DialogTitle className={classes.dialogContent}>
+                        Login
+                    </DialogTitle>
+                    <DialogContent className={classes.dialogContent}>
+                        <form noValidate onSubmit={this.handleLogin}>
+                            <TextField
+                                id="email"
+                                name="email"
+                                type="email"
+                                label="Email"
+                                className={classes.textField}
+                                helperText={errors.email}
+                                error={errors.email ? true : false}
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                                fullWidth
+                            />
+                            <TextField
+                                id="password"
+                                name="password"
+                                type="password"
+                                label="Password"
+                                color="primary"
+                                className={classes.textField}
+                                helperText={errors.password}
+                                error={errors.password ? true : false}
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                fullWidth
+                                color="primary"
+                            />
+                            <Button
+                                type="close"
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                disabled={loading}
+                                onClick={this.handleClose}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                disabled={loading}
+                                onClick={this.handleLogin}
+                            >
+                                Login
                             </Button>
                         </form>
                     </DialogContent>
