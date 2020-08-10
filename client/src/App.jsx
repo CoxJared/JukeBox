@@ -25,7 +25,7 @@ const appStyles = {
 };
 
 axios.defaults.baseURL =
-    'https://us-central1-botany-fe963.cloudfunctions.net/api';
+    'https://us-central1-jukebox-84350.cloudfunctions.net/api';
 
 function App(props) {
     return (

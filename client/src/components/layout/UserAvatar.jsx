@@ -89,8 +89,8 @@ export class UserAvatar extends Component {
             .post('/signup', newUserData)
             .then((response) => {
                 setAuthorizationHeader(response.data.token);
+                console.log(response.data.token);
                 this.setState({ loggedIn: true });
-                console.log('success');
                 this.handleClose();
             })
             .catch((err) => {
