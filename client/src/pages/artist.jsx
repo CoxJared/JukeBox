@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
 // import GridList from '@material-ui/core/GridLIst';
-import {GridList, GridListTile} from '@material-ui/core';
+import {GridList, GridListTile, GridListTileBar} from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
@@ -183,7 +183,11 @@ export class artist extends Component {
             AlbumElements = this.state.albums.map((album) =>(
                 <GridListTile cols={1} style={{height: 'auto'}}>
                     <img src={album.image[2]['#text']}/>
-                    <h1 style={albumStyles.albumName}>{album.name}</h1>
+                    <GridListTileBar
+                        title={album.name}
+                        subtitle={<span>by: {this.state.name}</span>}
+                        ></GridListTileBar>
+                    {/* <h1 style={albumStyles.albumName}>{album.name}</h1> */}
                 </GridListTile>
             ))
 
