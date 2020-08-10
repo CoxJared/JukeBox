@@ -1,88 +1,42 @@
 import React, { Component } from 'react';
+import { mergeClasses } from '@material-ui/styles';
 
-//Temporary album info to be replaces with info from api
-import titanicRising from '../../images/tempAlbumCovers/titanicrising-weyesblood.jpg';
-import twinFantasy from '../../images/tempAlbumCovers/twinfantasy-carseatheadsrest.png';
-import anotherGreenWorld from '../../images/tempAlbumCovers/anothergreenworld-brianeno.jpeg';
-import betheCowboy from '../../images/tempAlbumCovers/mitski-bethecowboy.jpeg';
-import pomPom from '../../images/tempAlbumCovers/pompom-arielpink.jpeg';
-import sweetTrip from '../../images/tempAlbumCovers/sweettrip-veolcity.jpeg';
-import virtue from '../../images/tempAlbumCovers/virtue-thevoidz.jpeg';
-import againstAllLogic from '../../images/tempAlbumCovers/againstalllogic.jpeg';
-import galacticMelt from '../../images/tempAlbumCovers/galacticmelt.jpg';
-import closer from '../../images/tempAlbumCovers/closer.jpg';
-const albums = [
-    {
-        image: titanicRising,
-        name: 'Titanic Rising',
-        artist: 'Weyes Blood'
-    },
-    {
-        image: twinFantasy,
-        name: 'Twin Fantasy',
-        artist: 'Car Seat Headrest'
-    },
-    {
-        image: anotherGreenWorld,
-        name: 'Another Green World',
-        artist: 'Brian Eno'
-    },
-    {
-        image: pomPom,
-        name: 'Pom Pom',
-        artist: 'Ariel Pink'
-    },
-    {
-        image: virtue,
-        name: 'Virtue',
-        artist: 'The Voidz'
-    }
-];
-const albums2 = [
-    {
-        image: sweetTrip,
-        name: 'veolcity : design : comfort.',
-        artist: 'Sweet Trip'
-    },
-    {
-        image: againstAllLogic,
-        name: '2017-2019',
-        artist: 'Against All logic'
-    },
-    {
-        image: betheCowboy,
-        name: 'Be The Cowboy',
-        artist: 'Mitski'
-    },
-    {
-        image: galacticMelt,
-        name: 'Galactic Melt',
-        artist: 'Com Truise'
-    },
-    {
-        image: closer,
-        name: 'Closer',
-        artist: 'Joy division'
-    }
-];
-// import twinFantasy from '../../../images/tempAlbumCovers';
+//MUI
+import withStyles from '@material-ui/core/styles/withStyles';
+import { Button, Paper } from '@material-ui/core';
 
-const albumStyles = {
+const ALBUM_WIDTH = 200;
+const ALBUM_TITLE_HEIGHT = 40;
+const MAX_POSITION = -5;
+
+const styles = (theme) => ({
+    ...theme.styleSpreading,
     container: {
-        marginTop: 40
+        marginTop: 50,
+        width: ALBUM_WIDTH * 5 + 80,
+        overflow: 'hidden',
+        position: 'relative',
+        backgroundColor: '#212122',
+        borderRadius: 10,
+        boxShadow: '2px 2px 5px #000',
+        padding: 20
     },
     title: {
         fontSize: 35,
         fontWeight: 300,
-        color: '#aaa',
-        margin: '20px 0'
+        color: '#ccc',
+        fontWeight: 350,
+        margin: '0px 0 5px '
     },
     albums: {
-        height: 180,
-        display: 'flex'
+        height: 220,
+        display: 'flex',
+        position: 'relative',
+        transition: '.8s ease-in-out'
     },
     album: {
-        height: '100%',
+        height: `calc(100% - ${ALBUM_TITLE_HEIGHT}px)`,
+        width: ALBUM_WIDTH,
         margin: '0 25px 0 0'
     },
     albumImage: {
@@ -99,36 +53,86 @@ const albumStyles = {
         fontSize: 15,
         fontWeight: 500,
         color: '#b9b950'
+    },
+    buttons: {
+        height: 30
+    },
+    leftButton: {
+        // position: 'relative',
+        width: 20,
+        height: 20,
+        color: '#770',
+        pointer: 'cursor'
+    },
+    rightButton: {
+        float: 'right',
+        // position: 'absolute',
+        height: 20,
+        width: 20,
+        color: '#770',
+        pointer: 'cursor'
     }
-};
+});
 
 export class AlbumShowcase extends Component {
+    state = {
+        position: 0
+    };
+
+    moveAlbumsLeft = () => {
+        let position = this.state.position;
+        position += 5;
+        this.setState({ position });
+    };
+
+    moveAlbumsRight = () => {
+        let position = this.state.position;
+        position -= 5;
+        this.setState({ position });
+    };
+
     render() {
+        const { classes, albums } = this.props;
+        const { position } = this.state;
         const albumElements = albums.map((album) => (
-            <div style={albumStyles.album}>
-                <img src={album.image} style={albumStyles.albumImage} />
-                <h1 style={albumStyles.albumName}>{album.name}</h1>
-                <h2 style={albumStyles.albumArtist}>{album.artist}</h2>
-            </div>
-        ));
-        const albumElements2 = albums2.map((album) => (
-            <div style={albumStyles.album}>
-                <img src={album.image} style={albumStyles.albumImage} />
-                <h1 style={albumStyles.albumName}>{album.name}</h1>
-                <h2 style={albumStyles.albumArtist}>{album.artist}</h2>
+            <div className={classes.album}>
+                <img src={album.image} className={classes.albumImage} />
+                <h1 className={classes.albumName}>{album.name}</h1>
+                <h2 className={classes.albumArtist}>{album.artist}</h2>
             </div>
         ));
 
         return (
-            <div style={albumStyles.container}>
-                <h1 style={albumStyles.title}>Popular this week</h1>
-                <div style={albumStyles.albums}>{albumElements}</div>
-                <div style={{ height: 60 }} />
-                <h1 style={albumStyles.title}>Popular with friends</h1>
-                <div style={albumStyles.albums}>{albumElements2}</div>
-            </div>
+            <Paper className={classes.container}>
+                <h1 className={classes.title}>{this.props.title}</h1>
+                <div className={classes.buttons}>
+                    <Button
+                        disabled={position === 0}
+                        className={classes.leftButton}
+                        onClick={this.moveAlbumsLeft}
+                    >
+                        left
+                    </Button>
+                    <Button
+                        disabled={
+                            position ===
+                            -((Math.floor(albums.length / 5) - 1) * 5)
+                        }
+                        className={classes.rightButton}
+                        onClick={this.moveAlbumsRight}
+                    >
+                        right
+                    </Button>
+                </div>
+                <div
+                    className={classes.albums}
+                    style={{ left: `${position * ALBUM_WIDTH + 20}px` }}
+                >
+                    {albumElements}
+                </div>
+            </Paper>
         );
     }
 }
 
-export default AlbumShowcase;
+export default withStyles(styles)(AlbumShowcase);

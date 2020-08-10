@@ -1,11 +1,8 @@
 import React, { Component } from 'react';
-import NavBar from '../components/layout/NavBar';
+import { albums } from '../util/randomAlbums';
+import AlbumShowcase from '../components/albums/AlbumShowcase';
 
 //MUI
-import Grid from '@material-ui/core/Grid';
-import SearchBar from '../components/layout/SearchBar';
-import AlbumShowcase from '../components/albums/AlbumShowcase';
-import Logo from '../components/layout/Logo';
 import withStyles from '@material-ui/core/styles/withStyles';
 
 const styles = (theme) => ({
@@ -18,8 +15,18 @@ const styles = (theme) => ({
 
 export class home extends Component {
     render() {
-      return <AlbumShowcase />;
-        const { classes } = this.props;
+        let topAlbums = albums.slice(0, 10);
+        let friednsAlbuums = albums.slice(10, 21);
+        return (
+            <div>
+                <AlbumShowcase albums={topAlbums} title={'Popular This Week'} />
+                <div style={{ height: 20 }} />
+                <AlbumShowcase
+                    albums={friednsAlbuums}
+                    title={'Popular With Friends'}
+                />
+            </div>
+        );
     }
 }
 
