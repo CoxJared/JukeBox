@@ -1,5 +1,7 @@
 import React, { Component, Fragment } from 'react';
 import noImage from '../../images/no-image.png';
+import axios from 'axios';
+import { setAuthorizationHeader } from '../../util/userActions';
 
 //MUI
 import Avatar from '@material-ui/core/Avatar';
@@ -80,7 +82,20 @@ export class UserAvatar extends Component {
             confirmPassword: this.state.confirmPassword,
             handle: this.state.handle
         };
-        this.handleClose();
+
+        console.log(newUserData);
+
+        axios
+            .post('/signup', newUserData)
+            .then((response) => {
+                setAuthorizationHeader(response.data.token);
+                this.setState({ loggedIn: true });
+                console.log('success');
+                this.handleClose();
+            })
+            .catch((err) => {
+                console.error(err);
+            });
     };
 
     handleChange = (event) => {
