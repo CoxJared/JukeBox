@@ -7,19 +7,19 @@ const FBAuth = require('./util/fbAuth');
 const cors = require('cors');
 app.use(cors());
 
-const {
-  db
-} = require('./util/admin');
+const { db } = require('./util/admin');
 
 const {
-  login,
-  signup,
-  uploadImage
+    login,
+    signup,
+    uploadImage,
+    getUserDetails
 } = require('./handlers/users');
 
 // users routes
 app.post('/signup', signup);
 app.post('/login', login);
-app.post('/user/image', FBAuth, uploadImage)
+app.post('/user/image', FBAuth, uploadImage);
+app.get('/user/:handle', getUserDetails);
 
 exports.api = functions.https.onRequest(app);
