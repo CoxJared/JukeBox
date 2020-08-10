@@ -9,7 +9,7 @@ const col = '#FFF05E';
 const navbarStyle = {
   container: {
     // borderRight: '1px solid #FFF05E'
-    marginTop: 150
+    marginTop: 50
   },
   button: {
     color: '#888',

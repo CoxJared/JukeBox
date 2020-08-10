@@ -12,6 +12,7 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { MuiThemeProvider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import withStyles from '@material-ui/core/styles/withStyles';
+import UserAvatar from './components/layout/UserAvatar';
 
 const theme = createMuiTheme(themeObject);
 
@@ -29,6 +30,7 @@ function App(props) {
         <Grid container spacing={4} style={appStyles.container}>
           <Grid item sm={2}>
             <Logo />
+            <UserAvatar />
             <NavBar />
           </Grid>
           <Grid item sm={8}>

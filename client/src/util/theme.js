@@ -1,21 +1,22 @@
 export default {
   palette: {
     primary: {
-      light: '#81c784',
-      main: '#4caf50',
-      dark: '#388e3c',
+      light: '#b9b950',
+      main: '#e9e950',
+      dark: '#e0e050',
       contrastText: '#fff'
     },
     secondary: {
       light: '#ff6333',
-      main: '#ff3d00',
+      main: '#1e150',
       dark: '#b22a00',
       contrastText: '#fff'
     }
   },
   styleSpreading: {
-    ///
-    ///
-    ///
+    textField: {
+      margin: '10px ',
+      color: '#fff'
+    },
   }
 };
