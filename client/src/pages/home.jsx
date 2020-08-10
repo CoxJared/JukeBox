@@ -18,9 +18,8 @@ const styles = (theme) => ({
 
 export class home extends Component {
     render() {
+      return <AlbumShowcase />;
         const { classes } = this.props;
-
-        return <AlbumShowcase />;
     }
 }
 

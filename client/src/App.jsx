@@ -7,6 +7,7 @@ import themeObject from './util/theme';
 import Logo from './components/layout/Logo';
 import NavBar from './components/layout/NavBar';
 import SearchBar from './components/layout/SearchBar';
+import axios from 'axios';
 
 //MUI
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
@@ -23,6 +24,9 @@ const appStyles = {
         justifyContent: 'center'
     }
 };
+
+axios.defaults.baseURL =
+    'https://us-central1-botany-fe963.cloudfunctions.net/api';
 
 function App(props) {
     return (
