@@ -28,6 +28,7 @@ const appStyles = {
     container: {
         margin: ' 20px auto 0 auto',
         justifyContent: 'center'
+        // height: '10000px'
     }
 };
 
@@ -51,7 +52,7 @@ function App(props) {
     return (
         <MuiThemeProvider theme={theme}>
             <Provider store={store}>
-                <Router className="App">
+                <Router>
                     <Grid container spacing={4} style={appStyles.container}>
                         <Grid item sm={2}>
                             <Logo />
