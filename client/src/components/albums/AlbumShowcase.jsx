@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { Link } from 'react-router-dom';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -92,15 +93,21 @@ export class AlbumShowcase extends Component {
         const { classes, albums } = this.props;
         const { position } = this.state;
         const albumElements = albums.map((album) => (
-            <div className={classes.album}>
-                <img
-                    src={album.image}
-                    className={classes.albumImage}
-                    alt={`${album.name}`}
-                />
-                <h1 className={classes.albumName}>{album.name}</h1>
-                <h2 className={classes.albumArtist}>{album.artist}</h2>
-            </div>
+            <Link
+                to="/album"
+                style={{ textDecoration: 'none' }}
+                className="albumLink"
+            >
+                <div className={classes.album}>
+                    <img
+                        src={album.image}
+                        className={classes.albumImage}
+                        alt={`${album.name}`}
+                    />
+                    <h1 className={classes.albumName}>{album.name}</h1>
+                    <h2 className={classes.albumArtist}>{album.artist}</h2>
+                </div>
+            </Link>
         ));
 
         return (

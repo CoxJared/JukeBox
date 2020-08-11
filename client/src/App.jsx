@@ -68,7 +68,7 @@ function App(props) {
                                     path="/artist/:mbid"
                                     component={artist}
                                 />
-                                <Route exact path="album" component={album} />
+                                <Route exact path="/album" component={album} />
                             </Switch>
                         </Grid>
                     </Grid>
