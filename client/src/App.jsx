@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import home from './pages/home';
+import search from './pages/search';
 import artist from './pages/artist';
 import activity from './pages/activity';
 import themeObject from './util/theme';
@@ -20,8 +21,8 @@ import { logoutUser, getUserData } from './redux/actions/userActions';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { MuiThemeProvider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import withStyles from '@material-ui/core/styles/withStyles';
 import UserAvatar from './components/layout/UserAvatar';
+import album from './pages/album';
 
 const theme = createMuiTheme(themeObject);
 
@@ -29,6 +30,7 @@ const appStyles = {
     container: {
         margin: ' 20px auto 0 auto',
         justifyContent: 'center'
+        // height: '10000px'
     }
 };
 
@@ -52,7 +54,7 @@ function App(props) {
     return (
         <MuiThemeProvider theme={theme}>
             <Provider store={store}>
-                <Router className="App">
+                <Router>
                     <Grid container spacing={4} style={appStyles.container}>
                         <Grid item sm={2}>
                             <Logo />
@@ -68,6 +70,11 @@ function App(props) {
                                     path="/artist/:mbid"
                                     component={artist}
                                 />
+                                <Route
+                                    path="/search/:search_query"
+                                    component={search}
+                                />
+                                <Route exact path="/album" component={album} />
                                 <Route
                                     exact
                                     path="/activity"
