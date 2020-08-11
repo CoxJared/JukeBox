@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import axios from 'axios';
 import Grid from '@material-ui/core/Grid';
+import Paper from '@material-ui/core/Paper';
+import { Typography } from '@material-ui/core';
 // import GridList from '@material-ui/core/GridLIst';
 import { GridList, GridListTile, GridListTileBar } from '@material-ui/core';
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -10,9 +12,87 @@ const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
-        margin: ' 20px auto 0 auto',
-        justifyContent: 'center'
-    }
+        height: 300,
+        width: 900,
+        marginTop: 50,
+        marginLeft: 100
+    },
+    artistInfo: {
+        width: 570,
+        height: 350,
+        marginLeft: 20,
+        marginBottom: 20,
+        backgroundColor: '#212122',
+        padding: '5px 15px',
+        borderRadius: 10
+    },
+    albumImage: {
+        width: 270,
+        height: 300
+    },
+    albumList: {
+        width: 900,
+        backgroundColor: '#212122',
+        padding: '5px 15px',
+        borderRadius: 10,
+        marginBottom: 20
+    },
+    trackList: {
+        width: 900,
+        backgroundColor: '#212122',
+        padding: '5px 15px',
+        borderRadius: 10
+    },
+    artistName: {
+        color: '#fff',
+        fontSize: 45,
+        fontWeight: 450
+    },
+    infoText: {
+        fontSize: 20
+    },
+    tracks: {
+//        width: 900,
+        overflow: 'hidden'
+    },
+    tracklistExpansion: {
+        marginTop: 10,
+        fontSize: 15,
+        fontWeight: 500,
+        textAlign: 'left',
+        float: 'left',
+        width: '100%',
+        cursor: 'pointer'
+    },
+    track: {
+        height: 20,
+        width: 900,
+        borderBottom: '1px solid #555',
+        padding: '12px 0'
+    },
+    trackNumber: {
+        display: 'inline',
+        fontSize: 20,
+        fontWeight: 200,
+        color: '#aaa',
+        marginRight: 10
+    },
+    trackName: {
+        display: 'inline',
+        fontWeight: 300,
+        fontSize: 20,
+        color: '#aaa'
+    },
+    trackLength: {
+        display: 'inline',
+        float: 'right',
+        fontWeight: 200,
+        // top: 0,
+        textAlign: 'right',
+        width: 300,
+        fontSize: 20,
+        color: '#aaa'
+    },
 });
 
 const albumStyles = {
@@ -58,8 +138,10 @@ export class artist extends Component {
             images: [],
             genres: [],
             bio: '',
-            top_tracks: [],
+            tracks: [],
             albums: [],
+            albumListOpened: true,
+            trackListOpened: true,
             hasLoaded: false
         };
     }
@@ -151,9 +233,10 @@ export class artist extends Component {
         axios.get(ARTIST_URL).then((res) => {
             // TODO need to handle redirects if artist cannot be found
             // console.log(res)
-            const top_tracks = res.data.toptracks.track.map((obj) => obj.name);
-            this.setState({ top_tracks });
+            const top_tracks = res.data.toptracks.track.map((obj) => obj);
+            this.setState({ tracks: top_tracks });
             this.setState({ hasLoaded: true });
+            console.log(top_tracks);
         });
     }
 
@@ -172,36 +255,63 @@ export class artist extends Component {
         return ARTIST_URL;
     }
 
+    handleAlbumListExpansion = () => {
+        this.setState({ albumListOpened: !this.state.albumListOpened});
+    }
+    handleTrackListExpansion = () => {
+        this.setState({ trackListOpened: !this.state.trackListOpened});
+    }
+
     render() {
         const { classes } = this.props;
         let { hasLoaded } = this.state;
         let ArtistInfo;
         let AlbumElements;
+        let AlbumImage;
+        let Tracks;
+
         if (hasLoaded) {
+            AlbumImage = (
+                <div>
+                { this.state.albums[0] ? 
+                // Show most  popular album
+                    <img className={classes.albumImage} src={this.state.albums[0].image[3]['#text']}></img>
+                    : <div>Loading</div>
+                }
+                </div>
+            )
             AlbumElements = this.state.albums.map((album) => (
-                <GridListTile cols={1} style={{ height: 'auto' }}>
-                    <img src={album.image[2]['#text']} />
+                <GridListTile cols={1} style={{ height: '300' }}>
+                    <img src={album.image[3]['#text']} />
                     <GridListTileBar
                         title={album.name}
                         subtitle={<span>by: {this.state.name}</span>}
                     ></GridListTileBar>
-                    {/* <h1 style={albumStyles.albumName}>{album.name}</h1> */}
                 </GridListTile>
             ));
-
             ArtistInfo = (
                 <div>
                     {this.state.name ? (
-                        <h3 style={albumStyles.title}>{this.state.name}</h3>
+                        <Typography className={classes.artistName}>{this.state.name}</Typography>
                     ) : (
                         <h3>Loading...</h3>
                     )}
-                    <p style={{ color: 'white' }}>{this.state.bio}</p>
-                    {/* <ul>
-                    {this.state.top_tracks.map( track => <li>{track}</li>)}
-                </ul>      */}
+                    <p className={classes.infoText} style={{ color: 'white' }}>{this.state.bio}</p>
                 </div>
             );
+            Tracks = this.state.tracks.map((track, i) =>(
+                <div className={classes.track}>
+                    {/* <h1 className={classes.trackNumber}>{i}</h1> */}
+                    <h1 className={classes.trackName}>{track.name}</h1>
+                    <h1 className={classes.trackLength}>
+                        {Math.floor(track.duration / 60)}:
+                        {String(track.duration % 60).split('').length === 2
+                            ? track.duration % 60
+                            : '0' + (track.duration % 60)}
+                    </h1>
+                </div>
+            ));
+
         } else {
             ArtistInfo = <h1>Is loading....</h1>;
         }
@@ -211,18 +321,40 @@ export class artist extends Component {
                 container
                 spacing={1}
                 className={classes.container}
-                direction="column"
+                direction="row"
                 justify="center"
+                alginItems="center"
+                className={classes.container}
             >
-                <Grid item sm={12}>
-                    {ArtistInfo}
-                    <div style={albumStyles.container}></div>
-                    <h1 style={albumStyles.title}>Top Albums </h1>
-                    <GridList className={classes.gridList} cols={3}>
-                        {AlbumElements}
-                    </GridList>
-                </Grid>
-            </Grid>
+            {AlbumImage}
+            <Paper className={classes.artistInfo}>
+                {ArtistInfo}
+            </Paper>
+            <Paper className={classes.albumList}>
+                <Typography
+                    color="primary"
+                    className={classes.albumListExpansion}
+                    onClick={this.handleAlbumListExpansion}>
+                    Album List
+                </Typography>
+                <GridList className={classes.gridList} cols={3} 
+                    style={{height: this.state.albumListOpened? 'auto' : 0}}>
+                    {AlbumElements}
+                </GridList>
+            </Paper>
+
+            <Paper className={classes.trackList}>
+                <Typography
+                    color="primary"
+                    onClick={this.handleTrackListExpansion}>
+                    Track List
+                </Typography>
+                <div className={classes.tracks}
+                    style={{height: this.state.trackListOpened ? 'auto' : 0}}>
+                    {Tracks}
+                </div>
+            </Paper>
+        </Grid>
         );
     }
 }
