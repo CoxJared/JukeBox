@@ -47,7 +47,6 @@ function App(props) {
                                 path="/artist/:mbid"
                                 component={artist}
                             />
-
                             <Route 
                                 path="/search/:search_query" 
                                 component={search} />

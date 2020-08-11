@@ -60,13 +60,15 @@ export class SearchBar extends Component {
   async onSubmit(event) {
     event.preventDefault();
     this.setState({hasSearched: true})
+    console.log("SHOULD SEARCH NOW")
   }
 
 
   render() {
       const {hasSearched} = this.state;
-      if (hasSearched && (this.state.mbid != '')) {
+      if (hasSearched && (this.state.search_query != '')) {
         const url = '/search/' + this.state.search_query;
+        console.log("SEARCH QUERY");
 
         return <Redirect to={url}/>;
       }
