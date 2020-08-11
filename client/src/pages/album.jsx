@@ -172,7 +172,7 @@ export class album extends Component {
                                     playcount: {album.playcount}
                                 </Typography>
                             </Grid>
-                            <Grid item xs={4}>
+                            <Grid item xs={6}>
                                 <UserRating />
                             </Grid>
                         </Grid>

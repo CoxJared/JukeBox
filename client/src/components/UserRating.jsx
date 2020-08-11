@@ -1,18 +1,24 @@
 import React, { Component } from 'react';
-import star from '../images/star.png';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
-import { mergeClasses } from '@material-ui/styles';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
         width: 300,
-        height: '100%'
+        height: '100%',
+        paddingTop: 40
+    },
+    ratingTitle: {
+        // width: '100%',
+        margin: '0 auto',
+        fontSize: 20,
+        textAlign: 'center'
     },
     stars: {
-        margin: 70,
+        margin: '0px auto ',
         width: 250,
         display: 'flex'
     },
@@ -59,40 +65,42 @@ export class UserRating extends Component {
         this.setState({ albumRating: rating });
     }
 
-    checkMouseOverStar = () => {
+    componentDidMount() {
         let handleMouseMove = (event) => {
-            let starsContainer = document
-                .getElementById('stars')
-                .getBoundingClientRect();
+            try {
+                let starsContainer = document
+                    .getElementById('stars')
+                    .getBoundingClientRect();
 
-            event = event || window.event; // IE-ism
-            if (mouseInElement(event, starsContainer)) {
-                if (!this.state.hoveringOnStars) {
-                    this.setState({ hoveringOnStars: true });
-                }
-                ratings.forEach((rating) => {
-                    let starContainer = document
-                        .getElementById(`starid-${rating}`)
-                        .getBoundingClientRect();
-                    if (mouseInElement(event, starContainer)) {
-                        this.setState({ hoverRating: rating });
+                event = event || window.event; // IE-ism
+                if (mouseInElement(event, starsContainer)) {
+                    if (!this.state.hoveringOnStars) {
+                        this.setState({ hoveringOnStars: true });
                     }
-                });
-            } else {
-                if (this.state.hoveringOnStars) {
-                    this.setState({ hoveringOnStars: false });
+                    ratings.forEach((rating) => {
+                        let starContainer = document
+                            .getElementById(`starid-${rating}`)
+                            .getBoundingClientRect();
+                        if (mouseInElement(event, starContainer)) {
+                            this.setState({ hoverRating: rating });
+                        }
+                    });
+                } else {
+                    if (this.state.hoveringOnStars) {
+                        this.setState({ hoveringOnStars: false });
+                    }
                 }
-            }
+            } catch {}
         };
         document.onmousemove = handleMouseMove;
-    };
+    }
 
     render() {
         const { classes } = this.props;
         const albumRating = this.state.hoveringOnStars
             ? this.state.hoverRating
             : this.state.albumRating;
-        this.checkMouseOverStar();
+        // this.checkMouseOverStar();
 
         const stars = (
             <div className={classes.stars} id="stars">
@@ -113,13 +121,19 @@ export class UserRating extends Component {
                         onClick={() => {
                             this.updateRating(rating);
                         }}
-                        color="primary"
                     />
                 ))}
             </div>
         );
 
-        return <div> {stars}</div>;
+        return (
+            <div className={classes.container}>
+                <Typography color="primary" className={classes.ratingTitle}>
+                    My Rating
+                </Typography>
+                {stars}
+            </div>
+        );
     }
 }
 
