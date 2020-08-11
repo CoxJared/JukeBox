@@ -12,7 +12,7 @@ const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
         marginTop: 50,
-        width: ALBUM_WIDTH * 5 + 80,
+        width: ALBUM_WIDTH * 5 + 40,
         overflow: 'hidden',
         position: 'relative',
         backgroundColor: '#212122',
@@ -34,8 +34,8 @@ const styles = (theme) => ({
     },
     album: {
         height: `calc(100% - ${ALBUM_TITLE_HEIGHT}px)`,
-        width: ALBUM_WIDTH,
-        margin: '0 25px 0 0'
+        width: `${ALBUM_WIDTH}px`,
+        margin: '0 0px 0 0'
     },
     albumImage: {
         objectFit: 'cover',
