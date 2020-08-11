@@ -43,7 +43,9 @@ const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 export class album extends Component {
     constructor(props) {
         super(props);
+        const { album, artist } = props.location.state;
         this.state = {};
+        this.getInfoFromApiRequest(album, artist);
     }
 
     async getInfoFromApiRequest(albumName, artist) {
@@ -56,10 +58,6 @@ export class album extends Component {
                 album: data.album
             });
         }
-    }
-
-    componentWillMount() {
-        this.getInfoFromApiRequest('Show Me How', 'Men I Trust');
     }
 
     render() {

@@ -94,10 +94,15 @@ export class AlbumShowcase extends Component {
         const { position } = this.state;
         const albumElements = albums.map((album) => (
             <Link
-                to="/album"
+                to={{
+                    pathname: '/album',
+                    state: {
+                        album: album.name,
+                        artist: album.artist
+                    }
+                }}
                 style={{ textDecoration: 'none' }}
                 className="albumLink"
-                params={{ album: album.name, artist: album.artist }}
             >
                 <div className={classes.album}>
                     <img
