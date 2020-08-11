@@ -39,3 +39,19 @@ code {
   opacity: .7;
   margin-bottom: 1px
 }
+
+
+
+.leftStar {
+  background: url('./images/star.png');
+  background-size: 50px 50px;
+  object-fit: cover;
+}
+
+.rightStar {
+  background: url('./images/star.png');
+  background-size: 50px 50px;
+  background-position-x: 25px;
+  object-fit: cover;
+  
+}

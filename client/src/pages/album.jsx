@@ -5,7 +5,9 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
-import AlbumRating from '../components/AlbumRating';
+import AlbumRating from '../components/AlbumRatingChart';
+import UserAvatar from '../components/layout/UserAvatar';
+import UserRating from '../components/UserRating';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -26,9 +28,17 @@ const styles = (theme) => ({
         padding: '5px 15px',
         borderRadius: 10
     },
+    albumInfoGrid: {
+        display: 'flex',
+        flexGrow: 1
+    },
+    albumInfoHalf: {
+        position: 'relative',
+        width: '50%'
+    },
     albumName: {
         color: '#fff',
-        fontSize: 45,
+        fontSize: 40,
         fontWeight: 450
     },
     artist: {
@@ -78,8 +88,7 @@ const styles = (theme) => ({
         width: 300,
         fontSize: 20,
         color: '#aaa'
-    },
-
+    }
 });
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
@@ -141,18 +150,32 @@ export class album extends Component {
                 >
                     <img className={classes.albumImage} src={image} />
                     <Paper className={classes.albumInfo}>
-                        <Typography className={classes.albumName}>
-                            {album.name}
-                        </Typography>
-                        <Typography className={classes.artist} color="primary">
-                            {album.artist}
-                        </Typography>
-                        <Typography className={classes.albumText}>
-                            listeners: {album.listeners}
-                        </Typography>
-                        <Typography className={classes.albumText}>
-                            playcount: {album.playcount}
-                        </Typography>
+                        <Grid
+                            container
+                            spacing={0}
+                            className={classes.albumInfoGrid}
+                        >
+                            <Grid item xs={5} className={classes.albumInfoHalf}>
+                                <Typography className={classes.albumName}>
+                                    {album.name}
+                                </Typography>
+                                <Typography
+                                    className={classes.artist}
+                                    color="primary"
+                                >
+                                    {album.artist}
+                                </Typography>
+                                <Typography className={classes.albumText}>
+                                    listeners: {album.listeners}
+                                </Typography>
+                                <Typography className={classes.albumText}>
+                                    playcount: {album.playcount}
+                                </Typography>
+                            </Grid>
+                            <Grid item xs={4}>
+                                <UserRating />
+                            </Grid>
+                        </Grid>
                     </Paper>
                     <AlbumRating ratings={ratings} />
                     <Typography
