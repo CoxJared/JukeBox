@@ -35,6 +35,39 @@ const styles = (theme) => ({
     },
     albumText: {
         color: '#bbb'
+    },
+    tracks: {
+        width: 900,
+        marginTop: 20
+    },
+    track: {
+        height: 20,
+        width: 900,
+        borderBottom: '1px solid #555',
+        padding: '12px 0'
+    },
+    trackNumber: {
+        display: 'inline',
+        fontSize: 20,
+        fontWeight: 200,
+        color: '#aaa',
+        marginRight: 10
+    },
+    trackName: {
+        display: 'inline',
+        fontWeight: 300,
+        fontSize: 20,
+        color: '#aaa'
+    },
+    trackLength: {
+        display: 'inline',
+        float: 'right',
+        fontWeight: 200,
+        // top: 0,
+        textAlign: 'right',
+        width: 300,
+        fontSize: 20,
+        color: '#aaa'
     }
 });
 
@@ -67,7 +100,19 @@ export class album extends Component {
         if (album) {
             console.log(album);
             let image = album.image.find((img) => img.size === 'mega')['#text'];
-            console.log(image);
+
+            const songs = album.tracks.track.map((song, i) => (
+                <div className={classes.track}>
+                    <h1 className={classes.trackNumber}>{i}</h1>
+                    <h1 className={classes.trackName}>{song.name}</h1>
+                    <h1 className={classes.trackLength}>
+                        {Math.floor(song.duration / 60)}:
+                        {String(song.duration % 60).split('').length === 2
+                            ? song.duration % 60
+                            : '0' + (song.duration % 60)}
+                    </h1>
+                </div>
+            ));
 
             return (
                 <Grid
@@ -92,6 +137,7 @@ export class album extends Component {
                             playcount: {album.playcount}
                         </Typography>
                     </Paper>
+                    <div className={classes.tracks}>{songs}</div>
                 </Grid>
             );
         } else {
