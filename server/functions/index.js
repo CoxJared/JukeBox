@@ -19,6 +19,11 @@ const {
   getAuthenticatedUser
 } = require('./handlers/users');
 
+const {
+  getAllAlbums,
+  addOneAlbum
+} = require('./handlers/albums');
+
 // users routes
 app.post('/signup', signup);
 app.post('/login', login);
@@ -26,4 +31,8 @@ app.post('/user/image', FBAuth, uploadImage);
 app.get('/user/:handle', getUserDetails);
 app.get('/user', FBAuth, getAuthenticatedUser);
 
+//album routes
+
 exports.api = functions.https.onRequest(app);
+app.get('/albums', getAllAlbums);
+app.post('/album', addOneAlbum);
