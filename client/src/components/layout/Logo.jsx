@@ -21,7 +21,7 @@ const logoStyles = {
 function Logo() {
     return (
         <div style={logoStyles.container}>
-            <img src={logo} style={logoStyles.image} />
+            <img src={logo} style={logoStyles.image} alt="logo" />
             <span style={logoStyles.name}>JukeBox</span>
         </div>
     );

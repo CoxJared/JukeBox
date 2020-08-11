@@ -5,8 +5,6 @@ import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
 import { Link } from 'react-router-dom';
 
-const col = '#FFF05E';
-
 const navbarStyle = {
     container: {
         // borderRight: '1px solid #FFF05E'
@@ -34,7 +32,13 @@ export class NavBar extends Component {
                 </Button>
                 <Button style={navbarStyle.button}>explore</Button>
                 <Button style={navbarStyle.button}>lists</Button>
-                <Button style={navbarStyle.button}>activity</Button>
+                <Button
+                    style={navbarStyle.button}
+                    component={Link}
+                    to="/activity"
+                >
+                    activity
+                </Button>
                 <Button style={navbarStyle.button}>concerts</Button>
                 <Button style={navbarStyle.button}></Button>
             </Grid>

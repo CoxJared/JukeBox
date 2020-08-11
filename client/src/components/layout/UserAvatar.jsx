@@ -1,7 +1,14 @@
-import React, { Component, Fragment } from 'react';
-import noImage from '../../images/no-image.png';
-import axios from 'axios';
-import { setAuthorizationHeader } from '../../util/userActions';
+import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+//redux
+import { connect } from 'react-redux';
+import {
+    loginUser,
+    logoutUser,
+    uploadImage,
+    signupUser
+} from '../../redux/actions/userActions';
 
 //MUI
 import Avatar from '@material-ui/core/Avatar';
@@ -12,6 +19,7 @@ import Dialog from '@material-ui/core/Dialog';
 import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import { Typography } from '@material-ui/core';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -20,10 +28,20 @@ const styles = (theme) => ({
         justify: 'center',
         alignItems: 'center'
     },
-    avatar: {
+    tempAvatar: {
         width: 80,
         height: 80,
         margin: ' 80px auto 20px auto'
+    },
+    avatar: {
+        width: 80,
+        height: 80,
+        margin: ' 80px auto 20px auto',
+        cursor: 'pointer'
+    },
+    handle: {
+        color: '#fff',
+        textAlign: 'center'
     },
     signupButton: {
         margin: '5px',
@@ -48,54 +66,39 @@ const styles = (theme) => ({
     }
 });
 
-export class UserAvatar extends Component {
-    state = {
-        loggedIn: false,
-        signupOpen: false,
-        loginOpen: false,
-        email: '',
-        password: '',
-        confirmPassword: '',
-        handle: '',
-        errors: {},
-        loading: false
-    };
+class UserAvatar extends Component {
+    constructor() {
+        super();
+        this.state = {
+            signupOpen: false,
+            loginOpen: false,
+            email: '',
+            password: '',
+            confirmPassword: '',
+            handle: '',
+            errors: {}
+        };
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if (nextProps.UI.erros) {
+            this.setState({ errors: nextProps.UI.errors });
+        }
+    }
 
     openSignupDialog = () => {
         this.setState({ signupOpen: true });
     };
+
+    openLoginDialog = () => {
+        this.setState({ loginOpen: true });
+    };
+
     handleClose = () => {
         this.setState({
             signupOpen: false,
             loginOpen: false
         });
-    };
-
-    handleSubmit = (event) => {
-        event.preventDefault();
-        this.setState({
-            loading: true
-        });
-        const newUserData = {
-            email: this.state.email,
-            password: this.state.password,
-            confirmPassword: this.state.confirmPassword,
-            handle: this.state.handle
-        };
-
-        console.log(newUserData);
-
-        axios
-            .post('/signup', newUserData)
-            .then((response) => {
-                setAuthorizationHeader(response.data.token);
-                this.setState({ loggedIn: true });
-                console.log('success');
-                this.handleClose();
-            })
-            .catch((err) => {
-                console.error(err);
-            });
     };
 
     handleChange = (event) => {
@@ -104,41 +107,117 @@ export class UserAvatar extends Component {
         });
     };
 
+    handleSignup = (event) => {
+        event.preventDefault();
+        const newUserData = {
+            email: this.state.email,
+            password: this.state.password,
+            confirmPassword: this.state.confirmPassword,
+            handle: this.state.handle
+        };
+        this.props.signupUser(newUserData);
+        this.handleClose();
+    };
+
+    handleLogin = (event) => {
+        event.preventDefault();
+        const userData = {
+            email: this.state.email,
+            password: this.state.password
+        };
+        this.props.loginUser(userData);
+        this.handleClose();
+    };
+
+    handleLogout = () => {
+        this.props.logoutUser();
+    };
+
+    handleEditPicture = () => {
+        const fileInput = document.getElementById('imageInput');
+        fileInput.click();
+    };
+
+    handleImageChange = (event) => {
+        const image = event.target.files[0];
+        const formData = new FormData();
+
+        formData.append('image', image, image.name);
+
+        this.props.uploadImage(formData);
+    };
+
     render() {
-        const { classes } = this.props;
-        const { errors, loading } = this.state;
+        const {
+            classes,
+            user: { credentials }
+        } = this.props;
+        const { errors } = this.state;
 
         return (
             <div>
-                <Grid
-                    container
-                    direction="column"
-                    justify="center"
-                    alignItems="center"
-                    classes={styles.container}
-                >
-                    <Avatar
-                        alt="no image"
-                        src={noImage}
-                        className={classes.avatar}
-                    />
-                    <Grid>
-                        <Button
-                            className={classes.signupButton}
-                            onClick={this.openSignupDialog}
-                        >
-                            Sign Up
-                        </Button>
-                        <Button className={classes.loginButton}>Login </Button>
+                {!credentials.handle ? (
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                        classes={styles.container}
+                    >
+                        <Avatar alt="no image" className={classes.tempAvatar} />
+                        <Grid>
+                            <Button
+                                className={classes.signupButton}
+                                onClick={this.openSignupDialog}
+                            >
+                                Sign Up
+                            </Button>
+                            <Button
+                                className={classes.loginButton}
+                                onClick={this.openLoginDialog}
+                            >
+                                Login
+                            </Button>
+                        </Grid>
                     </Grid>
-                </Grid>
+                ) : (
+                    <Grid
+                        container
+                        direction="column"
+                        justify="center"
+                        alignItems="center"
+                        classes={styles.container}
+                    >
+                        <input
+                            type="file"
+                            id="imageInput"
+                            hidden="hidden"
+                            onChange={this.handleImageChange}
+                        />
+                        <Avatar
+                            style={{ color: 'blue' }}
+                            src={credentials.imageUrl}
+                            className={classes.avatar}
+                            onClick={this.handleEditPicture}
+                        />
+                        <Typography className={classes.handle}>
+                            {credentials.handle}
+                        </Typography>
+                        <Button
+                            className={classes.loginButton}
+                            onClick={this.handleLogout}
+                        >
+                            Logout
+                        </Button>
+                    </Grid>
+                )}
 
                 <Dialog open={this.state.signupOpen} className={classes.dialog}>
                     <DialogTitle className={classes.dialogContent}>
                         Signup
                     </DialogTitle>
                     <DialogContent className={classes.dialogContent}>
-                        <form noValidate onSubmit={this.handleSubmit}>
+                        <form noValidate onSubmit={this.handleSignup}>
                             <TextField
                                 id="email"
                                 name="email"
@@ -163,7 +242,6 @@ export class UserAvatar extends Component {
                                 value={this.state.password}
                                 onChange={this.handleChange}
                                 fullWidth
-                                color="primary"
                             />
                             <TextField
                                 id="confirmPassword"
@@ -189,17 +267,12 @@ export class UserAvatar extends Component {
                                 onChange={this.handleChange}
                                 fullWidth
                             />
-                            {/* {errors.general && (
-                <Typography variant="body2" className={classes.customError}>
-                  {errors.general}
-                </Typography>
-              )} */}
                             <Button
                                 type="submit"
                                 variant="contained"
                                 color="secondary"
                                 className={classes.button}
-                                disabled={loading}
+                                // disabled={loading}
                                 onClick={this.handleClose}
                             >
                                 Close
@@ -209,10 +282,65 @@ export class UserAvatar extends Component {
                                 variant="contained"
                                 color="primary"
                                 className={classes.button}
-                                disabled={loading}
-                                onClick={this.handleSubmit}
+                                // disabled={loading}
+                                onClick={this.handleSignup}
                             >
                                 Signup
+                            </Button>
+                        </form>
+                    </DialogContent>
+                </Dialog>
+
+                <Dialog open={this.state.loginOpen} className={classes.dialog}>
+                    <DialogTitle className={classes.dialogContent}>
+                        Login
+                    </DialogTitle>
+                    <DialogContent className={classes.dialogContent}>
+                        <form noValidate onSubmit={this.handleLogin}>
+                            <TextField
+                                id="email"
+                                name="email"
+                                type="email"
+                                label="Email"
+                                className={classes.textField}
+                                helperText={errors.email}
+                                error={errors.email ? true : false}
+                                value={this.state.email}
+                                onChange={this.handleChange}
+                                fullWidth
+                            />
+                            <TextField
+                                id="password"
+                                name="password"
+                                type="password"
+                                label="Password"
+                                color="primary"
+                                className={classes.textField}
+                                helperText={errors.password}
+                                error={errors.password ? true : false}
+                                value={this.state.password}
+                                onChange={this.handleChange}
+                                fullWidth
+                            />
+                            <Button
+                                type="close"
+                                variant="contained"
+                                color="secondary"
+                                className={classes.button}
+                                // disabled={loading}
+                                onClick={this.handleClose}
+                            >
+                                Close
+                            </Button>
+                            <Button
+                                type="submit"
+                                variant="contained"
+                                color="primary"
+                                className={classes.button}
+                                // disabled={loading}
+                                onClick={this.handleLogin}
+                            >
+                                Login
                             </Button>
                         </form>
                     </DialogContent>
@@ -222,4 +350,29 @@ export class UserAvatar extends Component {
     }
 }
 
-export default withStyles(styles)(UserAvatar);
+UserAvatar.propTypes = {
+    classes: PropTypes.object.isRequired,
+    loginUser: PropTypes.func.isRequired,
+    logoutUser: PropTypes.func.isRequired,
+    signupUser: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    UI: PropTypes.object.isRequired,
+    uploadImage: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    UI: state.UI
+});
+
+const mapActionsToProps = {
+    loginUser,
+    logoutUser,
+    signupUser,
+    uploadImage
+};
+
+export default connect(
+    mapStateToProps,
+    mapActionsToProps
+)(withStyles(styles)(UserAvatar));

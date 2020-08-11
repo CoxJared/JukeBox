@@ -69,7 +69,6 @@ export class SearchBar extends Component {
       if (hasSearched && (this.state.search_query != '')) {
         const url = '/search/' + this.state.search_query;
         console.log("SEARCH QUERY");
-
         return <Redirect to={url}/>;
       }
       return (
