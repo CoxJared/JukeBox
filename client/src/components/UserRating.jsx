@@ -19,12 +19,12 @@ const styles = (theme) => ({
     },
     stars: {
         margin: '0px auto ',
-        width: 250,
+        width: 200,
         display: 'flex'
     },
     halfStar: {
-        height: 50,
-        width: 25
+        height: 40,
+        width: 20
     }
 });
 

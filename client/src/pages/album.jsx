@@ -155,7 +155,7 @@ export class album extends Component {
                             spacing={0}
                             className={classes.albumInfoGrid}
                         >
-                            <Grid item xs={5} className={classes.albumInfoHalf}>
+                            <Grid item xs={6} className={classes.albumInfoHalf}>
                                 <Typography className={classes.albumName}>
                                     {album.name}
                                 </Typography>

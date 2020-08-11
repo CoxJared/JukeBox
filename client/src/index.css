@@ -44,14 +44,14 @@ code {
 
 .leftStar {
   background: url('./images/star.png');
-  background-size: 50px 50px;
+  background-size: 40px 40px;
   object-fit: cover;
 }
 
 .rightStar {
   background: url('./images/star.png');
-  background-size: 50px 50px;
-  background-position-x: 25px;
+  background-size: 40px 40px;
+  background-position-x: 20px;
   object-fit: cover;
-  
+
 }

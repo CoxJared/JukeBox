@@ -9,7 +9,7 @@ const styles = (theme) => ({
     ratingsChart: {
         width: '100%',
         position: 'relative',
-        backgroundColor: '#212122',
+        backgroundColor: '#19191b',
         display: 'flex',
         padding: 15,
         marginTop: 20
@@ -21,7 +21,7 @@ const styles = (theme) => ({
     },
     ratingBarTop: {
         width: 50,
-        backgroundColor: '#212122'
+        backgroundColor: '#19191b'
     },
     ratingsTitle: {
         color: '#e9e950',
