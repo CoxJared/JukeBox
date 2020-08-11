@@ -97,6 +97,7 @@ export class AlbumShowcase extends Component {
                 to="/album"
                 style={{ textDecoration: 'none' }}
                 className="albumLink"
+                params={{ album: album.name, artist: album.artist }}
             >
                 <div className={classes.album}>
                     <img
