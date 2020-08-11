@@ -51,7 +51,7 @@ const styles = (theme) => ({
     }
 });
 
-export class AlbumRating extends Component {
+export class AlbumRatingChart extends Component {
     constructor(props) {
         super(props);
         this.state = {};
@@ -114,4 +114,4 @@ export class AlbumRating extends Component {
     }
 }
 
-export default withStyles(styles)(AlbumRating);
+export default withStyles(styles)(AlbumRatingChart);
