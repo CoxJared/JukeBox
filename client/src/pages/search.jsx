@@ -20,6 +20,21 @@ const styles = (theme) => ({
   container: {
     margin: ' 20px auto 0 auto',
     justifyContent: 'center'
+  },
+  table: {
+      marginTop: 20,
+      marginBottom: 20,
+      backgroundColor: '#212122'
+  },
+  headName: {
+      color: "#aaa",
+      fontWeight: 400,
+      fontSize: 40,
+  },
+  cellName: {
+      color: "#aaa",
+      fontWeight: 200,
+      fontSize: 20,
   }
 });
 
@@ -85,12 +100,12 @@ export class search extends Component {
 
     return (
         <div>
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="a dense table">
+        <TableContainer className={classes.table} component={Paper}>
+            <Table aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Artist</TableCell>
-                        <TableCell align="right">Listeners</TableCell>
+                        <TableCell className={classes.headName}>Artist</TableCell>
+                        <TableCell className={classes.headName} align="right">Listeners</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
@@ -99,7 +114,7 @@ export class search extends Component {
                             <TableCell>
                                 <img src={artist.image[0]['#text']}/>
                             </TableCell>
-                            <TableCell component="th" scope="row">
+                            <TableCell className={classes.cellName} component="th" scope="row">
                                 <Link to={{
                                 pathname: '/artist/' + artist.mbid,
                                 state: {artist: artist}
@@ -107,8 +122,7 @@ export class search extends Component {
                                     {artist.name}
                                 </Link>
                                 </TableCell>
-
-                            <TableCell align="right">{artist.listeners}</TableCell>
+                            <TableCell className={classes.cellName} align="right">{artist.listeners}</TableCell>
                          
                         </TableRow>
                     ))}
@@ -118,8 +132,8 @@ export class search extends Component {
 
 
         </TableContainer>
-        <TableContainer component={Paper}>
-            <Table className={classes.table} aria-label="a dense table">
+        <TableContainer className={classes.table} component={Paper}>
+            <Table aria-label="a dense table">
                 <TableHead>
                     <TableRow>
                         <TableCell>Album Name</TableCell>
