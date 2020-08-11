@@ -19,7 +19,6 @@ import { logoutUser, getUserData } from './redux/actions/userActions';
 import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { MuiThemeProvider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
-import withStyles from '@material-ui/core/styles/withStyles';
 import UserAvatar from './components/layout/UserAvatar';
 
 const theme = createMuiTheme(themeObject);

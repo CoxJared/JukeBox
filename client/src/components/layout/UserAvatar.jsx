@@ -1,7 +1,4 @@
-import React, { Component, Fragment } from 'react';
-import noImage from '../../images/no-image.png';
-import axios from 'axios';
-import { setAuthorizationHeader } from '../../util/userActions';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //redux
@@ -153,7 +150,6 @@ class UserAvatar extends Component {
     render() {
         const {
             classes,
-            UI: { loading },
             user: { credentials }
         } = this.props;
         const { errors } = this.state;
@@ -246,7 +242,6 @@ class UserAvatar extends Component {
                                 value={this.state.password}
                                 onChange={this.handleChange}
                                 fullWidth
-                                color="primary"
                             />
                             <TextField
                                 id="confirmPassword"
@@ -326,7 +321,6 @@ class UserAvatar extends Component {
                                 value={this.state.password}
                                 onChange={this.handleChange}
                                 fullWidth
-                                color="primary"
                             />
                             <Button
                                 type="close"

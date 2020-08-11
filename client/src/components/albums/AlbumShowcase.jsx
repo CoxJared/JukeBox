@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import { mergeClasses } from '@material-ui/styles';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -7,7 +6,6 @@ import { Button, Paper } from '@material-ui/core';
 
 const ALBUM_WIDTH = 200;
 const ALBUM_TITLE_HEIGHT = 40;
-const MAX_POSITION = -5;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -23,9 +21,8 @@ const styles = (theme) => ({
     },
     title: {
         fontSize: 35,
-        fontWeight: 300,
-        color: '#ccc',
         fontWeight: 350,
+        color: '#ccc',
         margin: '0px 0 5px '
     },
     albums: {
@@ -96,7 +93,11 @@ export class AlbumShowcase extends Component {
         const { position } = this.state;
         const albumElements = albums.map((album) => (
             <div className={classes.album}>
-                <img src={album.image} className={classes.albumImage} />
+                <img
+                    src={album.image}
+                    className={classes.albumImage}
+                    alt={`${album.name}`}
+                />
                 <h1 className={classes.albumName}>{album.name}</h1>
                 <h2 className={classes.albumArtist}>{album.artist}</h2>
             </div>
