@@ -5,7 +5,14 @@ import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
 // import GridList from '@material-ui/core/GridLIst';
 import { GridList, GridListTile, GridListTileBar } from '@material-ui/core';
+import Table from '@material-ui/core/Table';
+import TableBody from '@material-ui/core/TableBody';
+import TableCell from '@material-ui/core/TableCell';
+import TableContainer from '@material-ui/core/TableContainer';
+import TableHead from '@material-ui/core/TableHead';
+import TableRow from '@material-ui/core/TableRow';
 import withStyles from '@material-ui/core/styles/withStyles';
+import { album } from './album';
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 
@@ -55,44 +62,34 @@ const styles = (theme) => ({
 //        width: 900,
         overflow: 'hidden'
     },
-    tracklistExpansion: {
-        marginTop: 10,
-        fontSize: 15,
-        fontWeight: 500,
-        textAlign: 'left',
-        float: 'left',
-        width: '100%',
-        cursor: 'pointer'
-    },
     track: {
         height: 20,
         width: 900,
         borderBottom: '1px solid #555',
         padding: '12px 0'
-    },
-    trackNumber: {
-        display: 'inline',
-        fontSize: 20,
-        fontWeight: 200,
-        color: '#aaa',
-        marginRight: 10
+    }, 
+    trackRowHead: {
+        backgroundColor: '#212122',
+        fontSize: 40,
+        fontWeight: 300,
+        color: '#fff'
     },
     trackName: {
-        display: 'inline',
         fontWeight: 300,
         fontSize: 20,
         color: '#aaa'
     },
-    trackLength: {
-        display: 'inline',
-        float: 'right',
+    trackListeners: {
         fontWeight: 200,
-        // top: 0,
-        textAlign: 'right',
-        width: 300,
         fontSize: 20,
         color: '#aaa'
     },
+    trackPlaycount: {
+        color: '#aaa',
+        fontWeight: 200,
+        fontSize: 20,
+    },
+
 });
 
 const albumStyles = {
@@ -176,7 +173,6 @@ export class artist extends Component {
         const EXAMPLE_URL = 'https://api.spotify.com/v1/artists/' + ARTIST_ID;
         // axios.get(`http://www.reddit.com/r/${this.props.subreddit}.json`)
         axios.get(EXAMPLE_URL, config).then((res) => {
-            // console.log(res)
             this.setState({
                 images: res.data.images,
                 genres: res.data.genres,
@@ -189,19 +185,14 @@ export class artist extends Component {
 
     async get_spotify_albums(ARTIST_URL, config) {
         axios.get(ARTIST_URL + '/albums', config).then((res) => {
-            console.log(res);
             this.setState({ albums: res.data.items });
-            // console.log(this.state.albums);
-
             this.setState({ hasLoaded: true });
-            console.log('Has loaded');
         });
     }
 
     /// Functions for LastFM grabbing
     async get_artist_info() {
         const ARTIST_URL = this.return_url('getinfo');
-        console.log(ARTIST_URL);
 
         axios.get(ARTIST_URL).then((res) => {
             // TODO need to handle redirects if artist cannot be found
@@ -232,11 +223,9 @@ export class artist extends Component {
 
         axios.get(ARTIST_URL).then((res) => {
             // TODO need to handle redirects if artist cannot be found
-            // console.log(res)
             const top_tracks = res.data.toptracks.track.map((obj) => obj);
             this.setState({ tracks: top_tracks });
             this.setState({ hasLoaded: true });
-            console.log(top_tracks);
         });
     }
 
@@ -300,16 +289,11 @@ export class artist extends Component {
                 </div>
             );
             Tracks = this.state.tracks.map((track, i) =>(
-                <div className={classes.track}>
-                    {/* <h1 className={classes.trackNumber}>{i}</h1> */}
-                    <h1 className={classes.trackName}>{track.name}</h1>
-                    <h1 className={classes.trackLength}>
-                        {Math.floor(track.duration / 60)}:
-                        {String(track.duration % 60).split('').length === 2
-                            ? track.duration % 60
-                            : '0' + (track.duration % 60)}
-                    </h1>
-                </div>
+                <TableRow key={track.name} classes={classes.trackRowHead}>
+                    <TableCell component="th" scope="row" className={classes.trackName}>{track.name}</TableCell>
+                    <TableCell className={classes.trackPlaycount}>{track.playcount}</TableCell>
+                    <TableCell className={classes.trackListeners}>{track.listeners}</TableCell>
+                </TableRow>
             ));
 
         } else {
@@ -349,11 +333,28 @@ export class artist extends Component {
                     onClick={this.handleTrackListExpansion}>
                     Track List
                 </Typography>
-                <div className={classes.tracks}
-                    style={{height: this.state.trackListOpened ? 'auto' : 0}}>
-                    {Tracks}
-                </div>
+                <TableContainer component={Paper}
+                    style={{
+                        height: this.state.trackListOpened ? 'auto' : 0,
+                        backgroundColor: '#212122',
+                    }}>
+                    <Table className={classes.tracks} aria-label="a dense table">
+                        <TableHead>
+                            <TableRow className={classes.trackRowHead}>
+                                <TableCell component="th" scope="row" className={classes.trackName}>Track Name</TableCell>
+                                <TableCell className={classes.trackPlaycount}>Playcounts</TableCell>
+                                <TableCell className={classes.trackListeners}>Listeners</TableCell>
+                            </TableRow>
+                        </TableHead>
+                        <TableBody>
+                            {Tracks}
+                        </TableBody>
+                    </Table>
+                </TableContainer>
+
             </Paper>
+
+
         </Grid>
         );
     }
