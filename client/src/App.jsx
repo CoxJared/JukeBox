@@ -20,6 +20,7 @@ import createMuiTheme from '@material-ui/core/styles/createMuiTheme';
 import { MuiThemeProvider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import UserAvatar from './components/layout/UserAvatar';
+import album from './pages/album';
 
 const theme = createMuiTheme(themeObject);
 
@@ -67,6 +68,7 @@ function App(props) {
                                     path="/artist/:mbid"
                                     component={artist}
                                 />
+                                <Route exact path="album" component={album} />
                             </Switch>
                         </Grid>
                     </Grid>
