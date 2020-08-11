@@ -101,6 +101,10 @@ export class album extends Component {
         this.getInfoFromApiRequest(album, artist);
     }
 
+    addInfoToDatabase() {
+        console.log('starting');
+    }
+
     async getInfoFromApiRequest(albumName, artist) {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
         const ALBUM_URL = `${ROOT_URL}/2.0/?method=album.getinfo&api_key=${_api_key}&artist=${artist}&album=${albumName}&format=json`;

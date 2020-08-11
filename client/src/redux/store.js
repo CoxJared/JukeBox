@@ -7,6 +7,7 @@ import {
 import thunk from 'redux-thunk';
 
 import userReducer from './reducers/userReducer';
+import albumReducer from './reducers/albumReducers';
 import uiReducer from './reducers/uiReducer';
 
 const initialState = {};
@@ -14,6 +15,7 @@ const middleware = [thunk];
 
 const reducers = combineReducers({
   user: userReducer,
+  albums: albumReducer,
   UI: uiReducer
 });
 

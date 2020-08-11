@@ -4,6 +4,11 @@ export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
 export const SET_USER = 'SET_USER';
 export const LOADING_USER = 'LOADING_USER';
 
+//album reducer types
+export const SET_ALBUM = 'SET_ABLUM'
+export const LOADING_ALBUM = 'LOADING_ALBUM'
+export const ADD_ALBUM = 'ADD_ALBUM'
+
 //ui reducers
 export const SET_ERRORS = 'SET_ERRORS';
 export const LOADING_UI = 'LOADING_UI';
