@@ -34,7 +34,14 @@ const styles = (theme) => ({
   cellName: {
       color: "#aaa",
       fontWeight: 200,
-      fontSize: 20,
+      fontSize: 30,
+  },
+  cellImg: {
+      height: 100,
+      width: 100
+  },
+  row: {
+      height: 100,
   }
 });
 
@@ -85,7 +92,7 @@ export class search extends Component {
             const data = await response.json();
             console.log(data);
     
-          const {album} = data.results.albummatches; // FIXME hardcoded to use first result
+            const {album} = data.results.albummatches; // FIXME hardcoded to use first result
             // console.log(artist)
             this.setState({
                 album_matches: album,
@@ -103,7 +110,8 @@ export class search extends Component {
         <TableContainer className={classes.table} component={Paper}>
             <Table aria-label="a dense table">
                 <TableHead>
-                    <TableRow>
+                    <TableRow className={classes.row}>
+                        <TableCell className={classes.headName}></TableCell>
                         <TableCell className={classes.headName}>Artist</TableCell>
                         <TableCell className={classes.headName} align="right">Listeners</TableCell>
                     </TableRow>
@@ -111,8 +119,8 @@ export class search extends Component {
                 <TableBody>
                     {this.state.artist_matches.map((artist) => (
                         <TableRow key={artist.name}>
-                            <TableCell>
-                                <img src={artist.image[0]['#text']}/>
+                            <TableCell className={classes.cellImg}>
+                                <img width='100%' height='100%' src={artist.image[2]['#text']}/>
                             </TableCell>
                             <TableCell className={classes.cellName} component="th" scope="row">
                                 <Link to={{
@@ -127,27 +135,24 @@ export class search extends Component {
                         </TableRow>
                     ))}
                 </TableBody>
-
             </Table>
-
-
         </TableContainer>
         <TableContainer className={classes.table} component={Paper}>
             <Table aria-label="a dense table">
                 <TableHead>
                     <TableRow>
-                        <TableCell>Album Name</TableCell>
-                        <TableCell>Artist</TableCell>
-                        <TableCell align="right">Listeners</TableCell>
+                        <TableCell className={classes.headName}>Cover</TableCell>
+                        <TableCell className={classes.headName}>Album Name</TableCell>
+                        <TableCell className={classes.headName}>Artist</TableCell>
                     </TableRow>
                 </TableHead>
                 <TableBody>
                     {this.state.album_matches.map((album) => (
-                        <TableRow key={album.name}>
-                            <TableCell>
-                                <img src={album.image[0]['#text']}/>
+                        <TableRow className={classes.row} key={album.name}>
+                            <TableCell className={classes.cellImg}>
+                                <img style={{display:'block'}} width="100%" height="100%" src={album.image[3]['#text']}/>
                             </TableCell>
-                            <TableCell component="th" scope="row">
+                            <TableCell className={classes.cellName} component="th" scope="row">
                                 <Link to={{
                                     pathname: '/album',
                                     state: {artist: album.artist, album: album.name}
@@ -158,13 +163,10 @@ export class search extends Component {
                                     {album.name}
                                     </Link>
                                 </TableCell>
-                            <TableCell>{album.artist}</TableCell>
-                            <TableCell align="right">{album.listeners}</TableCell>
-                        
+                            <TableCell className={classes.cellName}>{album.artist}</TableCell>
                         </TableRow>
                     ))}
                     </TableBody>
-
             </Table>
         </TableContainer>
         </div>

@@ -4,6 +4,7 @@ import home from './pages/home';
 import search from './pages/search';
 import artist from './pages/artist';
 import activity from './pages/activity';
+import user from './pages/user';
 import themeObject from './util/theme';
 import Logo from './components/layout/Logo';
 import NavBar from './components/layout/NavBar';
@@ -79,6 +80,11 @@ function App(props) {
                                     exact
                                     path="/activity"
                                     component={activity}
+                                />
+                                <Route
+                                    exact
+                                    path="/user"
+                                    component={user}
                                 />
                             </Switch>
                         </Grid>
