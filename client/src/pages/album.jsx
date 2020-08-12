@@ -1,4 +1,8 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+//redux
+import { addAlbum } from '../redux/actions/albumActions';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -8,6 +12,7 @@ import { Typography } from '@material-ui/core';
 import AlbumRating from '../components/AlbumRatingChart';
 import UserAvatar from '../components/layout/UserAvatar';
 import UserRating from '../components/UserRating';
+import { connect } from 'react-redux';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -97,12 +102,20 @@ export class album extends Component {
     constructor(props) {
         super(props);
         const { album, artist } = props.location.state;
-        this.state = { trackListOpened: false };
+        this.state = { trackListOpened: false, addedToDb: false };
         this.getInfoFromApiRequest(album, artist);
     }
 
     addInfoToDatabase() {
-        console.log('starting');
+        this.setState({ addedToDb: true });
+        let album = this.state.album;
+        let newAlbum = {
+            name: album.name,
+            artist: album.artist,
+            image: album.image.find((img) => img.size === 'mega')['#text'],
+            mbid: album.mbid || ''
+        };
+        this.props.addAlbum(newAlbum);
     }
 
     async getInfoFromApiRequest(albumName, artist) {
@@ -128,7 +141,9 @@ export class album extends Component {
         const ratings = [2, 3, 5, 4, 7, 22, 33, 94, 36, 54, 30];
 
         if (album) {
-            console.log(album);
+            if (!this.state.addedToDb) {
+                this.addInfoToDatabase();
+            }
             let image = album.image.find((img) => img.size === 'mega')['#text'];
 
             const songs = album.tracks.track.map((song, i) => (
@@ -205,4 +220,12 @@ export class album extends Component {
     }
 }
 
-export default withStyles(styles)(album);
+album.propTypes = {
+    addAlbum: PropTypes.func.isRequired
+};
+
+// const mapActionsToProps = {
+//     addAlbum
+// };
+
+export default connect(null, { addAlbum })(withStyles(styles)(album));

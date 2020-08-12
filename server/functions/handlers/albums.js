@@ -32,19 +32,35 @@ exports.addOneAlbum = (request, response) => {
   const newAlbum = {
     name: request.body.name,
     artist: request.body.artist,
-    image: request.body.imageUrl,
+    image: request.body.image,
     createdAt: new Date().toISOString(),
-    mdid: request.body.json,
+    mbid: request.body.mbid,
     ratingCount: 0,
     reviewCount: 0,
   }
 
+
   db.collection('albums')
-    .add(newAlbum)
-    .then(doc => {
-      const responseAlbum = newAlbum;
-      responseAlbum.albumId = doc.id;
-      response.json(responseAlbum);
+    .get()
+    .then(data => {
+      let alreadyinDB = false;
+      data.forEach(doc => {
+        if (doc.data().name === newAlbum.name && doc.data().artist === newAlbum.artist) {
+          alreadyinDB = true;
+          return response.json({
+            message: "Album already in Database"
+          })
+        }
+      })
+      if (!alreadyinDB) {
+        db.collection('albums')
+          .add(newAlbum)
+          .then(doc => {
+            const responseAlbum = newAlbum;
+            responseAlbum.albumId = doc.id;
+            response.json(responseAlbum);
+          })
+      }
     })
     .catch(err => {
       response.status(500).json({

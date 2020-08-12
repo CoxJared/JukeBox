@@ -9,11 +9,11 @@ import {
 } from '../types';
 import axios from 'axios';
 
-export const getAlbum = (albumId) => (dispatch) => {
+export const getAlbum = (album) => (dispatch) => {
   dispatch({
     type: LOADING_ALBUM
   });
-  axios.get(`album/${albumid}`)
+  axios.get(`album/${album.artist}/${album.name}`)
     .then(response => {
       dispatch({
         type: SET_ALBUM,
@@ -28,6 +28,7 @@ export const getAlbum = (albumId) => (dispatch) => {
 };
 
 export const addAlbum = (newAlbum) => (dispatch) => {
+  console.log(newAlbum)
   dispatch({
     type: LOADING_UI
   });
