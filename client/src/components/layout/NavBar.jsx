@@ -40,7 +40,12 @@ export class NavBar extends Component {
                     activity
                 </Button>
                 <Button style={navbarStyle.button}>concerts</Button>
-                <Button style={navbarStyle.button}></Button>
+                <Button style={navbarStyle.button}
+                    component={Link}
+                    to='/user'
+                >
+                   Profile
+                </Button>
             </Grid>
         );
     }
