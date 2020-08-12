@@ -19,10 +19,12 @@ exports.addRating = (request, response) => {
     .limit(1)
 
   db
-    .doc(`/albums/${request.params.albumId}`)
+    .collection('albums')
+    .where('name', '==', request.body.album.name)
+    .where('artist', '==', request.body.album.artist)
     .get()
     .then((doc) => {
-      if (!doc.exists) {
+      if (doc.empty) {
         return response.status(404).json({
           error: 'Album not found'
         });
@@ -42,9 +44,8 @@ exports.addRating = (request, response) => {
       }
     })
     .then(() => {
-      response.json({
-        value: 'Rating added succefully'
-      })
+      response.json(
+        newRating)
     })
     .catch(err => {
       console.log(err);
