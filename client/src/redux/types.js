@@ -7,7 +7,9 @@ export const LOADING_USER = 'LOADING_USER';
 //album reducer types
 export const SET_ALBUM = 'SET_ABLUM'
 export const LOADING_ALBUM = 'LOADING_ALBUM'
-export const ADD_ALBUM = 'ADD_ALBUM'
+export const ADD_ALBUM = 'ADD_ALBUM';
+export const ADD_RATING = 'ADD_RATING';
+export const SET_RATING = 'SET_RATING';
 
 //ui reducers
 export const SET_ERRORS = 'SET_ERRORS';

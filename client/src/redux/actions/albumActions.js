@@ -5,7 +5,8 @@ import {
   LOADING_UI,
   SET_ALBUM,
   STOP_LOADING_UI,
-  SET_ERRORS
+  SET_ERRORS,
+  SET_RATING
 } from '../types';
 import axios from 'axios';
 
@@ -28,7 +29,6 @@ export const getAlbum = (album) => (dispatch) => {
 };
 
 export const addAlbum = (newAlbum) => (dispatch) => {
-  console.log(newAlbum)
   dispatch({
     type: LOADING_UI
   });
@@ -46,3 +46,22 @@ export const addAlbum = (newAlbum) => (dispatch) => {
       });
     });
 };
+
+export const addRating = (albumRating) => (dispatch) => {
+  dispatch({
+    type: LOADING_UI
+  });
+  axios.post('/album/rating', albumRating)
+    .then((response) => {
+      dispatch({
+        type: SET_RATING,
+        payload: response.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      })
+    })
+}
