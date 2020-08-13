@@ -128,21 +128,13 @@ export class album extends Component {
             console.log(this.state);
 
             let album = data.album;
-            console.log('album', album);
             let newAlbum = {
                 name: album.name,
                 artist: album.artist,
                 image: album.image.find((img) => img.size === 'mega')['#text'],
                 mbid: album.mbid || ''
             };
-            console.log('here');
             this.props.addAlbum(newAlbum);
-
-            //TODO move this somewhere neater
-            const user = this.props.user;
-            const albums = this.props.albums;
-            console.log('userhandle', user.credentials);
-            console.log('userhandle', albums.album);
         }
     }
 

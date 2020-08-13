@@ -59,7 +59,7 @@ export class UserRating extends Component {
     constructor() {
         super();
         this.state = {
-            albumRating: '3.5',
+            albumRating: '0.5',
             hoverRating: '0.5',
             hoveringOnStars: false
         };
@@ -70,9 +70,15 @@ export class UserRating extends Component {
         this.setState({ albumRating: rating });
     }
 
+    getRatings(album, userHandle) {
+        if (album && userHandle) {
+            this.props.getUserAlbumRating(album, userHandle);
+        }
+    }
+
     componentDidMount() {
-
-
+        const { user, albums } = this.props;
+        this.getRatings(albums.album, user.credentials.handle);
         let handleMouseMove = (event) => {
             try {
                 let starsContainer = document
@@ -104,10 +110,13 @@ export class UserRating extends Component {
 
     render() {
         const { classes } = this.props;
-        const albumRating = this.state.hoveringOnStars
+        const userRatingFromDB = this.props.albums.userRating.value;
+        let albumRating = this.state.hoveringOnStars
             ? this.state.hoverRating
-            : this.state.albumRating;
-        // this.checkMouseOverStar();
+            : userRatingFromDB;
+        if (albumRating === '' || albumRating === undefined) {
+            albumRating = '0.0';
+        }
 
         const stars = (
             <div className={classes.stars} id="stars">
@@ -136,7 +145,9 @@ export class UserRating extends Component {
         return (
             <div className={classes.container}>
                 <Typography color="primary" className={classes.ratingTitle}>
-                    My Rating
+                    {userRatingFromDB === undefined || userRatingFromDB === ''
+                        ? 'Unrated'
+                        : 'My Rating'}
                 </Typography>
                 {stars}
             </div>
@@ -152,6 +163,10 @@ UserRating.propTypes = {
 const mapStateToProps = (state) => ({
     user: state.user,
     albums: state.albums
+});
+
+const mapActionsToProps = (state) => ({
+    getUserAlbumRating: state.getUserAlbumRating
 });
 
 export default connect(mapStateToProps, { getUserAlbumRating })(

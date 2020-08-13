@@ -39,13 +39,11 @@ export const getAlbumRatings = (album) => (dispatch) => {
 }
 
 export const addAlbum = (newAlbum) => (dispatch) => {
-  console.log('dispatching')
   dispatch({
     type: LOADING_ALBUM
   });
   axios.post('/album', newAlbum)
     .then((response) => {
-      console.log('got info', response.data);
       dispatch({
         type: SET_ALBUM,
         payload: response.data
@@ -77,6 +75,7 @@ export const addRating = (albumRating) => (dispatch) => {
 
 export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
   console.log('get user rat')
+  console.log(`/album/${album.artist}/${album.name}/rating/${userHandle}`);
   axios.get(`/album/${album.artist}/${album.name}/rating/${userHandle}`)
     .then((response) => {
       dispatch({
@@ -85,9 +84,10 @@ export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
       })
     })
     .catch(err => {
-      dispatch({
-        type: SET_ERRORS,
-        payload: err.response.data
-      })
+      console.error(err);
+      // dispatch({
+      //   type: SET_ERRORS,
+      //   payload: err.response.data
+      // })
     })
 }

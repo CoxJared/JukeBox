@@ -230,7 +230,7 @@ exports.getAlbumRatings = (request, response) => {
 }
 
 exports.getUserAlbumRating = (request, response) => {
-  const rating = {
+  let rating = {
     id: '',
     albumId: '',
     createdAt: '',
