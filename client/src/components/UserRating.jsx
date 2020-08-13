@@ -71,7 +71,10 @@ export class UserRating extends Component {
     updateRating(rating) {
         console.log('new rating', rating);
         this.setState({ albumRating: rating });
-        const album = this.props.albums.album;
+        const album = {
+            name: this.props.albumName,
+            artist: this.props.artist
+        };
         this.props.submitUserAlbumRating(album, rating);
     }
 
@@ -83,7 +86,11 @@ export class UserRating extends Component {
 
     componentDidMount() {
         const { user, albums } = this.props;
-        this.getRatings(albums.album, user.credentials.handle);
+        const album = {
+            name: this.props.albumName,
+            artist: this.props.artist
+        };
+        this.getRatings(album, user.credentials.handle);
         let handleMouseMove = (event) => {
             try {
                 let starsContainer = document

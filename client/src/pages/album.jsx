@@ -14,7 +14,6 @@ import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
 import AlbumRating from '../components/AlbumRatingChart';
-import UserAvatar from '../components/layout/UserAvatar';
 import UserRating from '../components/UserRating';
 import { connect } from 'react-redux';
 
@@ -123,9 +122,8 @@ export class album extends Component {
         if (response.ok) {
             const data = await response.json();
 
-            this.setState({ album: data.album }, console.log('added to state'));
+            this.setState({ album: data.album });
             this.setState({ addedToDb: true });
-            console.log(this.state);
 
             let album = data.album;
             let newAlbum = {
@@ -135,6 +133,10 @@ export class album extends Component {
                 mbid: album.mbid || ''
             };
             this.props.addAlbum(newAlbum);
+            this.props.getUserAlbumRating(
+                album,
+                this.props.user.credentials.handle
+            );
         }
     }
 
@@ -203,11 +205,18 @@ export class album extends Component {
                                 </Typography>
                             </Grid>
                             <Grid item xs={6}>
-                                <UserRating />
+                                <UserRating
+                                    albumName={this.props.location.state.album}
+                                    artist={this.props.location.state.artist}
+                                />
                             </Grid>
                         </Grid>
                     </Paper>
-                    <AlbumRating ratings={ratings} />
+                    <AlbumRating
+                        ratings={ratings}
+                        albumName={this.props.location.state.album}
+                        artist={this.props.location.state.artist}
+                    />
                     <Typography
                         color="primary"
                         className={classes.tracklistExpansion}
@@ -233,7 +242,8 @@ export class album extends Component {
 
 album.propTypes = {
     addAlbum: PropTypes.func.isRequired,
-    getAlbumRatings: PropTypes.func.isRequired
+    getAlbumRatings: PropTypes.func.isRequired,
+    getUserAlbumRating: PropTypes.func.isRequired
 };
 
 const mapStateToProps = (state) => ({

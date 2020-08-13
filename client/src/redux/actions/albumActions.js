@@ -74,8 +74,6 @@ export const addRating = (albumRating) => (dispatch) => {
 }
 
 export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
-  console.log('get user rat')
-  console.log(`/album/${album.artist}/${album.name}/rating/${userHandle}`);
   axios.get(`/album/${album.artist}/${album.name}/rating/${userHandle}`)
     .then((response) => {
       dispatch({
@@ -98,7 +96,7 @@ export const submitUserAlbumRating = (album, value) => (dispatch) => {
     })
     .then((response) => {
       dispatch({
-        SET_RATING,
+        type: SET_RATING,
         payload: response.data
       })
     })

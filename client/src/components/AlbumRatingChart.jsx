@@ -60,14 +60,19 @@ export class AlbumRatingChart extends Component {
     constructor(props) {
         super(props);
         this.state = {};
-
-        getAlbumRatings();
     }
 
-    getAlbumRatings() {
-        let albums = this.props.albums;
+    componentDidMount() {
+        this.getAlbumRatingsFromDb();
+    }
+
+    getAlbumRatingsFromDb() {
+        let album = {
+            name: this.props.albumName,
+            artist: this.props.artist
+        };
         let user = this.props.user;
-        this.props.getAlbumRatings(albums.album, user.credentials.userHandle);
+        this.props.getAlbumRatings(album, user.credentials.userHandle);
     }
 
     createBarChartElements = (ratings) => {
@@ -82,23 +87,30 @@ export class AlbumRatingChart extends Component {
                 (ratings.reduce((acc, rating, i) => (acc += rating * i), 0) /
                     ratingCount) *
                     10
-            ) / 10;
+            ) / 20;
 
         let max = Math.max(...ratings);
         let HEIGHT = 140;
 
-        let elements = ratings.map((rating) => (
-            <div
-                className={this.props.classes.ratingBar}
-                style={{ height: HEIGHT }}
-            >
-                <div
-                    className={this.props.classes.ratingBarTop}
-                    //Added plus one so the bars never have 0 height which would look weird
-                    style={{ height: (HEIGHT * (max - rating)) / max + 1 }}
-                />
-            </div>
-        ));
+        let elements =
+            ratingCount !== 0 ? (
+                ratings.map((rating) => (
+                    <div
+                        className={this.props.classes.ratingBar}
+                        style={{ height: HEIGHT }}
+                    >
+                        <div
+                            className={this.props.classes.ratingBarTop}
+                            //Added plus one so the bars never have 0 height which would look weird
+                            style={{
+                                height: (HEIGHT * (max - rating)) / max + 20
+                            }}
+                        />
+                    </div>
+                ))
+            ) : (
+                <div />
+            );
         return (
             <div
                 className={this.props.classes.ratingsChart}
@@ -119,7 +131,14 @@ export class AlbumRatingChart extends Component {
     };
 
     render() {
-        const { ratings } = this.props;
+        const ratings = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
+        let dbRatings = this.props.albums.albumRatings.ratings;
+        if (dbRatings) {
+            dbRatings.forEach((rating) => {
+                let index = Number(rating.value) * 2;
+                ratings[index]++;
+            });
+        }
 
         const albumRatingChart = this.createBarChartElements(ratings);
 
