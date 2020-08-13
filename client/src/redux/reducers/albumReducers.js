@@ -27,7 +27,8 @@ export default function (state = initialState, action) {
       };
     case ADD_ALBUM:
       return {
-        ...state
+        ...state,
+        album: action.payload
       };
     case SET_RATING:
       return {

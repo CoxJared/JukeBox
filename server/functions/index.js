@@ -23,7 +23,8 @@ const {
   getAllAlbums,
   addOneAlbum,
   addRating,
-  getOneAlbum
+  getOneAlbum,
+  getAlbumRatings
 } = require('./handlers/albums');
 
 
@@ -39,6 +40,7 @@ app.get('/albums', getAllAlbums);
 app.post('/album', addOneAlbum);
 app.get('/album/:artist/:name', getOneAlbum);
 app.post('/album/rating', FBAuth, addRating);
+app.get('/album/:artist/:name/ratings', getAlbumRatings);
 
 
 exports.api = functions.https.onRequest(app);

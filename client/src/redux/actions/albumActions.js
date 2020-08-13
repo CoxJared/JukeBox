@@ -35,7 +35,7 @@ export const addAlbum = (newAlbum) => (dispatch) => {
   axios.post('/album', newAlbum)
     .then((response) => {
       dispatch({
-        type: SET_ALBUM,
+        type: ADD_ALBUM,
         payload: response.data
       })
     })

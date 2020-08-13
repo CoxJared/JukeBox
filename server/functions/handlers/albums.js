@@ -46,9 +46,9 @@ exports.addOneAlbum = (request, response) => {
       data.forEach(doc => {
         if (doc.data().name === newAlbum.name && doc.data().artist === newAlbum.artist) {
           alreadyinDB = true;
-          return response.json({
-            message: "Album already in Database"
-          })
+          return response.json(
+            newAlbum
+          )
         }
       })
       if (!alreadyinDB) {
@@ -170,3 +170,54 @@ exports.addRating = (request, response) => {
       });
     })
 };
+
+exports.getAlbumRatings = (request, response) => {
+
+  let ratings = [];
+  let albumId;
+
+  db.collection('albums')
+    .where('artist', '==', request.params.artist)
+    .where('name', '==', request.params.name)
+    .get()
+    .then((data) => {
+      if (data.empty) {
+        return response.status(404).json({
+          error: 'Album not found'
+        });
+      } else {
+        data.forEach((doc) => {
+          albumId = doc.id
+        })
+        return db.collection('ratings')
+          .where('albumId', '==', albumId)
+          .get()
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return response.json({
+          ratings: ratings
+        })
+      } else {
+        data.forEach(doc => {
+          ratings.push({
+            id: doc.id,
+            albumId: doc.data().albumId,
+            createdAt: doc.data().createdAt,
+            userHandle: doc.data().userHandle,
+            value: doc.data().value
+          })
+        })
+        return response.json({
+          ratings: ratings
+        })
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      return response.status(400).json({
+        error: err
+      })
+    })
+}
