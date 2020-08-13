@@ -69,7 +69,6 @@ export class UserRating extends Component {
     }
 
     updateRating(rating) {
-        console.log('new rating', rating);
         this.setState({ albumRating: rating });
         const album = {
             name: this.props.albumName,
@@ -121,13 +120,17 @@ export class UserRating extends Component {
     }
 
     render() {
-        const { classes } = this.props;
+        const { classes, albums } = this.props;
         const userRatingFromDB = this.props.albums.userRating.value;
         let albumRating = this.state.hoveringOnStars
             ? this.state.hoverRating
             : userRatingFromDB;
         if (albumRating === '' || albumRating === undefined) {
             albumRating = '0.0';
+        }
+
+        if (albums.loading.rating === undefined || albums.loading.rating) {
+            return <h1>loading</h1>;
         }
 
         const stars = (

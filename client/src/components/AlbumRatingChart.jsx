@@ -131,6 +131,8 @@ export class AlbumRatingChart extends Component {
     };
 
     render() {
+        const { albums } = this.props;
+
         const ratings = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
         let dbRatings = this.props.albums.albumRatings.ratings;
         if (dbRatings) {
@@ -138,6 +140,10 @@ export class AlbumRatingChart extends Component {
                 let index = Number(rating.value) * 2;
                 ratings[index]++;
             });
+        }
+
+        if (albums.loading.ratings === undefined || albums.loading.ratings) {
+            return <h1>loading</h1>;
         }
 
         const albumRatingChart = this.createBarChartElements(ratings);

@@ -9,8 +9,10 @@ export const SET_ALBUM = 'SET_ABLUM'
 export const LOADING_ALBUM = 'LOADING_ALBUM'
 export const ADD_ALBUM = 'ADD_ALBUM';
 export const ADD_RATING = 'ADD_RATING';
+export const LOADING_RATINGS = 'LOADING_RATINGS'
 export const SET_RATING = 'SET_RATING';
 export const SET_RATINGS = 'SET_RATINGS';
+export const LOADING_RATING = 'LOADING_RATING';
 
 //ui reducers
 export const SET_ERRORS = 'SET_ERRORS';

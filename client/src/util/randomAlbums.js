@@ -4,7 +4,6 @@ import twinFantasy from '../images/tempAlbumCovers/twinfantasy-carseatheadsrest.
 import anotherGreenWorld from '../images/tempAlbumCovers/anothergreenworld-brianeno.jpeg';
 import betheCowboy from '../images/tempAlbumCovers/mitski-bethecowboy.jpeg';
 import pomPom from '../images/tempAlbumCovers/pompom-arielpink.jpeg';
-import sweetTrip from '../images/tempAlbumCovers/sweettrip-veolcity.jpeg';
 import virtue from '../images/tempAlbumCovers/virtue-thevoidz.jpeg';
 import againstAllLogic from '../images/tempAlbumCovers/againstalllogic.jpeg';
 import galacticMelt from '../images/tempAlbumCovers/galacticmelt.jpg';
@@ -20,6 +19,7 @@ import powersthatb from '../images/tempAlbumCovers/thepowersthatb.jpeg';
 import kaputt from '../images/tempAlbumCovers/kaputt.jpeg';
 import pureComedy from '../images/tempAlbumCovers/purecomedy.jpeg';
 import theBends from '../images/tempAlbumCovers/thebends.jpeg';
+import revolver from '../images/tempAlbumCovers/revolver.jpeg';
 
 export const albums = (function () {
     let albums = [{
@@ -46,11 +46,6 @@ export const albums = (function () {
             image: virtue,
             name: 'Virtue',
             artist: 'The Voidz'
-        },
-        {
-            image: sweetTrip,
-            name: 'veolcity : design : comfort.',
-            artist: 'Sweet Trip'
         },
         {
             image: againstAllLogic,
@@ -126,6 +121,11 @@ export const albums = (function () {
             image: theBends,
             name: 'The Bends',
             artist: 'Radiohead'
+        },
+        {
+            image: revolver,
+            name: 'The Beatles',
+            artist: 'Revolver'
         }
     ];
 

@@ -4,14 +4,20 @@ import {
   LOADING_ALBUM,
   ADD_RATING,
   SET_RATING,
-  SET_RATINGS
+  SET_RATINGS,
+  LOADING_RATINGS,
+  LOADING_RATING
 } from '../types';
 
 const initialState = {
   album: {},
   albumRatings: [],
   userRating: '',
-  loading: false
+  loading: {
+    album: false,
+    ratings: false,
+    rating: false
+  }
 }
 
 export default function (state = initialState, action) {
@@ -19,13 +25,35 @@ export default function (state = initialState, action) {
     case LOADING_ALBUM:
       return {
         ...state,
-        loading: true
+        loading: {
+          ...state.loading,
+          album: true
+        }
+      };
+    case LOADING_RATINGS:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          ratings: true
+        }
+      };
+    case LOADING_RATING:
+      return {
+        ...state,
+        loading: {
+          ...state.loading,
+          rating: true
+        }
       };
     case SET_ALBUM:
       return {
         ...state,
         album: action.payload,
-          loading: false
+          loading: {
+            ...state.loading,
+            album: false
+          }
       };
     case ADD_ALBUM:
       return {
@@ -35,18 +63,26 @@ export default function (state = initialState, action) {
     case SET_RATING:
       return {
         ...state,
-        userRating: action.payload
+        userRating: action.payload,
+          loading: {
+            ...state.loading,
+            rating: false
+          }
       };
     case SET_RATINGS:
       return {
         ...state,
-        albumRatings: action.payload
+        albumRatings: action.payload,
+          loading: {
+            ...state.loading,
+            ratings: false
+          }
       }
       case ADD_RATING:
         return {
           ...state
-        }
-        default:
-          return state;
+        };
+      default:
+        return state;
   }
 }

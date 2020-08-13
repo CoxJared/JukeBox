@@ -152,7 +152,7 @@ export class album extends Component {
         //TODO update dis
         const ratings = [2, 3, 5, 4, 7, 22, 33, 94, 36, 54, 30];
 
-        if (albums.loading === undefined || albums.loading) {
+        if (albums.loading.album === undefined || albums.loading.album) {
             return <h1>loading</h1>;
         }
 

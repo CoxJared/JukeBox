@@ -7,7 +7,9 @@ import {
   STOP_LOADING_UI,
   SET_ERRORS,
   SET_RATING,
-  SET_RATINGS
+  SET_RATINGS,
+  LOADING_RATING,
+  LOADING_RATINGS
 } from '../types';
 import axios from 'axios';
 
@@ -29,6 +31,9 @@ export const getAlbum = (album) => (dispatch) => {
 };
 
 export const getAlbumRatings = (album) => (dispatch) => {
+  dispatch({
+    type: LOADING_RATINGS
+  });
   axios.get(`album/${album.artist}/${album.name}/ratings`)
     .then(response => {
       dispatch({
@@ -56,7 +61,7 @@ export const addAlbum = (newAlbum) => (dispatch) => {
 
 export const addRating = (albumRating) => (dispatch) => {
   dispatch({
-    type: LOADING_UI
+    type: LOADING_RATING
   });
   axios.post('/album/rating', albumRating)
     .then((response) => {
@@ -74,6 +79,9 @@ export const addRating = (albumRating) => (dispatch) => {
 }
 
 export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
+  dispatch({
+    type: LOADING_RATING
+  });
   axios.get(`/album/${album.artist}/${album.name}/rating/${userHandle}`)
     .then((response) => {
       dispatch({
@@ -91,6 +99,9 @@ export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
 }
 
 export const submitUserAlbumRating = (album, value) => (dispatch) => {
+  dispatch({
+    type: LOADING_RATING
+  });
   axios.post(`/album/${album.artist}/${album.name}/rating`, {
       value
     })
@@ -99,9 +110,12 @@ export const submitUserAlbumRating = (album, value) => (dispatch) => {
         type: SET_RATING,
         payload: response.data
       })
+      getAlbumRatings(album);
     })
     .catch(err => {
       console.error(err)
     })
+
+
 
 }
