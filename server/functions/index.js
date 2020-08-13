@@ -21,13 +21,11 @@ const {
 
 const {
   getAllAlbums,
-  addOneAlbum
+  addOneAlbum,
+  addRating,
+  getOneAlbum
 } = require('./handlers/albums');
 
-const {
-  // getAllRatings,
-  addRating
-} = require('./handlers/ratings');
 
 // users routes
 app.post('/signup', signup);
@@ -39,9 +37,8 @@ app.get('/user', FBAuth, getAuthenticatedUser);
 //album routes
 app.get('/albums', getAllAlbums);
 app.post('/album', addOneAlbum);
+app.get('/album/:artist/:name', getOneAlbum);
+app.post('/album/rating', FBAuth, addRating);
 
-//rating routes
-// app.get('/ratings', getAllRatings);
-app.post('/:albumId/rating', FBAuth, addRating);
 
 exports.api = functions.https.onRequest(app);
