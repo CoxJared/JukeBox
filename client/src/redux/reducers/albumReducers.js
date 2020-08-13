@@ -3,12 +3,13 @@ import {
   ADD_ALBUM,
   LOADING_ALBUM,
   ADD_RATING,
-  SET_RATING
-
+  SET_RATING,
+  SET_RATINGS
 } from '../types';
 
 const initialState = {
   album: {},
+  albumRatings: [],
   userRating: '',
   loading: false
 }
@@ -35,11 +36,16 @@ export default function (state = initialState, action) {
         ...state,
         rating: action.payload
       };
-    case ADD_RATING:
+    case SET_RATINGS:
       return {
-        ...state
+        ...state,
+        albumRatings: action.payload
       }
-      default:
-        return state;
+      case ADD_RATING:
+        return {
+          ...state
+        }
+        default:
+          return state;
   }
 }

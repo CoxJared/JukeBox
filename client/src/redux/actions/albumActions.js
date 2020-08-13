@@ -6,7 +6,8 @@ import {
   SET_ALBUM,
   STOP_LOADING_UI,
   SET_ERRORS,
-  SET_RATING
+  SET_RATING,
+  SET_RATINGS
 } from '../types';
 import axios from 'axios';
 
@@ -27,6 +28,16 @@ export const getAlbum = (album) => (dispatch) => {
     })
     .catch(err => console.log(err));
 };
+
+export const getAlbumRatings = (album) => (dispatch) => {
+  axios.get(`album/${album.artist}/${album.name}/ratings`)
+    .then(response => {
+      dispatch({
+        type: SET_RATINGS,
+        payload: response.data
+      })
+    })
+}
 
 export const addAlbum = (newAlbum) => (dispatch) => {
   dispatch({

@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //redux
-import { addAlbum } from '../redux/actions/albumActions';
+import { addAlbum, getAlbumRatings } from '../redux/actions/albumActions';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -116,6 +116,7 @@ export class album extends Component {
             mbid: album.mbid || ''
         };
         this.props.addAlbum(newAlbum);
+        this.props.getAlbumRatings(newAlbum);
     }
 
     async getInfoFromApiRequest(albumName, artist) {
@@ -221,11 +222,14 @@ export class album extends Component {
 }
 
 album.propTypes = {
-    addAlbum: PropTypes.func.isRequired
+    addAlbum: PropTypes.func.isRequired,
+    getAlbumRatings: PropTypes.func.isRequired
 };
 
 // const mapActionsToProps = {
 //     addAlbum
 // };
 
-export default connect(null, { addAlbum })(withStyles(styles)(album));
+export default connect(null, { addAlbum, getAlbumRatings })(
+    withStyles(styles)(album)
+);
