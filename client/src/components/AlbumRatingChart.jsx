@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+//redux
+import { getAlbumRatings } from '../redux/actions/albumActions';
+import { connect } from 'react-redux';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -55,6 +60,14 @@ export class AlbumRatingChart extends Component {
     constructor(props) {
         super(props);
         this.state = {};
+
+        getAlbumRatings();
+    }
+
+    getAlbumRatings() {
+        let albums = this.props.albums;
+        let user = this.props.user;
+        this.props.getAlbumRatings(albums.album, user.credentials.userHandle);
     }
 
     createBarChartElements = (ratings) => {
@@ -114,4 +127,15 @@ export class AlbumRatingChart extends Component {
     }
 }
 
-export default withStyles(styles)(AlbumRatingChart);
+AlbumRatingChart.propTypes = {
+    getAlbumRatings: PropTypes.func.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    albums: state.albums
+});
+
+export default connect(mapStateToProps, { getAlbumRatings })(
+    withStyles(styles)(AlbumRatingChart)
+);

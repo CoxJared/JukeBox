@@ -105,40 +105,44 @@ const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 export class album extends Component {
     constructor(props) {
         super(props);
-        const { album, artist } = props.location.state;
+
         this.state = { trackListOpened: false, addedToDb: false };
-        this.getInfoFromApiRequest(album, artist);
     }
 
-    addInfoToDatabase() {
-        this.setState({ addedToDb: true });
-        let album = this.state.album;
-        let newAlbum = {
-            name: album.name,
-            artist: album.artist,
-            image: album.image.find((img) => img.size === 'mega')['#text'],
-            mbid: album.mbid || ''
-        };
-        this.props.addAlbum(newAlbum);
-        this.props.getAlbumRatings(newAlbum);
-
-        //TODO move this somewhere neater
-        const user = this.props.user;
-        const albums = this.props.albums;
-        console.log('userhandle', user.credentials);
-        console.log('userhandle', albums.album);
-        this.props.getUserAlbumRating(albums.album, user.credentials.handle);
+    componentDidMount() {
+        const { album, artist } = this.props.location.state;
+        this.loadAlbumData(album, artist);
     }
 
-    async getInfoFromApiRequest(albumName, artist) {
+    addInfoToDatabase() {}
+
+    async loadAlbumData(albumName, artist) {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
         const ALBUM_URL = `${ROOT_URL}/2.0/?method=album.getinfo&api_key=${_api_key}&artist=${artist}&album=${albumName}&format=json`;
         const response = await fetch(ALBUM_URL);
         if (response.ok) {
             const data = await response.json();
-            this.setState({
-                album: data.album
-            });
+
+            this.setState({ album: data.album }, console.log('added to state'));
+            this.setState({ addedToDb: true });
+            console.log(this.state);
+
+            let album = data.album;
+            console.log('album', album);
+            let newAlbum = {
+                name: album.name,
+                artist: album.artist,
+                image: album.image.find((img) => img.size === 'mega')['#text'],
+                mbid: album.mbid || ''
+            };
+            console.log('here');
+            this.props.addAlbum(newAlbum);
+
+            //TODO move this somewhere neater
+            const user = this.props.user;
+            const albums = this.props.albums;
+            console.log('userhandle', user.credentials);
+            console.log('userhandle', albums.album);
         }
     }
 
@@ -149,13 +153,16 @@ export class album extends Component {
     render() {
         const { classes } = this.props;
         const { album } = this.state;
+        const albums = this.props.albums;
 
+        //TODO update dis
         const ratings = [2, 3, 5, 4, 7, 22, 33, 94, 36, 54, 30];
 
+        if (albums.loading === undefined || albums.loading) {
+            return <h1>loading</h1>;
+        }
+
         if (album) {
-            if (!this.state.addedToDb) {
-                this.addInfoToDatabase();
-            }
             let image = album.image.find((img) => img.size === 'mega')['#text'];
 
             const songs = album.tracks.track.map((song, i) => (

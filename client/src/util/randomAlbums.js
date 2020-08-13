@@ -19,10 +19,10 @@ import low from '../images/tempAlbumCovers/low.jpeg';
 import powersthatb from '../images/tempAlbumCovers/thepowersthatb.jpeg';
 import kaputt from '../images/tempAlbumCovers/kaputt.jpeg';
 import pureComedy from '../images/tempAlbumCovers/purecomedy.jpeg';
+import theBends from '../images/tempAlbumCovers/thebends.jpeg';
 
-export const albums = (function() {
-    let albums = [
-        {
+export const albums = (function () {
+    let albums = [{
             image: titanicRising,
             name: 'Titanic Rising',
             artist: 'Weyes Blood'
@@ -121,6 +121,11 @@ export const albums = (function() {
             image: kaputt,
             name: 'Kaputt',
             artist: 'Destroyer'
+        },
+        {
+            image: theBends,
+            name: 'The Bends',
+            artist: 'Radiohead'
         }
     ];
 
