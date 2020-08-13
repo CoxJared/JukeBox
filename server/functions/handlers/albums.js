@@ -132,32 +132,37 @@ exports.addRating = (request, response) => {
   const newRating = {
     value: request.body.value,
     createdAt: new Date().toISOString(),
-    albumId: request.params.albumId,
     userHandle: request.user.handle
   };
-
-  const ratingDocument = db.collection('ratings')
-    .where('albumId', '==', request.params.albumId)
-    .where('userHandle', '==', request.user.handle)
-    .limit(1)
-
+  let albumId;
   db
     .collection('albums')
-    .where('name', '==', request.body.album.name)
-    .where('artist', '==', request.body.album.artist)
+    .where('name', '==', request.params.name)
+    .where('artist', '==', request.params.artist)
+    .limit(1)
     .get()
-    .then((doc) => {
-      if (doc.empty) {
+    .then((data) => {
+      if (data.empty) {
         return response.status(404).json({
           error: 'Album not found'
         });
       } else {
-        return ratingDocument.get();
+        data.forEach(doc => {
+          albumId = doc.id;
+        })
+        return db.collection('ratings')
+          .where('albumId', '==', albumId)
+          .where('userHandle', '==', request.user.handle)
+          .limit(1)
+          .get()
       }
     })
     .then((data) => {
       if (data.empty) {
-        return db.collection('ratings').add(newRating);
+        return db.collection('ratings').add({
+          ...newRating,
+          albumId: albumId
+        });
       } else {
         data.forEach(doc => {
           db.doc(`/ratings/${doc.id}`).update({

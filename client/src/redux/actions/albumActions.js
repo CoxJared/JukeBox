@@ -91,3 +91,19 @@ export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
       // })
     })
 }
+
+export const submitUserAlbumRating = (album, value) => (dispatch) => {
+  axios.post(`/album/${album.artist}/${album.name}/rating`, {
+      value
+    })
+    .then((response) => {
+      dispatch({
+        SET_RATING,
+        payload: response.data
+      })
+    })
+    .catch(err => {
+      console.error(err)
+    })
+
+}

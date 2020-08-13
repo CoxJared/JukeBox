@@ -2,7 +2,10 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //redux
-import { getUserAlbumRating } from '../redux/actions/albumActions';
+import {
+    getUserAlbumRating,
+    submitUserAlbumRating
+} from '../redux/actions/albumActions';
 import { connect } from 'react-redux';
 
 //MUI
@@ -68,6 +71,8 @@ export class UserRating extends Component {
     updateRating(rating) {
         console.log('new rating', rating);
         this.setState({ albumRating: rating });
+        const album = this.props.albums.album;
+        this.props.submitUserAlbumRating(album, rating);
     }
 
     getRatings(album, userHandle) {
@@ -166,9 +171,11 @@ const mapStateToProps = (state) => ({
 });
 
 const mapActionsToProps = (state) => ({
-    getUserAlbumRating: state.getUserAlbumRating
+    getUserAlbumRating: state.getUserAlbumRating,
+    submitUserAlbumRating: state.submitUserAlbumRating
 });
 
-export default connect(mapStateToProps, { getUserAlbumRating })(
-    withStyles(styles)(UserRating)
-);
+export default connect(mapStateToProps, {
+    getUserAlbumRating,
+    submitUserAlbumRating
+})(withStyles(styles)(UserRating));
