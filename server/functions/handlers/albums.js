@@ -40,26 +40,33 @@ exports.addOneAlbum = (request, response) => {
   }
 
   db.collection('albums')
+    .where('artist', '==', request.body.artist)
+    .where('name', '==', request.body.name)
     .get()
     .then(data => {
-      let alreadyinDB = false;
-      data.forEach(doc => {
-        if (doc.data().name === newAlbum.name && doc.data().artist === newAlbum.artist) {
-          alreadyinDB = true;
-          return response.json(
-            newAlbum
-          )
-        }
-      })
-      if (!alreadyinDB) {
-        db.collection('albums')
+      if (!data.empty) {
+        data.forEach(doc => {
+          return response.json({
+            id: doc.id,
+            name: doc.data().name,
+            artist: doc.data().artist,
+            image: doc.data().image,
+            createdAt: doc.data().createdAt,
+            mbid: doc.data().mbid,
+            ratingCount: doc.data().ratingCount,
+            reviewCount: doc.data().reviewCount,
+          });
+        })
+      } else {
+        return db.collection('albums')
           .add(newAlbum)
-          .then(doc => {
-            const responseAlbum = newAlbum;
-            responseAlbum.albumId = doc.id;
-            response.json(responseAlbum);
-          })
+
       }
+    })
+    .then(doc => {
+      const responseAlbum = newAlbum;
+      responseAlbum.albumId = doc.id;
+      response.json(responseAlbum);
     })
     .catch(err => {
       response.status(500).json({
