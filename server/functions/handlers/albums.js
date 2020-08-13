@@ -221,3 +221,55 @@ exports.getAlbumRatings = (request, response) => {
       })
     })
 }
+
+exports.getUserAlbumRating = (request, response) => {
+  const rating = {
+    id: '',
+    albumId: '',
+    createdAt: '',
+    userHandle: '',
+    value: ''
+  };
+
+  db.collection('albums')
+    .where('artist', '==', request.params.artist)
+    .where('name', '==', request.params.name)
+    .get()
+    .then((data) => {
+      if (data.empty) {
+        return response.status(404).json({
+          error: 'Album not found'
+        });
+      } else {
+        data.forEach((doc) => {
+          albumId = doc.id
+        })
+        return db.collection('ratings')
+          .where('albumId', '==', albumId)
+          .where('userHandle', '==', request.params.user)
+          .get()
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return response.json(rating)
+      } else {
+        data.forEach(doc => {
+          rating = {
+            id: doc.id,
+            albumId: doc.data().albumId,
+            createdAt: doc.data().createdAt,
+            userHandle: doc.data().userHandle,
+            value: doc.data().value
+          }
+        })
+        return response.json(rating)
+      }
+    })
+    .catch(err => {
+      console.error(err);
+      return response.status(400).json({
+        error: err
+      })
+    })
+}
