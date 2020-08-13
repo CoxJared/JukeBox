@@ -1,4 +1,9 @@
 import React, { Component } from 'react';
+import PropTypes from 'prop-types';
+
+//redux
+import { getUserAlbumRating } from '../redux/actions/albumActions';
+import { connect } from 'react-redux';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -66,6 +71,8 @@ export class UserRating extends Component {
     }
 
     componentDidMount() {
+
+
         let handleMouseMove = (event) => {
             try {
                 let starsContainer = document
@@ -137,4 +144,16 @@ export class UserRating extends Component {
     }
 }
 
-export default withStyles(styles)(UserRating);
+UserRating.propTypes = {
+    getUserAlbumRating: PropTypes.func.isRequired,
+    data: PropTypes.object.isRequired
+};
+
+const mapStateToProps = (state) => ({
+    user: state.user,
+    albums: state.albums
+});
+
+export default connect(mapStateToProps, { getUserAlbumRating })(
+    withStyles(styles)(UserRating)
+);

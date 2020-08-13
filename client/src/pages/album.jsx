@@ -2,7 +2,11 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //redux
-import { addAlbum, getAlbumRatings } from '../redux/actions/albumActions';
+import {
+    addAlbum,
+    getAlbumRatings,
+    getUserAlbumRating
+} from '../redux/actions/albumActions';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -117,6 +121,13 @@ export class album extends Component {
         };
         this.props.addAlbum(newAlbum);
         this.props.getAlbumRatings(newAlbum);
+
+        //TODO move this somewhere neater
+        const user = this.props.user;
+        const albums = this.props.albums;
+        console.log('userhandle', user.credentials);
+        console.log('userhandle', albums.album);
+        this.props.getUserAlbumRating(albums.album, user.credentials.handle);
     }
 
     async getInfoFromApiRequest(albumName, artist) {
@@ -226,10 +237,13 @@ album.propTypes = {
     getAlbumRatings: PropTypes.func.isRequired
 };
 
-// const mapActionsToProps = {
-//     addAlbum
-// };
+const mapStateToProps = (state) => ({
+    user: state.user,
+    albums: state.albums
+});
 
-export default connect(null, { addAlbum, getAlbumRatings })(
-    withStyles(styles)(album)
-);
+export default connect(mapStateToProps, {
+    addAlbum,
+    getAlbumRatings,
+    getUserAlbumRating
+})(withStyles(styles)(album));

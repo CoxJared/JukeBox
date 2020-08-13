@@ -76,3 +76,20 @@ export const addRating = (albumRating) => (dispatch) => {
       })
     })
 }
+
+export const getUserAlbumRating = (album, userHandle) => (dispatch) => {
+  console.log('get user rat')
+  axios.get(`/album/${album.artist}/${album.name}/rating/${userHandle}`)
+    .then((response) => {
+      dispatch({
+        type: SET_RATING,
+        payload: response.data
+      })
+    })
+    .catch(err => {
+      dispatch({
+        type: SET_ERRORS,
+        payload: err.response.data
+      })
+    })
+}

@@ -34,7 +34,7 @@ export default function (state = initialState, action) {
     case SET_RATING:
       return {
         ...state,
-        rating: action.payload
+        userRating: action.payload
       };
     case SET_RATINGS:
       return {
