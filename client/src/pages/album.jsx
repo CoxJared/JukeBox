@@ -237,7 +237,7 @@ export class album extends Component {
                 </Grid>
             );
         } else {
-            return <div />;
+            return <AlbumSkeleton />;
         }
     }
 }
