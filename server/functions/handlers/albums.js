@@ -285,3 +285,29 @@ exports.getUserAlbumRating = (request, response) => {
       })
     })
 }
+
+exports.getAllReviews = (request, response) => {
+  db.collection('reviews')
+    .orderBy('createdAt', 'desc')
+    .get()
+    .then(data => {
+      if (data.empty) {
+        return response.status(400).json({
+          message: "No Reviews Found"
+        })
+      } else {
+        let reviews = [];
+        data.forEach(doc => {
+          reviews.push({
+            id: doc.id
+          })
+        })
+      }
+    })
+    .catch(err => {
+      console.error(err)
+      return response.status(400).json({
+        error: err
+      })
+    })
+};
