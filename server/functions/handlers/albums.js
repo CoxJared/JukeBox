@@ -302,6 +302,9 @@ exports.getAllReviews = (request, response) => {
             id: doc.id
           })
         })
+        return response.json({
+          reviews: reviews
+        })
       }
     })
     .catch(err => {
@@ -311,3 +314,110 @@ exports.getAllReviews = (request, response) => {
       })
     })
 };
+
+exports.getAlbumReviews = (request, response) => {
+  db.collection('albums')
+    .where('artist', '==', request.params.artist)
+    .where('name', '==', request.params.name)
+    .get()
+    .then(data => {
+      if (data.empty) {
+        return response.json({
+          message: 'Album not found'
+        })
+      } else {
+        let albumId;
+        data.forEach(doc => {
+          albumId = doc.id;
+        })
+        return db.collection('reviews')
+          .where('albumId', '==', albumId)
+          .orderBy('createdAt', 'desc')
+          .get()
+      }
+    })
+    .then(data => {
+      if (data.empty) {
+        return response.status(400).json({
+          reviews: []
+        })
+      } else {
+        let reviews = [];
+        data.forEach(doc => {
+          reviews.push({
+            id: doc.id,
+            body: doc.data().body,
+            createdAt: doc.data().createdAt,
+            userHandle: doc.data().userHandle,
+            userImage: doc.data().userImage,
+            albumId: doc.data().albumId
+          })
+        })
+        return response.json({
+          reviews: reviews
+        })
+      }
+    })
+    .catch(err => {
+      console.error(err)
+      return response.status(400).json({
+        error: err
+      })
+    })
+}
+
+exports.addAlbumReview = (request, response) => {
+  const newReview = {
+    body: request.body.body,
+    userHandle: request.user.handle,
+    userImage: request.user.imageUrl,
+    createdAt: new Date().toISOString(),
+  }
+
+  let albumId;
+  db
+    .collection('albums')
+    .where('artist', '==', request.params.artist)
+    .where('name', '==', request.params.name)
+    .limit(1)
+    .get()
+    .then((data) => {
+      if (data.empty) {
+        return response.status(404).json({
+          error: 'Album not found'
+        });
+      } else {
+        data.forEach(doc => {
+          albumId = doc.id;
+        })
+        return db.collection('reviews')
+          .where('albumId', '==', albumId)
+          .where('userHandle', '==', request.user.handle)
+          .limit(1)
+          .get()
+      }
+    })
+    .then((data) => {
+      if (data.empty) {
+        return db.collection('reviews').add({
+          ...newReview,
+          albumId: albumId
+        });
+      } else {
+        data.forEach(doc => {
+          db.doc(`/reviews/${doc.id}`).update({
+            body: newReview.value
+          })
+        })
+      }
+    })
+    .then(() => {
+      response.json(newReview)
+    })
+    .catch(err => {
+      console.log(err);
+      response.status(500).json({
+        error: 'Something Went Wrong'
+      });
+    })
+}
