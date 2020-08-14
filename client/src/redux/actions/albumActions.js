@@ -115,7 +115,4 @@ export const submitUserAlbumRating = (album, value) => (dispatch) => {
     .catch(err => {
       console.error(err)
     })
-
-
-
 }

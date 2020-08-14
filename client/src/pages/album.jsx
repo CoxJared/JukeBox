@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import AlbumSkeleton from '../components/skeletons/AlbumSkeleton';
 
 //redux
 import {
@@ -153,7 +154,7 @@ export class album extends Component {
         const ratings = [2, 3, 5, 4, 7, 22, 33, 94, 36, 54, 30];
 
         if (albums.loading.album === undefined || albums.loading.album) {
-            return <h1>loading</h1>;
+            return <AlbumSkeleton />;
         }
 
         if (album) {
