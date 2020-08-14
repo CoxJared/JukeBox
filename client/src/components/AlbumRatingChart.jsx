@@ -12,7 +12,7 @@ import Typography from '@material-ui/core/Typography';
 const styles = (theme) => ({
     ...theme.styleSpreading,
     ratingsChart: {
-        width: '100%',
+        width: 900,
         position: 'relative',
         backgroundColor: '#19191b',
         display: 'flex',
@@ -103,7 +103,7 @@ export class AlbumRatingChart extends Component {
                             className={this.props.classes.ratingBarTop}
                             //Added plus one so the bars never have 0 height which would look weird
                             style={{
-                                height: (HEIGHT * (max - rating)) / max + 20
+                                height: (HEIGHT * (max - rating)) / max - 2
                             }}
                         />
                     </div>
@@ -117,7 +117,6 @@ export class AlbumRatingChart extends Component {
                 style={{ height: HEIGHT }}
             >
                 {elements}
-                <h1 className={classes.ratingsTitle}>Ratings</h1>
                 <div className={classes.avgRatingContainer}>
                     <Typography className={classes.avgRating}>
                         {avgRating}

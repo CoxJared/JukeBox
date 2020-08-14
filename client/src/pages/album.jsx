@@ -99,6 +99,14 @@ const styles = (theme) => ({
         width: 300,
         fontSize: 20,
         color: '#aaa'
+    },
+    ratingsTitle: {
+        color: '#e9e950',
+        fontSize: 15,
+        fontWeight: 400,
+        width: 900,
+        textAlign: 'left',
+        margin: '30px 0 10px 0'
     }
 });
 
@@ -215,18 +223,19 @@ export class album extends Component {
                             </Grid>
                         </Grid>
                     </Paper>
+                    <h1 className={classes.ratingsTitle}>Reviews</h1>
                     <AlbumRating
                         ratings={ratings}
                         albumName={this.props.location.state.album}
                         artist={this.props.location.state.artist}
                     />
-                    <Typography
-                        color="primary"
-                        className={classes.tracklistExpansion}
+                    <h1
+                        className={classes.ratingsTitle}
+                        style={{ cursor: 'pointer' }}
                         onClick={this.handleTrackListExpansion}
                     >
-                        Tracklist
-                    </Typography>
+                        Tracklist...
+                    </h1>
                     <div
                         className={classes.tracks}
                         style={{
@@ -235,6 +244,7 @@ export class album extends Component {
                     >
                         {songs}
                     </div>
+                    <h1 className={classes.ratingsTitle}>Reviews</h1>
                     <AlbumReviews
                         albumName={this.props.location.state.album}
                         artist={this.props.location.state.artist}
