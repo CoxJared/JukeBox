@@ -171,7 +171,8 @@ export class UserRating extends Component {
 }
 
 UserRating.propTypes = {
-    getUserAlbumRating: PropTypes.func.isRequired
+    getUserAlbumRating: PropTypes.func.isRequired,
+    albums: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

@@ -15,6 +15,7 @@ export const SET_RATINGS = 'SET_RATINGS';
 export const LOADING_RATING = 'LOADING_RATING';
 export const LOADING_REVIEWS = 'LOADING_REVIEWS';
 export const SET_REVIEWS = 'SET_REVIEWS';
+export const SET_ALBUM_ERRORS = 'SET_ALBUM_ERRORS';
 
 //ui reducers
 export const SET_ERRORS = 'SET_ERRORS';

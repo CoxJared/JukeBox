@@ -18,6 +18,7 @@ import { Typography } from '@material-ui/core';
 import AlbumRating from '../components/AlbumRatingChart';
 import UserRating from '../components/UserRating';
 import { connect } from 'react-redux';
+import AlbumReviews from '../components/AlbumReviews';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -234,6 +235,10 @@ export class album extends Component {
                     >
                         {songs}
                     </div>
+                    <AlbumReviews
+                        albumName={this.props.location.state.album}
+                        artist={this.props.location.state.artist}
+                    />
                 </Grid>
             );
         } else {

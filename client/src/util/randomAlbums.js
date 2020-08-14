@@ -65,7 +65,7 @@ export const albums = (function () {
         {
             image: closer,
             name: 'Closer',
-            artist: 'Joy division'
+            artist: 'Joy Division'
         },
         {
             image: normaRockwell,

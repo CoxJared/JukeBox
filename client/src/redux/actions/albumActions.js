@@ -11,7 +11,8 @@ import {
   LOADING_RATING,
   LOADING_RATINGS,
   LOADING_REVIEWS,
-  SET_REVIEWS
+  SET_REVIEWS,
+  SET_ALBUM_ERRORS
 } from '../types';
 import axios from 'axios';
 
@@ -134,10 +135,14 @@ export const getAlbumReviews = (album) => (dispatch) => {
     .then((response) => {
       dispatch({
         type: SET_REVIEWS,
-        payload: response.data
+        payload: response.data.reviews
       })
     })
     .catch(err => {
       console.error(err)
+      dispatch({
+        type: SET_ALBUM_ERRORS,
+        payload: err.response.data
+      })
     })
 }

@@ -338,7 +338,7 @@ exports.getAlbumReviews = (request, response) => {
     })
     .then(data => {
       if (data.empty) {
-        return response.status(400).json({
+        return response.json({
           reviews: []
         })
       } else {
