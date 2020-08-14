@@ -9,7 +9,9 @@ import {
   SET_RATING,
   SET_RATINGS,
   LOADING_RATING,
-  LOADING_RATINGS
+  LOADING_RATINGS,
+  LOADING_REVIEWS,
+  SET_REVIEWS
 } from '../types';
 import axios from 'axios';
 
@@ -118,6 +120,22 @@ export const submitUserAlbumRating = (album, value) => (dispatch) => {
         payload: response.data
       })
       getAlbumRatings(album);
+    })
+    .catch(err => {
+      console.error(err)
+    })
+}
+
+export const getAlbumReviews = (album) => (dispatch) => {
+  dispatch({
+    type: LOADING_REVIEWS
+  });
+  axios.get(`/album/${album.artist}/${album.name}/reviews`)
+    .then((response) => {
+      dispatch({
+        type: SET_REVIEWS,
+        payload: response.data
+      })
     })
     .catch(err => {
       console.error(err)

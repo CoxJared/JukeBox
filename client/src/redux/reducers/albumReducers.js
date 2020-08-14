@@ -6,17 +6,24 @@ import {
   SET_RATING,
   SET_RATINGS,
   LOADING_RATINGS,
-  LOADING_RATING
+  LOADING_RATING,
+  LOADING_REVIEWS,
+  SET_REVIEWS
 } from '../types';
+import {
+  stat
+} from 'fs';
 
 const initialState = {
   album: {},
   albumRatings: [],
   userRating: '',
+  reviews: [],
   loading: {
     album: false,
     ratings: false,
-    rating: false
+    rating: false,
+    reviews: false
   }
 }
 
@@ -82,7 +89,24 @@ export default function (state = initialState, action) {
         return {
           ...state
         };
-      default:
-        return state;
+      case LOADING_REVIEWS:
+        return {
+          ...state,
+          loading: {
+            ...state.loading,
+            reviews: true
+          }
+        };
+      case SET_REVIEWS:
+        return {
+          ...state,
+          reviews: action.payload,
+            loading: {
+              ...state.loading,
+              reviews: false
+            }
+        }
+        default:
+          return state;
   }
 }
