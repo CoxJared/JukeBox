@@ -44,9 +44,9 @@ export const getAlbumRatings = (album) => (dispatch) => {
 }
 
 export const addAlbum = (newAlbum) => (dispatch) => {
-  dispatch({
-    type: LOADING_ALBUM
-  });
+  // dispatch({
+  //   type: LOADING_ALBUM
+  // });
   axios.post('/album', newAlbum)
     .then((response) => {
       dispatch({
@@ -57,6 +57,13 @@ export const addAlbum = (newAlbum) => (dispatch) => {
     .catch(err => {
       console.error(err);
     });
+};
+
+export const setAlbum = (album) => (dispatch) => {
+  dispatch({
+    type: SET_ALBUM,
+    payloading: album
+  })
 };
 
 export const addRating = (albumRating) => (dispatch) => {

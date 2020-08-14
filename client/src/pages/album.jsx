@@ -6,7 +6,8 @@ import AlbumSkeleton from '../components/skeletons/AlbumSkeleton';
 import {
     addAlbum,
     getAlbumRatings,
-    getUserAlbumRating
+    getUserAlbumRating,
+    setAlbum
 } from '../redux/actions/albumActions';
 
 //MUI
@@ -124,7 +125,6 @@ export class album extends Component {
             const data = await response.json();
 
             this.setState({ album: data.album });
-            this.setState({ addedToDb: true });
 
             let album = data.album;
             let newAlbum = {
@@ -133,6 +133,7 @@ export class album extends Component {
                 image: album.image.find((img) => img.size === 'mega')['#text'],
                 mbid: album.mbid || ''
             };
+            this.props.setAlbum(newAlbum);
             this.props.addAlbum(newAlbum);
             this.props.getUserAlbumRating(
                 album,
@@ -255,5 +256,6 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, {
     addAlbum,
     getAlbumRatings,
-    getUserAlbumRating
+    getUserAlbumRating,
+    setAlbum
 })(withStyles(styles)(album));
