@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 
 //redux
 import { connect } from 'react-redux';
+import { addAlbumReview } from '../../redux/actions/albumActions';
 
 //MUI
 import TextField from '@material-ui/core/TextField';
@@ -65,18 +66,19 @@ class ReviewForm extends Component {
         });
     };
 
-    handleSubmit = () => {
-        const {
-            albums: { album }
-        } = this.props.albums.album;
+    handleSubmit = (event) => {
+        event.preventDefault();
+        const { albums } = this.props;
         const body = this.state.body;
+        this.props.addAlbumReview(albums.album, body);
     };
+
     render() {
         const { classes, user, albums } = this.props;
         const errors = {};
         return (
             <Paper className={classes.container}>
-                <form noValidate onSubmit={this.handleSignup}>
+                <form noValidate onSubmit={this.handleSubmit}>
                     <div className={classes.user}>
                         <h1 className={classes.userHandle}>Submit Review</h1>
                     </div>
@@ -119,4 +121,6 @@ const mapStateToProps = (state) => ({
     albums: state.albums
 });
 
-export default connect(mapStateToProps, null)(withStyles(styles)(ReviewForm));
+export default connect(mapStateToProps, { addAlbumReview })(
+    withStyles(styles)(ReviewForm)
+);

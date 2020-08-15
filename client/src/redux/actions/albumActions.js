@@ -153,3 +153,15 @@ export const getAlbumReviews = (album) => (dispatch) => {
             // })
         });
 };
+
+export const addAlbumReview = (album, body) => (dispatch) => {
+    axios.post(`/album/${album.artist}/${album.name}/review`, {
+            body
+        })
+        .then(response => {
+            getAlbumReviews(album)
+        })
+        .catch(err => {
+            console.error(err);
+        })
+}
