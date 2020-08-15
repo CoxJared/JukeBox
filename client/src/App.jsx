@@ -7,7 +7,6 @@ import activity from './pages/activity';
 import user from './pages/user';
 import settings from './pages/settings';
 import themeObject from './util/theme';
-import Logo from './components/layout/Logo';
 import NavBar from './components/layout/NavBar';
 import SearchBar from './components/layout/SearchBar';
 import axios from 'axios';
@@ -59,7 +58,6 @@ function App(props) {
                 <Router>
                     <Grid container spacing={4} style={appStyles.container}>
                         <Grid item sm={2}>
-                            <Logo />
                             <UserAvatar />
                             <NavBar />
                         </Grid>

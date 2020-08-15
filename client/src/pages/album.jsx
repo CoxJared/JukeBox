@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AlbumSkeleton from '../components/skeletons/AlbumSkeleton';
+import ReviewForm from '../components/album/ReviewForm';
 
 //redux
 import {
@@ -15,10 +16,10 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import Paper from '@material-ui/core/Paper';
 import Grid from '@material-ui/core/Grid';
 import { Typography } from '@material-ui/core';
-import AlbumRating from '../components/AlbumRatingChart';
-import UserRating from '../components/UserRating';
+import AlbumRating from '../components/album/AlbumRatingChart';
+import UserRating from '../components/album/UserRating';
 import { connect } from 'react-redux';
-import AlbumReviews from '../components/AlbumReviews';
+import AlbumReviews from '../components/album/AlbumReviews';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -120,8 +121,12 @@ export class album extends Component {
     }
 
     componentDidMount() {
-        const { album, artist } = this.props.location.state;
-        this.loadAlbumData(album, artist);
+        if (this.props.location.state) {
+            const { album, artist } = this.props.location.state;
+            this.loadAlbumData(album, artist);
+        } else {
+            this.setState({ album: this.props.albums.album });
+        }
     }
 
     addInfoToDatabase() {}
@@ -245,6 +250,7 @@ export class album extends Component {
                         {songs}
                     </div>
                     <h1 className={classes.ratingsTitle}>Reviews</h1>
+                    <ReviewForm />
                     <AlbumReviews
                         albumName={this.props.location.state.album}
                         artist={this.props.location.state.artist}
@@ -260,7 +266,8 @@ export class album extends Component {
 album.propTypes = {
     addAlbum: PropTypes.func.isRequired,
     getAlbumRatings: PropTypes.func.isRequired,
-    getUserAlbumRating: PropTypes.func.isRequired
+    getUserAlbumRating: PropTypes.func.isRequired,
+    location: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

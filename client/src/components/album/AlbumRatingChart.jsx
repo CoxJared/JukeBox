@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 //redux
-import { getAlbumRatings } from '../redux/actions/albumActions';
+import { getAlbumRatings } from '../../redux/actions/albumActions';
 import { connect } from 'react-redux';
 
 //MUI
@@ -17,7 +17,7 @@ const styles = (theme) => ({
         backgroundColor: '#19191b',
         display: 'flex',
         padding: 15,
-        marginTop: 20
+        margin: '20px 0 0 100px'
     },
     ratingBar: {
         width: 50,

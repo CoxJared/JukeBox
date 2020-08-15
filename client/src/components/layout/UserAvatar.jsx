@@ -31,7 +31,7 @@ const styles = (theme) => ({
     tempAvatar: {
         width: 80,
         height: 80,
-        margin: ' 80px auto 20px auto'
+        margin: ' 180px auto 20px auto'
     },
     avatar: {
         width: 80,
