@@ -7,7 +7,7 @@ import { Typography } from '@material-ui/core';
 import AlbumShowcase from '../components/albums/AlbumShowcase';
 import { albums } from '../util/randomAlbums';
 import { album } from './album';
-import UserRating from '../components/UserRating';
+import UserRating from '../components/album/UserRating';
 
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;

@@ -5,12 +5,13 @@ import PropTypes from 'prop-types';
 import {
     getUserAlbumRating,
     submitUserAlbumRating
-} from '../redux/actions/albumActions';
+} from '../../redux/actions/albumActions';
 import { connect } from 'react-redux';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Typography } from '@material-ui/core';
+import ReviewForm from './ReviewForm';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -165,6 +166,7 @@ export class UserRating extends Component {
                         : 'My Rating'}
                 </Typography>
                 {stars}
+                
             </div>
         );
     }

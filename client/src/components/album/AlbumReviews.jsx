@@ -3,7 +3,7 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 
 //redux
-import { getAlbumReviews } from '../redux/actions/albumActions';
+import { getAlbumReviews } from '../../redux/actions/albumActions';
 import { connect } from 'react-redux';
 
 //MUI
