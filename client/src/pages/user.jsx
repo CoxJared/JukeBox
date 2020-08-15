@@ -97,7 +97,7 @@ function Review(props){
                 <h1 className={props.classes.reviewArtist}> Weyes Blood</h1>
             </Grid>
             <Grid item>
-                <h1 className={props.classes.reviewRatingTitle}>My Rating: </h1>
+                {/* <h1 className={props.classes.reviewRatingTitle}>My Rating: </h1> */}
                 <p className={props.classes.reviewText}>My review is worthless. I copied my opinion off Pitchfork and Melon</p>
             </Grid>
         </Grid>
@@ -140,6 +140,10 @@ export class user extends Component {
                     <Review album={favAlbums[0]} classes={classes}/>
                     <Review album={favAlbums[1]} classes={classes}/>
                 </Paper> 
+                <Paper className={classes.friendsList}>
+                    <h1> Friends go here</h1>
+                </Paper>
+
             </Grid>
         )
     }
