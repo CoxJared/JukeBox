@@ -56,18 +56,21 @@ class AlbumReviews extends Component {
         dayjs.extend(relativeTime);
         const { reviews } = this.props.albums;
         const { classes } = this.props;
-        const reviewElements = reviews.map((review) => (
-            <Paper className={classes.review}>
-                <div className={classes.user}>
-                    <Avatar className={classes.avatar} src={review.userImage} />
-                    <h1 className={classes.userHandle}>{review.userHandle}</h1>
-                    <h1 className={classes.dateTime}>
-                        {dayjs(review.createdAt).fromNow()}
-                    </h1>
-                </div>
-                <p className={classes.body}>{review.body}</p>
-            </Paper>
-        ));
+        let reviewElements;
+        if (reviews) {
+            reviewElements = reviews.map((review) => (
+                <Paper className={classes.review}>
+                    <div className={classes.user}>
+                        <Avatar className={classes.avatar} src={review.userImage} />
+                        <h1 className={classes.userHandle}>{review.userHandle}</h1>
+                        <h1 className={classes.dateTime}>
+                            {dayjs(review.createdAt).fromNow()}
+                        </h1>
+                    </div>
+                    <p className={classes.body}>{review.body}</p>
+                </Paper>
+            ));
+        }
         if (this.props.albums.loading.reviews) {
             return <div></div>;
         } else {
@@ -84,3 +87,4 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getAlbumReviews })(
     withStyles(styles)(AlbumReviews)
 );
+
