@@ -5,6 +5,7 @@ import search from './pages/search';
 import artist from './pages/artist';
 import activity from './pages/activity';
 import user from './pages/user';
+import settings from './pages/settings';
 import themeObject from './util/theme';
 import Logo from './components/layout/Logo';
 import NavBar from './components/layout/NavBar';
@@ -85,6 +86,11 @@ function App(props) {
                                     exact
                                     path="/user"
                                     component={user}
+                                />
+                                <Route
+                                    exact
+                                    path="/settings"
+                                    component={settings}
                                 />
                             </Switch>
                         </Grid>

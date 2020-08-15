@@ -46,6 +46,12 @@ export class NavBar extends Component {
                 >
                    Profile
                 </Button>
+                <Button style={navbarStyle.button}
+                    component={Link}
+                    to='/settings'
+                >
+                    Settings
+                </Button>
             </Grid>
         );
     }
