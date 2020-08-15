@@ -36,9 +36,9 @@ const styles = (theme) => ({
         marginBottom: 20
     },
     userHandle: {
-        fontSize: 20,
+        fontSize: 14,
         color: '#bbb',
-        margin: 10
+        margin: '0 0 10px 10px'
     },
     textField: {
         color: '#400',

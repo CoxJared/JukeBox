@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import RatingChartSkeleton from '../skeletons/RatingChartSkeleton';
 
 //redux
 import { getAlbumRatings } from '../../redux/actions/albumActions';
@@ -75,6 +76,23 @@ export class AlbumRatingChart extends Component {
         this.props.getAlbumRatings(album, user.credentials.userHandle);
     }
 
+    noRatingsChart() {
+        return [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0].map((rating) => (
+            <div
+                className={this.props.classes.ratingBar}
+                style={{ height: 140 }}
+            >
+                <div
+                    className={this.props.classes.ratingBarTop}
+                    //Added plus one so the bars never have 0 height which would look weird
+                    style={{
+                        height: 138
+                    }}
+                />
+            </div>
+        ));
+    }
+
     createBarChartElements = (ratings) => {
         const { classes } = this.props;
 
@@ -87,30 +105,28 @@ export class AlbumRatingChart extends Component {
                 (ratings.reduce((acc, rating, i) => (acc += rating * i), 0) /
                     ratingCount) *
                     10
-            ) / 20;
+            ) / 20 || 'Unrated';
 
         let max = Math.max(...ratings);
         let HEIGHT = 140;
 
         let elements =
-            ratingCount !== 0 ? (
-                ratings.map((rating) => (
-                    <div
-                        className={this.props.classes.ratingBar}
-                        style={{ height: HEIGHT }}
-                    >
-                        <div
-                            className={this.props.classes.ratingBarTop}
-                            //Added plus one so the bars never have 0 height which would look weird
-                            style={{
-                                height: (HEIGHT * (max - rating)) / max - 2
-                            }}
-                        />
-                    </div>
-                ))
-            ) : (
-                <div />
-            );
+            ratingCount !== 0
+                ? ratings.map((rating) => (
+                      <div
+                          className={this.props.classes.ratingBar}
+                          style={{ height: HEIGHT }}
+                      >
+                          <div
+                              className={this.props.classes.ratingBarTop}
+                              //Added plus one so the bars never have 0 height which would look weird
+                              style={{
+                                  height: (HEIGHT * (max - rating)) / max - 2
+                              }}
+                          />
+                      </div>
+                  ))
+                : this.noRatingsChart();
         return (
             <div
                 className={this.props.classes.ratingsChart}
@@ -142,7 +158,7 @@ export class AlbumRatingChart extends Component {
         }
 
         if (albums.loading.ratings === undefined || albums.loading.ratings) {
-            return <h1>loading</h1>;
+            return <RatingChartSkeleton />;
         }
 
         const albumRatingChart = this.createBarChartElements(ratings);
