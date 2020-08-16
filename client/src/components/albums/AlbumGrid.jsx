@@ -13,7 +13,7 @@ const styles = (theme) => ({
     container: {
         backgroundColor: '#212122',
         marginTop: 50,
-        width: ALBUM_WIDTH * 6 + 40,
+        width: '100%',
         padding: 20,
         justifyContent: 'center'
     },

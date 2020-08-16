@@ -14,6 +14,7 @@ import Paper from '@material-ui/core/Paper';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
+import ArtistShowcase from '../components/artists/ArtistShowcase';
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 
@@ -118,61 +119,10 @@ export class search extends Component {
 
         return (
             <div>
-                <TableContainer className={classes.table} component={Paper}>
-                    <Table aria-label="a dense table">
-                        <TableHead>
-                            <TableRow className={classes.row}>
-                                <TableCell
-                                    className={classes.headName}
-                                ></TableCell>
-                                <TableCell className={classes.headName}>
-                                    Artist
-                                </TableCell>
-                                <TableCell
-                                    className={classes.headName}
-                                    align="right"
-                                >
-                                    Listeners
-                                </TableCell>
-                            </TableRow>
-                        </TableHead>
-
-                        <TableBody>
-                            {this.state.artist_matches.map((artist) => (
-                                <TableRow key={artist.name}>
-                                    <TableCell className={classes.cellImg}>
-                                        <img
-                                            width="100%"
-                                            height="100%"
-                                            src={artist.image[2]['#text']}
-                                        />
-                                    </TableCell>
-                                    <TableCell
-                                        className={classes.cellName}
-                                        component="th"
-                                        scope="row"
-                                    >
-                                        <Link
-                                            to={{
-                                                pathname:
-                                                    '/artist/' + artist.mbid,
-                                                state: { artist: artist }
-                                            }}
-                                        >
-                                            {artist.name}
-                                        </Link>
-                                    </TableCell>
-                                    <TableCell
-                                        className={classes.cellName}
-                                        align="right"
-                                    >
-                                        {artist.listeners}
-                                    </TableCell>
-                                </TableRow>
-                            ))}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <ArtistShowcase
+                    artists={this.state.artist_matches}
+                    title="Artists"
+                />
                 <AlbumGrid
                     albums={this.state.album_matches.map((album) => ({
                         artist: album.artist,

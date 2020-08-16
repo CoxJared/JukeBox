@@ -30,6 +30,10 @@ code {
     monospace;
 }
 
+.albumLink {
+  text-decoration: none
+}
+
 .albumLink img {
   transition: .2s
 }

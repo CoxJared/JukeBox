@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
+import tempImage from '../../images/logo.png';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Button, Paper } from '@material-ui/core';
 
-const ALBUM_WIDTH = 200;
-const ALBUM_TITLE_HEIGHT = 40;
+const ARTIST_WIDTH = 200;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
         marginTop: 50,
-        width: ALBUM_WIDTH * 5 + 40,
+        width: '100%',
         overflow: 'hidden',
         position: 'relative',
         backgroundColor: '#212122',
@@ -26,29 +26,35 @@ const styles = (theme) => ({
         color: '#ccc',
         margin: '0px 0 5px '
     },
-    albums: {
+    artists: {
         height: 220,
         display: 'flex',
         position: 'relative',
         transition: '.8s ease-in-out'
     },
-    album: {
-        height: `calc(100% - ${ALBUM_TITLE_HEIGHT}px)`,
-        width: `${ALBUM_WIDTH}px`,
-        margin: '0 0px 0 0'
+    artist: {
+        height: ARTIST_WIDTH + 20,
+        width: ARTIST_WIDTH,
+        margin: '0 0px 0 0',
+        textDecoration: 'none',
+        '& :hover': {
+            opactiy: 0.5
+        }
     },
-    albumImage: {
+    artistImage: {
         objectFit: 'cover',
-        height: '100%'
+        width: '80%'
     },
-    albumName: {
-        fontSize: 15,
-        color: '#fff',
-        fontWeight: 300,
-        margin: '2px 0'
+    artistName: {
+        fontSize: 17,
+        color: '#b9b950',
+        fontWeight: 500,
+        margin: '2px 0',
+        width: '80%',
+        textAlign: 'center'
     },
-    albumArtist: {
-        fontSize: 15,
+    artistArtist: {
+        fontSize: 12,
         fontWeight: 500,
         color: '#b9b950'
     },
@@ -72,50 +78,53 @@ const styles = (theme) => ({
     }
 });
 
-export class AlbumShowcase extends Component {
+export class ArtistShowcase extends Component {
     state = {
         position: 0
     };
 
-    moveAlbumsLeft = () => {
+    moveArtistsLeft = () => {
         let position = this.state.position;
         position += 5;
         this.setState({ position });
     };
 
-    moveAlbumsRight = () => {
+    moveArtistsRight = () => {
         let position = this.state.position;
         position -= 5;
         this.setState({ position });
     };
 
     render() {
-        const { classes, albums } = this.props;
+        const { classes, artists } = this.props;
         const { position } = this.state;
-        const albumElements = albums.map((album) => (
+        const artistElements = artists.map((artist) => (
             <Link
                 to={{
-                    pathname: '/album',
-                    state: {
-                        album: album.name,
-                        artist: album.artist
-                    }
+                    pathname: '/artist/' + artist.mbid,
+                    state: { artist: artist }
                 }}
-                style={{ textDecoration: 'none' }}
                 className="albumLink"
             >
-                <div className={classes.album}>
+                <div className={classes.artist}>
                     <img
-                        src={album.image}
-                        className={classes.albumImage}
-                        alt={`${album.name}`}
+                        src={
+                            artist.image.find((img) => img.size == 'mega')[
+                                '#text'
+                            ] !== ''
+                                ? artist.image.find(
+                                      (img) => img.size == 'mega'
+                                  )['#text']
+                                : tempImage
+                        }
+                        className={classes.artistImage}
+                        alt={`${artist.name || tempImage}`}
                     />
-                    <h1 className={classes.albumName}>{album.name}</h1>
-                    <h2 className={classes.albumArtist}>{album.artist}</h2>
+                    <h1 className={classes.artistName}>{artist.name}</h1>
                 </div>
             </Link>
         ));
-        
+
         return (
             <Paper className={classes.container}>
                 <h1 className={classes.title}>{this.props.title}</h1>
@@ -123,30 +132,33 @@ export class AlbumShowcase extends Component {
                     <Button
                         disabled={position === 0}
                         className={classes.leftButton}
-                        onClick={this.moveAlbumsLeft}
+                        onClick={this.moveArtistsLeft}
                     >
                         left
                     </Button>
                     <Button
                         disabled={
                             position ===
-                            -((Math.floor(albums.length / 5) - 1) * 5)
+                            -((Math.floor(artists.length / 5) - 1) * 5)
                         }
                         className={classes.rightButton}
-                        onClick={this.moveAlbumsRight}
+                        onClick={this.moveArtistsRight}
                     >
                         right
                     </Button>
                 </div>
                 <div
-                    className={classes.albums}
-                    style={{ left: `${position * ALBUM_WIDTH + 20}px` }}
+                    className={classes.artists}
+                    style={{
+                        left: `${position * ARTIST_WIDTH + 20}px`,
+                        width: ARTIST_WIDTH * artists.length
+                    }}
                 >
-                    {albumElements}
+                    {artistElements}
                 </div>
             </Paper>
         );
     }
 }
 
-export default withStyles(styles)(AlbumShowcase);
+export default withStyles(styles)(ArtistShowcase);
