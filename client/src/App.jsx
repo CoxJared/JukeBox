@@ -32,6 +32,9 @@ const appStyles = {
         margin: ' 20px auto 0 auto',
         justifyContent: 'center'
         // height: '10000px'
+    },
+    switch: {
+        position: 'relative'
     }
 };
 
@@ -63,7 +66,7 @@ function App(props) {
                         </Grid>
                         <Grid item sm={8}>
                             <SearchBar />
-                            <Switch>
+                            <Switch style={appStyles.switch}>
                                 <Route exact path="/" component={home} />
                                 <Route
                                     exact
@@ -80,11 +83,7 @@ function App(props) {
                                     path="/activity"
                                     component={activity}
                                 />
-                                <Route
-                                    exact
-                                    path="/user"
-                                    component={user}
-                                />
+                                <Route exact path="/user" component={user} />
                                 <Route
                                     exact
                                     path="/settings"
