@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AlbumSkeleton from '../components/skeletons/AlbumSkeleton';
 import ReviewForm from '../components/album/ReviewForm';
+import { Link } from 'react-router-dom';
 
 //redux
 import {
@@ -51,7 +52,7 @@ const styles = (theme) => ({
     albumName: {
         color: '#fff',
         fontSize: 40,
-        fontWeight: 450
+        lineHeight: '1.1em'
     },
     artist: {
         fontSize: 20
@@ -111,8 +112,6 @@ const styles = (theme) => ({
     }
 });
 
-const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
-
 export class album extends Component {
     constructor(props) {
         super(props);
@@ -133,6 +132,7 @@ export class album extends Component {
 
     async loadAlbumData(albumName, artist) {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const _api_key = this.props.user.API_KEY;
         const ALBUM_URL = `${ROOT_URL}/2.0/?method=album.getinfo&api_key=${_api_key}&artist=${artist}&album=${albumName}&format=json`;
         const response = await fetch(ALBUM_URL);
         if (response.ok) {
@@ -207,12 +207,20 @@ export class album extends Component {
                                 <Typography className={classes.albumName}>
                                     {album.name}
                                 </Typography>
-                                <Typography
-                                    className={classes.artist}
-                                    color="primary"
+                                <Link
+                                    to={{
+                                        pathname: '/artist/' + album.artist,
+                                        state: { artist: album.artist }
+                                    }}
+                                    className="albumLink"
                                 >
-                                    {album.artist}
-                                </Typography>
+                                    <Typography
+                                        className={classes.artist}
+                                        color="primary"
+                                    >
+                                        {album.artist}
+                                    </Typography>
+                                </Link>
                                 <Typography className={classes.albumText}>
                                     listeners: {album.listeners}
                                 </Typography>
@@ -267,7 +275,8 @@ album.propTypes = {
     addAlbum: PropTypes.func.isRequired,
     getAlbumRatings: PropTypes.func.isRequired,
     getUserAlbumRating: PropTypes.func.isRequired,
-    location: PropTypes.object.isRequired
+    location: PropTypes.object.isRequired,
+    user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = (state) => ({

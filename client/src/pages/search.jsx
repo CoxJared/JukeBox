@@ -3,6 +3,9 @@ import { Link } from 'react-router-dom';
 import AlbumGrid from '../components/albums/AlbumGrid';
 import tempAlbumImage from '../images/logo.png';
 
+//reduxt
+import { connect } from 'react-redux';
+
 //MUI
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -15,8 +18,6 @@ import Paper from '@material-ui/core/Paper';
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
 import ArtistShowcase from '../components/artists/ArtistShowcase';
-
-const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -69,6 +70,7 @@ export class search extends Component {
 
     async search_artist() {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const _api_key = this.props.user.API_KEY;
         const SEARCH_URL =
             '/2.0/?method=artist.search&artist=' +
             this.state.search_query +
@@ -91,6 +93,7 @@ export class search extends Component {
     }
     async search_albums() {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const _api_key = this.props.user.API_KEY;
         const SEARCH_URL =
             '/2.0/?method=album.search&album=' +
             this.state.search_query +
@@ -136,4 +139,8 @@ export class search extends Component {
     }
 }
 
-export default withStyles(styles)(search);
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps, null)(withStyles(styles)(search));

@@ -3,6 +3,7 @@ import axios from 'axios';
 import tempAlbumImage from '../images/logo.png';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
+import { connect } from 'react-redux';
 import { Typography } from '@material-ui/core';
 // import GridList from '@material-ui/core/GridLIst';
 import { GridList, GridListTile, GridListTileBar } from '@material-ui/core';
@@ -15,8 +16,6 @@ import TableRow from '@material-ui/core/TableRow';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { album } from './album';
 import AlbumGrid from '../components/albums/AlbumGrid';
-
-const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -232,6 +231,7 @@ export class artist extends Component {
 
     return_url(method) {
         const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const _api_key = this.props.user.API_KEY;
         //const ARTIST_URL = ROOT_URL + '/2.0/?method=artist.'+ method +'&artist='+ artist_name +'&api_key=' + _api_key +'&format=json';
         const ARTIST_URL =
             ROOT_URL +
@@ -389,4 +389,9 @@ export class artist extends Component {
         );
     }
 }
-export default withStyles(styles)(artist);
+
+const mapStateToProps = (state) => ({
+    user: state.user
+});
+
+export default connect(mapStateToProps, null)(withStyles(styles)(artist));

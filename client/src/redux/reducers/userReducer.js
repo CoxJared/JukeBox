@@ -12,6 +12,7 @@ const initialState = {
   authenticated: false,
   loading: false,
   credentials: {},
+  API_KEY: process.env.REACT_APP_LASTFM_API_KEY
 };
 
 export default function (state = initialState, action) {
@@ -26,7 +27,7 @@ export default function (state = initialState, action) {
     case SET_USER:
       return {
         ...state,
-          authenticated: true,
+        authenticated: true,
           loading: false,
           ...action.payload
       };
