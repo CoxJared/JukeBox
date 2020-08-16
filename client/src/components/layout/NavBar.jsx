@@ -30,7 +30,7 @@ export class NavBar extends Component {
                 <Button style={navbarStyle.button} component={Link} to="/">
                     home
                 </Button>
-                <Button style={navbarStyle.button}>explore</Button>
+                {/* <Button style={navbarStyle.button}>explore</Button> */}
                 <Button style={navbarStyle.button}>lists</Button>
                 <Button
                     style={navbarStyle.button}
@@ -39,16 +39,14 @@ export class NavBar extends Component {
                 >
                     activity
                 </Button>
-                <Button style={navbarStyle.button}>concerts</Button>
-                <Button style={navbarStyle.button}
-                    component={Link}
-                    to='/user'
-                >
-                   Profile
+                {/* <Button style={navbarStyle.button}>concerts</Button> */}
+                <Button style={navbarStyle.button} component={Link} to="/user">
+                    Profile
                 </Button>
-                <Button style={navbarStyle.button}
+                <Button
+                    style={navbarStyle.button}
                     component={Link}
-                    to='/settings'
+                    to="/settings"
                 >
                     Settings
                 </Button>

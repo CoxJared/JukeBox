@@ -50,7 +50,7 @@ const styles = (theme) => ({
     input: {
         color: '#b0b050',
         paddingLeft: 40,
-        paddingTop: 2
+        paddingTop: 4
     }
 });
 

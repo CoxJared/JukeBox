@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { albums } from '../util/randomAlbums';
 import AlbumShowcase from '../components/albums/AlbumShowcase';
+import AlbumGrid from '../components/albums/AlbumGrid';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
@@ -22,6 +23,10 @@ export class home extends Component {
                 <AlbumShowcase albums={topAlbums} title={'Popular This Week'} />
                 <div style={{ height: 20 }} />
                 <AlbumShowcase
+                    albums={friednsAlbuums}
+                    title={'Popular With Friends'}
+                />
+                <AlbumGrid
                     albums={friednsAlbuums}
                     title={'Popular With Friends'}
                 />
