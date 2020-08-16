@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import axios from 'axios';
+import tempAlbumImage from '../images/logo.png';
 import Grid from '@material-ui/core/Grid';
 import Paper from '@material-ui/core/Paper';
 import { Typography } from '@material-ui/core';
@@ -13,6 +14,7 @@ import TableHead from '@material-ui/core/TableHead';
 import TableRow from '@material-ui/core/TableRow';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { album } from './album';
+import AlbumGrid from '../components/albums/AlbumGrid';
 
 const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 
@@ -59,7 +61,7 @@ const styles = (theme) => ({
         fontSize: 20
     },
     tracks: {
-//        width: 900,
+        //        width: 900,
         overflow: 'hidden'
     },
     track: {
@@ -67,7 +69,7 @@ const styles = (theme) => ({
         width: 900,
         borderBottom: '1px solid #555',
         padding: '12px 0'
-    }, 
+    },
     trackRowHead: {
         backgroundColor: '#212122',
         fontSize: 40,
@@ -87,9 +89,8 @@ const styles = (theme) => ({
     trackPlaycount: {
         color: '#aaa',
         fontWeight: 200,
-        fontSize: 20,
-    },
-
+        fontSize: 20
+    }
 });
 
 const albumStyles = {
@@ -245,11 +246,11 @@ export class artist extends Component {
     }
 
     handleAlbumListExpansion = () => {
-        this.setState({ albumListOpened: !this.state.albumListOpened});
-    }
+        this.setState({ albumListOpened: !this.state.albumListOpened });
+    };
     handleTrackListExpansion = () => {
-        this.setState({ trackListOpened: !this.state.trackListOpened});
-    }
+        this.setState({ trackListOpened: !this.state.trackListOpened });
+    };
 
     render() {
         const { classes } = this.props;
@@ -262,40 +263,59 @@ export class artist extends Component {
         if (hasLoaded) {
             AlbumImage = (
                 <div>
-                { this.state.albums[0] ? 
-                // Show most  popular album
-                    <img className={classes.albumImage} src={this.state.albums[0].image[3]['#text']}></img>
-                    : <div>Loading</div>
-                }
+                    {this.state.albums[0] ? (
+                        // Show most  popular album
+                        <img
+                            className={classes.albumImage}
+                            src={this.state.albums[0].image[3]['#text']}
+                        ></img>
+                    ) : (
+                        <div>Loading</div>
+                    )}
                 </div>
-            )
-            AlbumElements = this.state.albums.map((album) => (
-                <GridListTile cols={1} style={{ height: '300' }}>
-                    <img src={album.image[3]['#text']} />
-                    <GridListTileBar
-                        title={album.name}
-                        subtitle={<span>by: {this.state.name}</span>}
-                    ></GridListTileBar>
-                </GridListTile>
-            ));
+            );
+
+            // AlbumElements = this.state.albums.map((album) => (
+            //     <GridListTile cols={1} style={{ height: '300' }}>
+            //         <img src={album.image[3]['#text']} />
+            //         <GridListTileBar
+            //             title={album.name}
+            //             subtitle={<span>by: {this.state.name}</span>}
+            //         ></GridListTileBar>
+            //     </GridListTile>
+            // ));
+
             ArtistInfo = (
                 <div>
                     {this.state.name ? (
-                        <Typography className={classes.artistName}>{this.state.name}</Typography>
+                        <Typography className={classes.artistName}>
+                            {this.state.name}
+                        </Typography>
                     ) : (
                         <h3>Loading...</h3>
                     )}
-                    <p className={classes.infoText} style={{ color: 'white' }}>{this.state.bio}</p>
+                    <p className={classes.infoText} style={{ color: 'white' }}>
+                        {this.state.bio}
+                    </p>
                 </div>
             );
-            Tracks = this.state.tracks.map((track, i) =>(
+            Tracks = this.state.tracks.map((track, i) => (
                 <TableRow key={track.name} classes={classes.trackRowHead}>
-                    <TableCell component="th" scope="row" className={classes.trackName}>{track.name}</TableCell>
-                    <TableCell className={classes.trackPlaycount}>{track.playcount}</TableCell>
-                    <TableCell className={classes.trackListeners}>{track.listeners}</TableCell>
+                    <TableCell
+                        component="th"
+                        scope="row"
+                        className={classes.trackName}
+                    >
+                        {track.name}
+                    </TableCell>
+                    <TableCell className={classes.trackPlaycount}>
+                        {track.playcount}
+                    </TableCell>
+                    <TableCell className={classes.trackListeners}>
+                        {track.listeners}
+                    </TableCell>
                 </TableRow>
             ));
-
         } else {
             ArtistInfo = <h1>Is loading....</h1>;
         }
@@ -310,52 +330,62 @@ export class artist extends Component {
                 alginItems="center"
                 className={classes.container}
             >
-            {AlbumImage}
-            <Paper className={classes.artistInfo}>
-                {ArtistInfo}
-            </Paper>
-            <Paper className={classes.albumList}>
-                <Typography
-                    color="primary"
-                    className={classes.albumListExpansion}
-                    onClick={this.handleAlbumListExpansion}>
-                    Album List
-                </Typography>
-                <GridList className={classes.gridList} cols={3} 
-                    style={{height: this.state.albumListOpened? 'auto' : 0}}>
-                    {AlbumElements}
-                </GridList>
-            </Paper>
+                {AlbumImage}
+                <Paper className={classes.artistInfo}>{ArtistInfo}</Paper>
 
-            <Paper className={classes.trackList}>
-                <Typography
-                    color="primary"
-                    onClick={this.handleTrackListExpansion}>
-                    Track List
-                </Typography>
-                <TableContainer component={Paper}
-                    style={{
-                        height: this.state.trackListOpened ? 'auto' : 0,
-                        backgroundColor: '#212122',
-                    }}>
-                    <Table className={classes.tracks} aria-label="a dense table">
-                        <TableHead>
-                            <TableRow className={classes.trackRowHead}>
-                                <TableCell component="th" scope="row" className={classes.trackName}>Track Name</TableCell>
-                                <TableCell className={classes.trackPlaycount}>Playcounts</TableCell>
-                                <TableCell className={classes.trackListeners}>Listeners</TableCell>
-                            </TableRow>
-                        </TableHead>
-                        <TableBody>
-                            {Tracks}
-                        </TableBody>
-                    </Table>
-                </TableContainer>
+                <AlbumGrid
+                    albums={this.state.albums.map((album) => ({
+                        artist: this.state.name,
+                        name: album.name,
+                        image: album.image[3]['#text'] || tempAlbumImage
+                    }))}
+                    title="Albums"
+                />
 
-            </Paper>
-
-
-        </Grid>
+                <Paper className={classes.trackList}>
+                    <Typography
+                        color="primary"
+                        onClick={this.handleTrackListExpansion}
+                    >
+                        Track List
+                    </Typography>
+                    <TableContainer
+                        component={Paper}
+                        style={{
+                            height: this.state.trackListOpened ? 'auto' : 0,
+                            backgroundColor: '#212122'
+                        }}
+                    >
+                        <Table
+                            className={classes.tracks}
+                            aria-label="a dense table"
+                        >
+                            <TableHead>
+                                <TableRow className={classes.trackRowHead}>
+                                    <TableCell
+                                        component="th"
+                                        scope="row"
+                                        className={classes.trackName}
+                                    >
+                                        Track Name
+                                    </TableCell>
+                                    <TableCell
+                                        className={classes.trackPlaycount}
+                                    >
+                                        Playcounts
+                                    </TableCell>
+                                    <TableCell
+                                        className={classes.trackListeners}
+                                    >
+                                        Listeners
+                                    </TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>{Tracks}</TableBody>
+                        </Table>
+                    </TableContainer>
+                </Paper>
+            </Grid>
         );
     }
 }
