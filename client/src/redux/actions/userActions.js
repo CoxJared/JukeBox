@@ -2,7 +2,6 @@ import {
   SET_USER,
   SET_ERRORS,
   CLEAR_ERRORS,
-  LOADING_UI,
   SET_UNAUTHENTICATED,
   LOADING_USER,
 } from '../types';
@@ -10,7 +9,7 @@ import axios from 'axios';
 
 export const loginUser = (userData) => (dispatch) => {
   dispatch({
-    type: LOADING_UI
+    type: LOADING_USER
   });
   axios
     .post('/login', userData)
@@ -32,7 +31,7 @@ export const loginUser = (userData) => (dispatch) => {
 
 export const signupUser = (newUserData) => (dispatch) => {
   dispatch({
-    type: LOADING_UI
+    type: LOADING_USER
   });
   axios
     .post('/signup', newUserData)

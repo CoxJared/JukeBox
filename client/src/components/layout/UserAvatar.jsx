@@ -20,6 +20,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import { Typography } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -36,8 +37,14 @@ const styles = (theme) => ({
     avatar: {
         width: 80,
         height: 80,
-        margin: ' 80px auto 20px auto',
+        margin: ' 180px auto 20px auto',
         cursor: 'pointer'
+    },
+    loading: {
+        width: 80,
+        height: 80,
+        margin: ' 180px auto 20px auto',
+        backgroundColor: '#555'
     },
     handle: {
         color: '#fff',
@@ -150,7 +157,7 @@ class UserAvatar extends Component {
     render() {
         const {
             classes,
-            user: { credentials }
+            user: { credentials, loading }
         } = this.props;
         const { errors } = this.state;
 
@@ -164,17 +171,28 @@ class UserAvatar extends Component {
                         alignItems="center"
                         classes={styles.container}
                     >
-                        <Avatar alt="no image" className={classes.tempAvatar} />
+                        {loading ? (
+                            <Avatar alt="no image" className={classes.loading}>
+                                <CircularProgress />
+                            </Avatar>
+                        ) : (
+                            <Avatar
+                                alt="no image"
+                                className={classes.tempAvatar}
+                            />
+                        )}
                         <Grid>
                             <Button
                                 className={classes.signupButton}
                                 onClick={this.openSignupDialog}
+                                disabled={loading}
                             >
                                 Sign Up
                             </Button>
                             <Button
                                 className={classes.loginButton}
                                 onClick={this.openLoginDialog}
+                                disabled={loading}
                             >
                                 Login
                             </Button>
