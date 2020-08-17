@@ -232,6 +232,16 @@ export const staffPicks = (function () {
             name: 'Power, Corruption & Lies',
             artist: 'New Order'
         },
+        {
+            image: inrainbows,
+            name: 'In Rainbows',
+            artist: 'Radiohead'
+        },
+        {
+            image: bonito,
+            name: 'Bonito Generation',
+            artist: 'Kero Kero Bonito'
+        },
     ]
     //randomize albums
     for (let i = 0; i < 100; i++) {

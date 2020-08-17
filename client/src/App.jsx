@@ -25,6 +25,7 @@ import { MuiThemeProvider } from '@material-ui/core';
 import Grid from '@material-ui/core/Grid';
 import UserAvatar from './components/layout/UserAvatar';
 import album from './pages/album';
+import lists from './pages/lists';
 
 const theme = createMuiTheme(themeObject);
 
@@ -95,6 +96,7 @@ function App(props) {
                                     path="/explore"
                                     component={explore}
                                 />
+                                <Route exact path="/lists" component={lists} />
                             </Switch>
                         </Grid>
                     </Grid>

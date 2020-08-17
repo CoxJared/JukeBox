@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 
 //MUI
 import withStyles from '@material-ui/core/styles/withStyles';
-import { Button, Paper } from '@material-ui/core';
+import { Button, Paper, Avatar } from '@material-ui/core';
 
 const ALBUM_WIDTH = 200;
 const ALBUM_TITLE_HEIGHT = 40;
@@ -24,7 +24,19 @@ const styles = (theme) => ({
         fontSize: 35,
         fontWeight: 350,
         color: '#ccc',
-        margin: '0px 0 5px '
+        margin: '0px 0 10px '
+        // display: 'flex'
+    },
+    userInfo: {
+        display: 'flex',
+        float: 'right'
+    },
+    userImage: { margin: '0 10px 0 15px' },
+    userHandle: {
+        marginTop: 12,
+        fontSize: 17,
+        fontWeight: 600,
+        color: '#bbb'
     },
     albums: {
         height: 220,
@@ -115,10 +127,30 @@ export class AlbumShowcase extends Component {
                 </div>
             </Link>
         ));
-        
+
         return (
             <Paper className={classes.container}>
-                <h1 className={classes.title}>{this.props.title}</h1>
+                <h1 className={classes.title}>
+                    {this.props.title}
+                    <div className={classes.userInfo}>
+                        {this.props.userImage ? (
+                            <h2 className={classes.userHandle}>
+                                {this.props.userHandle}
+                            </h2>
+                        ) : (
+                            <div />
+                        )}
+                        {this.props.userImage ? (
+                            <Avatar
+                                src={this.props.userImage}
+                                alt=""
+                                className={classes.userImage}
+                            />
+                        ) : (
+                            <div />
+                        )}
+                    </div>
+                </h1>
                 <div className={classes.buttons}>
                     <Button
                         disabled={position === 0}
