@@ -69,7 +69,7 @@ export class search extends Component {
     }
 
     async search_artist() {
-        const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const ROOT_URL = 'https://ws.audioscrobbler.com';
         const _api_key = this.props.user.API_KEY;
         const SEARCH_URL =
             '/2.0/?method=artist.search&artist=' +
@@ -92,7 +92,7 @@ export class search extends Component {
         }
     }
     async search_albums() {
-        const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const ROOT_URL = 'https://ws.audioscrobbler.com';
         const _api_key = this.props.user.API_KEY;
         const SEARCH_URL =
             '/2.0/?method=album.search&album=' +

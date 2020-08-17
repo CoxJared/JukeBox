@@ -230,7 +230,7 @@ export class artist extends Component {
     }
 
     return_url(method) {
-        const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const ROOT_URL = 'https://ws.audioscrobbler.com';
         const _api_key = this.props.user.API_KEY;
         //const ARTIST_URL = ROOT_URL + '/2.0/?method=artist.'+ method +'&artist='+ artist_name +'&api_key=' + _api_key +'&format=json';
         const ARTIST_URL =

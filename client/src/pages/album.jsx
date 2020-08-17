@@ -131,7 +131,7 @@ export class album extends Component {
     addInfoToDatabase() {}
 
     async loadAlbumData(albumName, artist) {
-        const ROOT_URL = 'http://ws.audioscrobbler.com';
+        const ROOT_URL = 'https://ws.audioscrobbler.com';
         const _api_key = this.props.user.API_KEY;
         const ALBUM_URL = `${ROOT_URL}/2.0/?method=album.getinfo&api_key=${_api_key}&artist=${artist}&album=${albumName}&format=json`;
         const response = await fetch(ALBUM_URL);
