@@ -140,6 +140,7 @@ exports.addRating = (request, response) => {
   db.collection('ratings')
     .where('artist', '==', request.params.artist)
     .where('albumName', '==', request.params.name)
+    .where('userHandle', '==', request.user.handle)
     .get()
     .then((data) => {
       if (data.empty) {
@@ -149,7 +150,7 @@ exports.addRating = (request, response) => {
         data.forEach(doc => {
           ratingId = doc.id
         })
-        return db.doc(`/ratings/${doc.id}`).update({
+        return db.doc(`/ratings/${ratingId}`).update({
           value: newRating.value
         })
       }
@@ -167,9 +168,7 @@ exports.addRating = (request, response) => {
 };
 
 exports.getAlbumRatings = (request, response) => {
-
   let ratings = [];
-  let albumId;
 
   db.collection('ratings')
     .where('artist', '==', request.params.artist)
@@ -208,31 +207,18 @@ exports.getAlbumRatings = (request, response) => {
 exports.getUserAlbumRating = (request, response) => {
   let rating = {
     id: '',
-    albumId: '',
     createdAt: '',
     userHandle: '',
-    value: ''
+    value: '',
+    albumName: '',
+    artist: ''
   };
 
-  db.collection('albums')
+  db.collection('ratings')
     .where('artist', '==', request.params.artist)
-    .where('name', '==', request.params.name)
+    .where('albumName', '==', request.params.name)
+    .where('userHandle', '==', request.params.user)
     .get()
-    .then((data) => {
-      if (data.empty) {
-        return response.status(404).json({
-          error: 'Album not found'
-        });
-      } else {
-        data.forEach((doc) => {
-          albumId = doc.id
-        })
-        return db.collection('ratings')
-          .where('albumId', '==', albumId)
-          .where('userHandle', '==', request.params.user)
-          .get()
-      }
-    })
     .then(data => {
       if (data.empty) {
         return response.json(rating)
@@ -240,7 +226,8 @@ exports.getUserAlbumRating = (request, response) => {
         data.forEach(doc => {
           rating = {
             id: doc.id,
-            albumId: doc.data().albumId,
+            artist: doc.data().artist,
+            albumName: doc.data().albumName,
             createdAt: doc.data().createdAt,
             userHandle: doc.data().userHandle,
             value: doc.data().value
@@ -287,41 +274,28 @@ exports.getAllReviews = (request, response) => {
 };
 
 exports.getAlbumReviews = (request, response) => {
-  db.collection('albums')
+  let reviews = [];
+
+  db.collection('reviews')
     .where('artist', '==', request.params.artist)
-    .where('name', '==', request.params.name)
+    .where('albumName', '==', request.params.name)
     .get()
     .then(data => {
       if (data.empty) {
         return response.json({
-          message: 'Album not found'
+          reviews: reviews
         })
       } else {
-        let albumId;
-        data.forEach(doc => {
-          albumId = doc.id;
-        })
-        return db.collection('reviews')
-          .where('albumId', '==', albumId)
-          .orderBy('createdAt', 'desc')
-          .get()
-      }
-    })
-    .then(data => {
-      if (data.empty) {
-        return response.json({
-          reviews: []
-        })
-      } else {
-        let reviews = [];
         data.forEach(doc => {
           reviews.push({
             id: doc.id,
-            body: doc.data().body,
+            albumId: doc.data().albumId,
+            albumName: doc.data().albumName,
+            artist: doc.data().artist,
             createdAt: doc.data().createdAt,
             userHandle: doc.data().userHandle,
-            userImage: doc.data().userImage,
-            albumId: doc.data().albumId
+            body: doc.data().body,
+            userImage: doc.data().userImage
           })
         })
         return response.json({
@@ -330,7 +304,7 @@ exports.getAlbumReviews = (request, response) => {
       }
     })
     .catch(err => {
-      console.error(err)
+      console.error(err);
       return response.status(400).json({
         error: err
       })
@@ -340,45 +314,28 @@ exports.getAlbumReviews = (request, response) => {
 exports.addAlbumReview = (request, response) => {
   const newReview = {
     body: request.body.body,
+    createdAt: new Date().toISOString(),
     userHandle: request.user.handle,
     userImage: request.user.imageUrl,
-    createdAt: new Date().toISOString(),
-  }
+    albumName: request.params.name,
+    artist: request.params.artist
+  };
 
-  let albumId;
-  db
-    .collection('albums')
+  db.collection('reviews')
     .where('artist', '==', request.params.artist)
-    .where('name', '==', request.params.name)
-    .limit(1)
+    .where('albumName', '==', request.params.name)
+    .where('userHandle', '==', request.user.handle)
     .get()
     .then((data) => {
       if (data.empty) {
-        return response.status(404).json({
-          error: 'Album not found'
-        });
+        return db.collection('reviews').add(newReview)
       } else {
+        let reviewId;
         data.forEach(doc => {
-          albumId = doc.id;
+          reviewId = doc.id
         })
-        return db.collection('reviews')
-          .where('albumId', '==', albumId)
-          .where('userHandle', '==', request.user.handle)
-          .limit(1)
-          .get()
-      }
-    })
-    .then((data) => {
-      if (data.empty) {
-        return db.collection('reviews').add({
-          ...newReview,
-          albumId: albumId
-        });
-      } else {
-        data.forEach(doc => {
-          db.doc(`/reviews/${doc.id}`).update({
-            body: newReview.value
-          })
+        return db.doc(`/reviews/${reviewId}`).update({
+          body: newReview.body
         })
       }
     })
