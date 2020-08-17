@@ -16,13 +16,13 @@ const styles = (theme) => ({
 export class home extends Component {
     render() {
         let topAlbums = albums.slice(0, 10);
-        let friednsAlbuums = albums.slice(10, 21);
+        let friendsAlbums = albums.slice(10, 20);
         return (
             <div>
                 <AlbumShowcase albums={topAlbums} title={'Popular This Week'} />
                 <div style={{ height: 20 }} />
                 <AlbumShowcase
-                    albums={friednsAlbuums}
+                    albums={friendsAlbums}
                     title={'Popular With Friends'}
                 />
             </div>

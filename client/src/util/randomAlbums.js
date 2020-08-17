@@ -21,6 +21,15 @@ import pureComedy from '../images/tempAlbumCovers/purecomedy.jpeg';
 import theBends from '../images/tempAlbumCovers/thebends.jpeg';
 import revolver from '../images/tempAlbumCovers/revolver.jpeg';
 
+import drukqs from '../images/tempAlbumCovers/drukqs.jpeg';
+import sinceileftyou from '../images/tempAlbumCovers/sinceileftyou.jpeg';
+import cosmogramma from '../images/tempAlbumCovers/cosmogramma.jpeg';
+import channelorange from '../images/tempAlbumCovers/channelorange.jpeg';
+import brutalism from '../images/tempAlbumCovers/brutalism.jpeg';
+import mezzanine from '../images/tempAlbumCovers/mezzanine.jpeg';
+import loveless from '../images/tempAlbumCovers/mybloodyvalentine.jpeg';
+import powercorruption from '../images/tempAlbumCovers/powercorruptionandlies.jpeg';
+
 export const albums = (function () {
     let albums = [{
             image: titanicRising,
@@ -126,7 +135,47 @@ export const albums = (function () {
             image: revolver,
             name: 'The Beatles',
             artist: 'Revolver'
-        }
+        },
+        {
+            image: drukqs,
+            name: 'Drukqs',
+            artist: 'Aphex Twin'
+        },
+        {
+            image: sinceileftyou,
+            name: 'Since I left you',
+            artist: 'The Avalanches'
+        },
+        {
+            image: cosmogramma,
+            name: 'Cosmogramma',
+            artist: 'Flying Lotus'
+        },
+        {
+            image: channelorange,
+            name: 'Channel Orange',
+            artist: 'Frank Ocean'
+        },
+        {
+            image: brutalism,
+            name: 'Brutalism',
+            artist: 'IDLES'
+        },
+        {
+            image: mezzanine,
+            name: 'Mezzanine',
+            artist: 'Massive Attack'
+        },
+        {
+            image: loveless,
+            name: 'Loveless',
+            artist: 'My Bloody Valentine'
+        },
+        {
+            image: powercorruption,
+            name: 'Power, Corruption & Lies',
+            artist: 'New Order'
+        },
     ];
 
     //randomize albums
@@ -141,3 +190,58 @@ export const albums = (function () {
 
     return albums;
 })();
+
+export const staffPicks = (function () {
+    let albums = [{
+            image: drukqs,
+            name: 'Drukqs',
+            artist: 'Aphex Twin'
+        },
+        {
+            image: sinceileftyou,
+            name: 'Since I left you',
+            artist: 'The Avalanches'
+        },
+        {
+            image: cosmogramma,
+            name: 'Cosmogramma',
+            artist: 'Flying Lotus'
+        },
+        {
+            image: channelorange,
+            name: 'Channel Orange',
+            artist: 'Frank Ocean'
+        },
+        {
+            image: brutalism,
+            name: 'Brutalism',
+            artist: 'IDLES'
+        },
+        {
+            image: mezzanine,
+            name: 'Mezzanine',
+            artist: 'Massive Attack'
+        },
+        {
+            image: loveless,
+            name: 'Loveless',
+            artist: 'My Bloody Valentine'
+        },
+        {
+            image: powercorruption,
+            name: 'Power, Corruption & Lies',
+            artist: 'New Order'
+        },
+    ]
+    //randomize albums
+    for (let i = 0; i < 100; i++) {
+        let a = Math.floor(Math.random() * albums.length);
+        let b = Math.floor(Math.random() * albums.length);
+
+        let temp = albums[a];
+        albums[a] = albums[b];
+        albums[b] = temp;
+    }
+
+    return albums;
+})()

@@ -4,6 +4,7 @@ import home from './pages/home';
 import search from './pages/search';
 import artist from './pages/artist';
 import activity from './pages/activity';
+import explore from './pages/explore';
 import user from './pages/user';
 import settings from './pages/settings';
 import themeObject from './util/theme';
@@ -88,6 +89,11 @@ function App(props) {
                                     exact
                                     path="/settings"
                                     component={settings}
+                                />
+                                <Route
+                                    exact
+                                    path="/explore"
+                                    component={explore}
                                 />
                             </Switch>
                         </Grid>

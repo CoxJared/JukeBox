@@ -30,7 +30,13 @@ export class NavBar extends Component {
                 <Button style={navbarStyle.button} component={Link} to="/">
                     home
                 </Button>
-                {/* <Button style={navbarStyle.button}>explore</Button> */}
+                <Button
+                    style={navbarStyle.button}
+                    component={Link}
+                    to="/explore"
+                >
+                    explore
+                </Button>
                 <Button style={navbarStyle.button}>lists</Button>
                 <Button
                     style={navbarStyle.button}
