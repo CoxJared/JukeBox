@@ -132,42 +132,25 @@ exports.addRating = (request, response) => {
   const newRating = {
     value: request.body.value,
     createdAt: new Date().toISOString(),
-    userHandle: request.user.handle
+    userHandle: request.user.handle,
+    albumName: request.params.name,
+    artist: request.params.artist
   };
-  let albumId;
-  db
-    .collection('albums')
-    .where('name', '==', request.params.name)
+
+  db.collection('ratings')
     .where('artist', '==', request.params.artist)
-    .limit(1)
+    .where('albumName', '==', request.params.name)
     .get()
     .then((data) => {
       if (data.empty) {
-        return response.status(404).json({
-          error: 'Album not found'
-        });
+        return db.collection('ratings').add(newRating)
       } else {
+        let ratingId;
         data.forEach(doc => {
-          albumId = doc.id;
+          ratingId = doc.id
         })
-        return db.collection('ratings')
-          .where('albumId', '==', albumId)
-          .where('userHandle', '==', request.user.handle)
-          .limit(1)
-          .get()
-      }
-    })
-    .then((data) => {
-      if (data.empty) {
-        return db.collection('ratings').add({
-          ...newRating,
-          albumId: albumId
-        });
-      } else {
-        data.forEach(doc => {
-          db.doc(`/ratings/${doc.id}`).update({
-            value: newRating.value
-          })
+        return db.doc(`/ratings/${doc.id}`).update({
+          value: newRating.value
         })
       }
     })
@@ -188,24 +171,10 @@ exports.getAlbumRatings = (request, response) => {
   let ratings = [];
   let albumId;
 
-  db.collection('albums')
+  db.collection('ratings')
     .where('artist', '==', request.params.artist)
-    .where('name', '==', request.params.name)
+    .where('albumName', '==', request.params.name)
     .get()
-    .then((data) => {
-      if (data.empty) {
-        return response.status(404).json({
-          error: 'Album not found'
-        });
-      } else {
-        data.forEach((doc) => {
-          albumId = doc.id
-        })
-        return db.collection('ratings')
-          .where('albumId', '==', albumId)
-          .get()
-      }
-    })
     .then(data => {
       if (data.empty) {
         return response.json({
@@ -216,6 +185,8 @@ exports.getAlbumRatings = (request, response) => {
           ratings.push({
             id: doc.id,
             albumId: doc.data().albumId,
+            albumName: doc.data().albumName,
+            artist: doc.data().artist,
             createdAt: doc.data().createdAt,
             userHandle: doc.data().userHandle,
             value: doc.data().value
