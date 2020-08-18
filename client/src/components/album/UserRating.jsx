@@ -130,9 +130,12 @@ export class UserRating extends Component {
             albumRating = '0.0';
         }
 
-        if (albums.loading.rating === undefined || albums.loading.rating) {
-            return <h1>loading</h1>;
-        }
+        const title =
+            albums.loading.rating === undefined || albums.loading.rating
+                ? 'Loading...'
+                : userRatingFromDB === undefined || userRatingFromDB === ''
+                ? 'Unrated'
+                : 'My Rating';
 
         const stars = (
             <div className={classes.stars} id="stars">
@@ -161,12 +164,9 @@ export class UserRating extends Component {
         return (
             <div className={classes.container}>
                 <Typography color="primary" className={classes.ratingTitle}>
-                    {userRatingFromDB === undefined || userRatingFromDB === ''
-                        ? 'Unrated'
-                        : 'My Rating'}
+                    {title}
                 </Typography>
                 {stars}
-                
             </div>
         );
     }

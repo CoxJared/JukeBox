@@ -61,12 +61,12 @@ function App(props) {
         <MuiThemeProvider theme={theme}>
             <Provider store={store}>
                 <Router>
-                    <Grid container spacing={4} style={appStyles.container}>
-                        <Grid item sm={2}>
+                    <Grid container spacing={1} style={appStyles.container}>
+                        <Grid item sm={2} xs={2}>
                             <UserAvatar />
                             <NavBar />
                         </Grid>
-                        <Grid item sm={8}>
+                        <Grid item sm={7} xs={7}>
                             <SearchBar />
                             <Switch style={appStyles.switch}>
                                 <Route exact path="/" component={home} />
