@@ -11,7 +11,7 @@ const styles = (theme) => ({
         height: 300,
         width: 900,
         marginTop: 50,
-        marginLeft: 100
+        marginLeft: 45
     },
     albumImage: {
         width: 270,
