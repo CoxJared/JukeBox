@@ -6,16 +6,17 @@ import withStyles from '@material-ui/core/styles/withStyles';
 import { Paper } from '@material-ui/core';
 
 const ALBUM_WIDTH = 170;
-const ALBUM_TITLE_HEIGHT = 20;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
         backgroundColor: '#212122',
         marginTop: 50,
-        width: '100%',
+        width: 900,
         padding: 20,
-        justifyContent: 'center'
+        justifyContent: 'center',
+        position: 'relative',
+        borderRadius: 15
     },
     albumsTitle: {
         fontSize: 35,
@@ -27,7 +28,7 @@ const styles = (theme) => ({
         // height: 600,
         display: 'flex',
         flexWrap: 'wrap',
-        width: ALBUM_WIDTH * 6,
+        width: ALBUM_WIDTH * 5,
         position: 'relative',
         transition: '.8s ease-in-out',
         margin: 'auto'

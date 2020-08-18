@@ -38,7 +38,8 @@ const styles = (theme) => ({
         width: 80,
         height: 80,
         margin: ' 180px auto 20px auto',
-        cursor: 'pointer'
+        cursor: 'pointer',
+        boxShadow: '4px 4px 4px #111'
     },
     loading: {
         width: 80,

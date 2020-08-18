@@ -5,14 +5,14 @@ import { Link } from 'react-router-dom';
 import withStyles from '@material-ui/core/styles/withStyles';
 import { Button, Paper, Avatar } from '@material-ui/core';
 
-const ALBUM_WIDTH = 200;
+const ALBUM_WIDTH = 180;
 const ALBUM_TITLE_HEIGHT = 40;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
         marginTop: 50,
-        width: ALBUM_WIDTH * 5 + 40,
+        width: 900,
         overflow: 'hidden',
         position: 'relative',
         backgroundColor: '#212122',
@@ -31,7 +31,7 @@ const styles = (theme) => ({
         display: 'flex',
         float: 'right'
     },
-    userImage: { margin: '0 10px 0 15px' },
+    userImage: { margin: '0 10px 0 15px', boxShadow: '4px 4px 4px #111' },
     userHandle: {
         marginTop: 12,
         fontSize: 17,
@@ -51,7 +51,7 @@ const styles = (theme) => ({
     },
     albumImage: {
         objectFit: 'cover',
-        height: '100%'
+        width: '95%'
     },
     albumName: {
         fontSize: 15,
@@ -172,7 +172,7 @@ export class AlbumShowcase extends Component {
                 </div>
                 <div
                     className={classes.albums}
-                    style={{ left: `${position * ALBUM_WIDTH + 20}px` }}
+                    style={{ left: `${position * ALBUM_WIDTH + 0}px` }}
                 >
                     {albumElements}
                 </div>

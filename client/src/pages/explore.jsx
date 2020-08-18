@@ -7,7 +7,7 @@ export class explore extends Component {
     render() {
         return (
             <div>
-                <AlbumGrid title="Suggestions For You" albums={albums} />
+                <AlbumGrid title="Staff Picks" albums={albums} />
             </div>
         );
     }

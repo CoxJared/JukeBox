@@ -42,6 +42,16 @@ const styles = (theme) => ({
     },
     body: {
         color: '#ccc'
+    },
+    loadingPaper: {
+        width: 900,
+        position: 'relative',
+        padding: 20,
+        backgroundColor: '#333'
+    },
+    loadingTitle: {
+        color: '#999950',
+        fontSize: 20
     }
 });
 
@@ -61,8 +71,13 @@ class AlbumReviews extends Component {
             reviewElements = reviews.map((review) => (
                 <Paper className={classes.review}>
                     <div className={classes.user}>
-                        <Avatar className={classes.avatar} src={review.userImage} />
-                        <h1 className={classes.userHandle}>{review.userHandle}</h1>
+                        <Avatar
+                            className={classes.avatar}
+                            src={review.userImage}
+                        />
+                        <h1 className={classes.userHandle}>
+                            {review.userHandle}
+                        </h1>
                         <h1 className={classes.dateTime}>
                             {dayjs(review.createdAt).fromNow()}
                         </h1>
@@ -72,7 +87,11 @@ class AlbumReviews extends Component {
             ));
         }
         if (this.props.albums.loading.reviews) {
-            return <div></div>;
+            return (
+                <Paper className={classes.loadingPaper}>
+                    <h1 className={classes.loadingTitle}>Loading...</h1>
+                </Paper>
+            );
         } else {
             return <div className={classes.container}>{reviewElements}</div>;
         }
@@ -87,4 +106,3 @@ const mapStateToProps = (state) => ({
 export default connect(mapStateToProps, { getAlbumReviews })(
     withStyles(styles)(AlbumReviews)
 );
-

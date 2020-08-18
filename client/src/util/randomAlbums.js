@@ -30,8 +30,27 @@ import mezzanine from '../images/tempAlbumCovers/mezzanine.jpeg';
 import loveless from '../images/tempAlbumCovers/mybloodyvalentine.jpeg';
 import powercorruption from '../images/tempAlbumCovers/powercorruptionandlies.jpeg';
 
-export const albums = (function () {
-    let albums = [{
+import apricotprincess from '../images/tempAlbumCovers/apricotprincess.jpeg';
+import bottomlesspit from '../images/tempAlbumCovers/bottomlesspit.jpeg';
+import thedisintegrationloops from '../images/tempAlbumCovers/thedisintegrationloops.jpg';
+import disintegration from '../images/tempAlbumCovers/disintegration.jpeg';
+import inthegraceofyourlove from '../images/tempAlbumCovers/inthegraceofyourlove.jpeg';
+import herecmesthewarmjets from '../images/tempAlbumCovers/herecomesthewarmjets.jpeg';
+import juju from '../images/tempAlbumCovers/juju.jpeg';
+
+import bloodorange from '../images/tempAlbumCovers/bloodorange.jpeg';
+import bloom from '../images/tempAlbumCovers/bloom.png';
+import doris from '../images/tempAlbumCovers/doris.jpeg';
+import kiwanuka from '../images/tempAlbumCovers/kiwanuka.jpeg';
+import whatsgoinon from '../images/tempAlbumCovers/whatsgoingon.jpeg';
+import inapoemunlimited from '../images/tempAlbumCovers/inapoemunlimited.jpeg';
+import telefone from '../images/tempAlbumCovers/telefone.jpeg';
+import yeslawd from '../images/tempAlbumCovers/yeslawd.jpeg';
+import thisishappening from '../images/tempAlbumCovers/thisishappening.jpeg';
+
+export const albums = (function() {
+    let albums = [
+        {
             image: titanicRising,
             name: 'Titanic Rising',
             artist: 'Weyes Blood'
@@ -133,8 +152,8 @@ export const albums = (function () {
         },
         {
             image: revolver,
-            name: 'The Beatles',
-            artist: 'Revolver'
+            name: 'Revolver',
+            artist: 'The Beatles'
         },
         {
             image: drukqs,
@@ -176,6 +195,86 @@ export const albums = (function () {
             name: 'Power, Corruption & Lies',
             artist: 'New Order'
         },
+        {
+            image: apricotprincess,
+            name: 'Apricot Princess',
+            artist: 'Rex Orange County'
+        },
+        {
+            image: bottomlesspit,
+            name: 'Bottomless Pit',
+            artist: 'Death Grips'
+        },
+        {
+            image: thedisintegrationloops,
+            name: 'The Disintegration Loops II',
+            artist: 'William Basinski'
+        },
+        {
+            image: disintegration,
+            name: 'Disintegration',
+            artist: 'The Cure'
+        },
+        {
+            image: inthegraceofyourlove,
+            name: 'In the grace of your love',
+            artist: 'The rapture'
+        },
+        {
+            image: herecmesthewarmjets,
+            name: 'Here comes the warm jets',
+            artist: 'Brian Eno'
+        },
+        {
+            image: juju,
+            name: 'Juju',
+            artist: 'Siouxsie and the Banshees'
+        },
+        {
+            image: bloodorange,
+            name: 'Freetown Sound',
+            artist: 'Blood Orange'
+        },
+        {
+            image: doris,
+            name: 'Doris',
+            artist: 'Earl Sweatshirt'
+        },
+        {
+            image: whatsgoinon,
+            name: 'Whats going on',
+            artist: 'Marvin Gaye'
+        },
+        {
+            image: yeslawd,
+            name: 'Yes Lawd!',
+            artist: 'NxWorries'
+        },
+        {
+            image: telefone,
+            name: 'Telefone',
+            artist: 'Noname'
+        },
+        {
+            image: thisishappening,
+            name: 'This is Happening',
+            artist: 'LCD Soundsystem'
+        },
+        {
+            image: kiwanuka,
+            name: 'KIWANUKA',
+            artist: 'Micheal Kiwanuka'
+        },
+        {
+            image: inapoemunlimited,
+            name: 'In a Poem Unlimited',
+            artist: 'US Girls'
+        },
+        {
+            image: bloom,
+            name: 'Bloom',
+            artist: 'Beach House'
+        }
     ];
 
     //randomize albums
@@ -191,8 +290,9 @@ export const albums = (function () {
     return albums;
 })();
 
-export const staffPicks = (function () {
-    let albums = [{
+export const graemePicks = (function() {
+    let albums = [
+        {
             image: drukqs,
             name: 'Drukqs',
             artist: 'Aphex Twin'
@@ -241,8 +341,8 @@ export const staffPicks = (function () {
             image: bonito,
             name: 'Bonito Generation',
             artist: 'Kero Kero Bonito'
-        },
-    ]
+        }
+    ];
     //randomize albums
     for (let i = 0; i < 100; i++) {
         let a = Math.floor(Math.random() * albums.length);
@@ -254,4 +354,136 @@ export const staffPicks = (function () {
     }
 
     return albums;
-})()
+})();
+
+export const jaredPicks = (function() {
+    let albums = [
+        {
+            image: menitrust,
+            name: 'Show Me How',
+            artist: 'Men I Trust'
+        },
+        {
+            image: bottomlesspit,
+            name: 'Bottomless Pit',
+            artist: 'Death Grips'
+        },
+        {
+            image: thedisintegrationloops,
+            name: 'The Disintegration Loops II',
+            artist: 'William Basinski'
+        },
+        {
+            image: disintegration,
+            name: 'Disintegration',
+            artist: 'The Cure'
+        },
+        {
+            image: inthegraceofyourlove,
+            name: 'In the grace of your love',
+            artist: 'The rapture'
+        },
+        {
+            image: herecmesthewarmjets,
+            name: 'Here comes the warm jets',
+            artist: 'Brian Eno'
+        },
+        {
+            image: juju,
+            name: 'Juju',
+            artist: 'Siouxsie and the Banshees'
+        },
+        {
+            image: titanicRising,
+            name: 'Titanic Rising',
+            artist: 'Weyes Blood'
+        },
+        {
+            image: againstAllLogic,
+            name: '2017-2019',
+            artist: 'Against All logic'
+        },
+        {
+            image: normaRockwell,
+            name: 'Norman Fucking Rockwell',
+            artist: 'Lana Del Rey'
+        }
+    ];
+    //randomize albums
+    for (let i = 0; i < 100; i++) {
+        let a = Math.floor(Math.random() * albums.length);
+        let b = Math.floor(Math.random() * albums.length);
+
+        let temp = albums[a];
+        albums[a] = albums[b];
+        albums[b] = temp;
+    }
+
+    return albums;
+})();
+
+export const owenPicks = (function() {
+    let albums = [
+        {
+            image: bloodorange,
+            name: 'Freetown Sound',
+            artist: 'Blood Orange'
+        },
+        {
+            image: doris,
+            name: 'Doris',
+            artist: 'Earl Sweatshirt'
+        },
+        {
+            image: whatsgoinon,
+            name: 'Whats going on',
+            artist: 'Marvin Gaye'
+        },
+        {
+            image: yeslawd,
+            name: 'Yes Lawd!',
+            artist: 'NxWorries'
+        },
+        {
+            image: telefone,
+            name: 'Telefone',
+            artist: 'Noname'
+        },
+        {
+            image: thisishappening,
+            name: 'This is Happening',
+            artist: 'LCD Soundsystem'
+        },
+        {
+            image: kiwanuka,
+            name: 'KIWANUKA',
+            artist: 'Michael Kiwanuka'
+        },
+        {
+            image: inapoemunlimited,
+            name: 'In a Poem Unlimited',
+            artist: 'US Girls'
+        },
+        {
+            image: bloom,
+            name: 'Bloom',
+            artist: 'Beach House'
+        },
+        {
+            image: apricotprincess,
+            name: 'Apricot Princess',
+            artist: 'Rex Orange County'
+        }
+    ];
+    //randomize albums
+    for (let i = 0; i < 100; i++) {
+        let a = Math.floor(Math.random() * albums.length);
+        let b = Math.floor(Math.random() * albums.length);
+
+        let temp = albums[a];
+        albums[a] = albums[b];
+        albums[b] = temp;
+    }
+
+    return albums;
+})();

@@ -10,7 +10,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const styles = (theme) => ({
     container: {
         display: 'flex',
-        width: 1080
+        width: 940
     },
     search: {
         position: 'relative',
@@ -22,7 +22,8 @@ const styles = (theme) => ({
         // margin: '0  auto 0 ',
         width: 600,
         display: 'flex',
-        color: '#fff'
+        color: '#fff',
+        boxShadow: '4px 4px 4px #111'
     },
     logo: { width: 700 },
     image: {

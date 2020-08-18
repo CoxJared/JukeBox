@@ -258,7 +258,7 @@ export class album extends Component {
                         {songs}
                     </div>
                     <h1 className={classes.ratingsTitle}>Reviews</h1>
-                    <ReviewForm />
+                    {this.props.user.authenticated ? <ReviewForm /> : <div />}
                     <AlbumReviews
                         albumName={this.props.location.state.album}
                         artist={this.props.location.state.artist}
