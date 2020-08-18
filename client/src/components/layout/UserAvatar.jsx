@@ -7,7 +7,11 @@ import {
     loginUser,
     logoutUser,
     uploadImage,
-    signupUser
+    signupUser,
+    openLogin,
+    closeLogin,
+    openSignup,
+    closeSignup
 } from '../../redux/actions/userActions';
 
 //MUI
@@ -78,8 +82,6 @@ class UserAvatar extends Component {
     constructor() {
         super();
         this.state = {
-            signupOpen: false,
-            loginOpen: false,
             email: '',
             password: '',
             confirmPassword: '',
@@ -95,18 +97,19 @@ class UserAvatar extends Component {
     }
 
     openSignupDialog = () => {
-        this.setState({ signupOpen: true });
+        this.props.openSignup();
     };
 
     openLoginDialog = () => {
-        this.setState({ loginOpen: true });
+        this.props.openLogin();
     };
 
-    handleClose = () => {
-        this.setState({
-            signupOpen: false,
-            loginOpen: false
-        });
+    closeLogin = () => {
+        this.props.closeLogin();
+    };
+
+    closeSignup = () => {
+        this.props.closeSignup();
     };
 
     handleChange = (event) => {
@@ -123,8 +126,15 @@ class UserAvatar extends Component {
             confirmPassword: this.state.confirmPassword,
             handle: this.state.handle
         };
-        this.props.signupUser(newUserData);
-        this.handleClose();
+        if (
+            newUserData.email &&
+            newUserData.password &&
+            newUserData.confirmPassword &&
+            newUserData.handle
+        ) {
+            this.props.signupUser(newUserData);
+        }
+        this.closeSignup();
     };
 
     handleLogin = (event) => {
@@ -133,8 +143,10 @@ class UserAvatar extends Component {
             email: this.state.email,
             password: this.state.password
         };
-        this.props.loginUser(userData);
-        this.handleClose();
+        if (userData.email && userData.password) {
+            this.props.loginUser(userData);
+        }
+        this.closeLogin();
     };
 
     handleLogout = () => {
@@ -158,7 +170,7 @@ class UserAvatar extends Component {
     render() {
         const {
             classes,
-            user: { credentials, loading }
+            user: { credentials, loading, signupOpen, loginOpen }
         } = this.props;
         const { errors } = this.state;
 
@@ -231,7 +243,7 @@ class UserAvatar extends Component {
                     </Grid>
                 )}
 
-                <Dialog open={this.state.signupOpen} className={classes.dialog}>
+                <Dialog open={signupOpen} className={classes.dialog}>
                     <DialogTitle className={classes.dialogContent}>
                         Signup
                     </DialogTitle>
@@ -292,7 +304,7 @@ class UserAvatar extends Component {
                                 color="secondary"
                                 className={classes.button}
                                 // disabled={loading}
-                                onClick={this.handleClose}
+                                onClick={this.closeSignup}
                             >
                                 Close
                             </Button>
@@ -310,7 +322,7 @@ class UserAvatar extends Component {
                     </DialogContent>
                 </Dialog>
 
-                <Dialog open={this.state.loginOpen} className={classes.dialog}>
+                <Dialog open={loginOpen} className={classes.dialog}>
                     <DialogTitle className={classes.dialogContent}>
                         Login
                     </DialogTitle>
@@ -347,7 +359,7 @@ class UserAvatar extends Component {
                                 color="secondary"
                                 className={classes.button}
                                 // disabled={loading}
-                                onClick={this.handleClose}
+                                onClick={this.closeLogin}
                             >
                                 Close
                             </Button>
@@ -388,7 +400,11 @@ const mapActionsToProps = {
     loginUser,
     logoutUser,
     signupUser,
-    uploadImage
+    uploadImage,
+    openLogin,
+    closeLogin,
+    openSignup,
+    closeSignup
 };
 
 export default connect(

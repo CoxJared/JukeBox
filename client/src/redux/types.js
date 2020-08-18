@@ -3,6 +3,10 @@ export const SET_AUTHENTICATED = 'SET_AUTHENTICATED';
 export const SET_UNAUTHENTICATED = 'SET_UNAUTHENTICATED';
 export const SET_USER = 'SET_USER';
 export const LOADING_USER = 'LOADING_USER';
+export const OPEN_LOGIN = 'OPEN_LOGIN';
+export const CLOSE_LOGIN = 'CLOSE_LOGIN';
+export const OPEN_SIGNUP = 'OPEN_SIGNUP';
+export const CLOSE_SIGNUP = 'CLOSE_SIGNUP';
 
 //album reducer types
 export const SET_ALBUM = 'SET_ABLUM'

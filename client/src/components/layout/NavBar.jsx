@@ -40,24 +40,24 @@ export class NavBar extends Component {
                 <Button style={navbarStyle.button} component={Link} to="/lists">
                     lists
                 </Button>
-                <Button
+                {/* <Button
                     style={navbarStyle.button}
                     component={Link}
                     to="/activity"
                 >
                     activity
-                </Button>
+                </Button> */}
                 {/* <Button style={navbarStyle.button}>concerts</Button> */}
-                <Button style={navbarStyle.button} component={Link} to="/user">
+                {/* <Button style={navbarStyle.button} component={Link} to="/user">
                     Profile
-                </Button>
-                <Button
+                </Button> */}
+                {/* <Button
                     style={navbarStyle.button}
                     component={Link}
                     to="/settings"
                 >
                     Settings
-                </Button>
+                </Button> */}
             </Grid>
         );
     }

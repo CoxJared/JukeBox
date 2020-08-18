@@ -4,6 +4,10 @@ import {
   CLEAR_ERRORS,
   SET_UNAUTHENTICATED,
   LOADING_USER,
+  OPEN_LOGIN,
+  CLOSE_LOGIN,
+  OPEN_SIGNUP,
+  CLOSE_SIGNUP
 } from '../types';
 import axios from 'axios';
 
@@ -92,3 +96,24 @@ const setAuthorizationHeader = (token) => {
   localStorage.setItem('FBIdToken', FBIdToken);
   axios.defaults.headers.common['Authorization'] = FBIdToken;
 };
+
+export const openLogin = () => (dispatch) => {
+  dispatch({
+    type: OPEN_LOGIN
+  })
+}
+export const closeLogin = () => (dispatch) => {
+  dispatch({
+    type: CLOSE_LOGIN
+  })
+}
+export const openSignup = () => (dispatch) => {
+  dispatch({
+    type: OPEN_SIGNUP
+  })
+}
+export const closeSignup = () => (dispatch) => {
+  dispatch({
+    type: CLOSE_SIGNUP
+  })
+}
