@@ -20,7 +20,7 @@ const styles = (theme) => ({
     review: {
         width: 860,
         padding: 20,
-        backgroundColor: '#282828'
+        backgroundColor: '#222222'
     },
     user: {
         display: 'flex'
@@ -47,10 +47,14 @@ const styles = (theme) => ({
         width: 900,
         position: 'relative',
         padding: 20,
-        backgroundColor: '#333'
+        backgroundColor: '#222222'
     },
     loadingTitle: {
         color: '#999950',
+        fontSize: 20
+    },
+    noReviewsTitle: {
+        color: '#555',
         fontSize: 20
     }
 });
@@ -67,7 +71,7 @@ class AlbumReviews extends Component {
         const { reviews } = this.props.albums;
         const { classes } = this.props;
         let reviewElements;
-        if (reviews) {
+        if (reviews && reviews.length > 0) {
             reviewElements = reviews.map((review) => (
                 <Paper className={classes.review}>
                     <div className={classes.user}>
@@ -85,6 +89,12 @@ class AlbumReviews extends Component {
                     <p className={classes.body}>{review.body}</p>
                 </Paper>
             ));
+        } else {
+            reviewElements = (
+                <Paper className={classes.review}>
+                    <h1 className={classes.noReviewsTitle}>No reviews added</h1>
+                </Paper>
+            );
         }
         if (this.props.albums.loading.reviews) {
             return (
