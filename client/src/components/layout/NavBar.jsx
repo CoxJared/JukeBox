@@ -8,7 +8,7 @@ import { Link } from 'react-router-dom';
 const navbarStyle = {
     container: {
         // borderRight: '1px solid #FFF05E'
-        marginTop: 50
+        marginTop: 10
     },
     button: {
         color: '#888',

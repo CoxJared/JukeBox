@@ -53,6 +53,8 @@ const styles = (theme) => ({
     },
     handle: {
         color: '#fff',
+        fontSize: 26,
+        fontWeight: 500,
         textAlign: 'center'
     },
     signupButton: {
@@ -189,11 +191,11 @@ class UserAvatar extends Component {
                                 <CircularProgress />
                             </Avatar>
                         ) : (
-                            <Avatar
-                                alt="no image"
-                                className={classes.tempAvatar}
-                            />
-                        )}
+                                <Avatar
+                                    alt="no image"
+                                    className={classes.tempAvatar}
+                                />
+                            )}
                         <Grid>
                             <Button
                                 className={classes.signupButton}
@@ -212,36 +214,36 @@ class UserAvatar extends Component {
                         </Grid>
                     </Grid>
                 ) : (
-                    <Grid
-                        container
-                        direction="column"
-                        justify="center"
-                        alignItems="center"
-                        classes={styles.container}
-                    >
-                        <input
-                            type="file"
-                            id="imageInput"
-                            hidden="hidden"
-                            onChange={this.handleImageChange}
-                        />
-                        <Avatar
-                            style={{ color: 'blue' }}
-                            src={credentials.imageUrl}
-                            className={classes.avatar}
-                            onClick={this.handleEditPicture}
-                        />
-                        <Typography className={classes.handle}>
-                            {credentials.handle}
-                        </Typography>
-                        <Button
+                        <Grid
+                            container
+                            direction="column"
+                            justify="center"
+                            alignItems="center"
+                            classes={styles.container}
+                        >
+                            <input
+                                type="file"
+                                id="imageInput"
+                                hidden="hidden"
+                                onChange={this.handleImageChange}
+                            />
+                            <Avatar
+                                style={{ color: 'blue' }}
+                                src={credentials.imageUrl}
+                                className={classes.avatar}
+                                onClick={this.handleEditPicture}
+                            />
+                            <Typography className={classes.handle}>
+                                {credentials.handle}
+                            </Typography>
+                            {/* <Button
                             className={classes.loginButton}
                             onClick={this.handleLogout}
                         >
                             Logout
-                        </Button>
-                    </Grid>
-                )}
+                        </Button> */}
+                        </Grid>
+                    )}
 
                 <Dialog open={signupOpen} className={classes.dialog}>
                     <DialogTitle className={classes.dialogContent}>
