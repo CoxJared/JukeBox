@@ -1,5 +1,8 @@
 import React, { Component } from 'react';
 
+//redux 
+import { connect } from 'react-redux';
+
 //MUI
 import Grid from '@material-ui/core/Grid';
 import Button from '@material-ui/core/Button';
@@ -19,6 +22,7 @@ const navbarStyle = {
 
 export class NavBar extends Component {
     render() {
+        const { user } = this.props;
         return (
             <Grid
                 container
@@ -48,19 +52,31 @@ export class NavBar extends Component {
                     activity
                 </Button>
                 <Button style={navbarStyle.button}>concerts</Button>
-                <Button style={navbarStyle.button} component={Link} to="/user">
-                    Profile
+                {user.authenticated ?
+                    <Button style={navbarStyle.button} component={Link} to="/user">
+                        Profile
                 </Button>
-                <Button
-                    style={navbarStyle.button}
-                    component={Link}
-                    to="/settings"
-                >
-                    Settings
-                </Button>
+
+
+                    : <div />
+                }
+                {user.authenticated ?
+                    <Button
+                        style={navbarStyle.button}
+                        component={Link}
+                        to="/settings"
+                    >
+                        Settings
+                    </Button>
+                    : <div />
+                }
             </Grid>
         );
     }
 }
 
-export default NavBar;
+const mapStateToProps = (state) => ({
+    user: state.user
+})
+
+export default connect(mapStateToProps, null)(NavBar);
