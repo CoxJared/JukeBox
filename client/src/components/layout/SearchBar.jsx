@@ -1,5 +1,4 @@
 import React, { Component } from 'react';
-import logo from '../../images/logo.png';
 
 //MUI
 import InputBase from '@material-ui/core/InputBase';
@@ -10,7 +9,7 @@ import withStyles from '@material-ui/core/styles/withStyles';
 const styles = (theme) => ({
     container: {
         display: 'flex',
-        width: 940
+        width: 600
     },
     search: {
         position: 'relative',
@@ -20,14 +19,10 @@ const styles = (theme) => ({
             backgroundColor: '#282828'
         },
         // margin: '0  auto 0 ',
-        width: 600,
+        width: '100%',
         display: 'flex',
         color: '#fff',
         boxShadow: '4px 4px 4px #111'
-    },
-    logo: { width: 700 },
-    image: {
-        width: 30
     },
     name: {
         color: '#b9b950',
@@ -87,10 +82,7 @@ export class SearchBar extends Component {
         }
         return (
             <div className={classes.container}>
-                <div className={classes.logo}>
-                    <img src={logo} className={classes.image} alt="logo" />
-                    <span className={classes.name}>JukeBox</span>
-                </div>
+
                 <div className={classes.search}>
                     <form onSubmit={this.onSubmit.bind(this)}>
                         <div

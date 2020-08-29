@@ -29,19 +29,23 @@ import CircularProgress from '@material-ui/core/CircularProgress';
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
-        width: '100%',
+        width: 300,
+        height: 35,
         justify: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        display: 'flex'
+        // border: '2px solid red'
     },
     tempAvatar: {
-        width: 80,
-        height: 80,
-        margin: ' 140px auto 20px auto'
+        width: 35,
+        height: 35,
+        marginRight: 10
+        // border: '2px solid red'
     },
     avatar: {
-        width: 80,
-        height: 80,
-        margin: ' 180px auto 20px auto',
+        width: 35,
+        height: 35,
+        margin: ' 0 0px 0 auto',
         cursor: 'pointer',
         boxShadow: '4px 4px 4px #111'
     },
@@ -64,7 +68,7 @@ const styles = (theme) => ({
         backgroundColor: '#232323'
     },
     loginButton: {
-        margin: '0px 5px',
+        margin: '0px 0px',
         fontSize: 12,
         color: '#fff',
         backgroundColor: '#232323'
@@ -181,10 +185,10 @@ class UserAvatar extends Component {
                 {!credentials.handle ? (
                     <Grid
                         container
-                        direction="column"
+                        direction="row"
                         justify="center"
                         alignItems="center"
-                        classes={styles.container}
+                        className={classes.container}
                     >
                         {loading ? (
                             <Avatar alt="no image" className={classes.loading}>
@@ -219,7 +223,7 @@ class UserAvatar extends Component {
                             direction="column"
                             justify="center"
                             alignItems="center"
-                            classes={styles.container}
+                            className={classes.container}
                         >
                             <input
                                 type="file"
@@ -236,12 +240,12 @@ class UserAvatar extends Component {
                             <Typography className={classes.handle}>
                                 {credentials.handle}
                             </Typography>
-                            {/* <Button
-                            className={classes.loginButton}
-                            onClick={this.handleLogout}
-                        >
-                            Logout
-                        </Button> */}
+                            <Button
+                                className={classes.loginButton}
+                                onClick={this.handleLogout}
+                            >
+                                Logout
+                        </Button>
                         </Grid>
                     )}
 
