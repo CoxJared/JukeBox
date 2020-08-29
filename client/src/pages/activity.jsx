@@ -14,30 +14,30 @@ import Star from '../images/star.png';
 const styles = (theme) => ({
   ...theme.styleSpreading,
   container: {
-      margin:'40px',
+      margin:'10px',
       display: 'flex',
       flexDirection: 'row',
       justifyContent: 'left',
       alignItems: 'left',
   },
     title: {
-        fontSize: 30,
+        fontSize: 25,
         fontWeight: 300,
         color: '#aaa',
     },
 
     text: {
-      fontSize: 20,
+      fontSize: 15,
       fontWeight: 300,
       color: '#aaa',
-      margin: '5px',
+      margin: '0px',
     },
 
     year: {
-      fontSize: 30,
+      fontSize: 15,
       fontWeight: 300,
       color: 'rgb(112, 110, 110)',
-      margin: '0 10px'
+      margin: '0 3px'
   },
 
     albums: {
@@ -46,26 +46,26 @@ const styles = (theme) => ({
     },
     album: {
         height: '100%',
-        margin: '0 25px 0 0'
+        margin: '0 5px 0 0'
     },
     albumImage: {
         margin: '10px',
         objectFit: 'cover',
-        height: '300px'
+        height: '120px'
     },
     albumName: {
-        fontSize: 15,
+        fontSize: 20,
         color: '#fff',
         fontWeight: 300,
         margin: '2px 0'
     },
     albumArtist: {
-        fontSize: 15,
+        fontSize: 7,
         fontWeight: 500,
         color: '#b9b950'
     },
     userName: {
-      margin: '10px 10px 0 0',
+      margin: '2px 0px 2px 0',
       fontSize: 15,
         fontWeight: 500,
         color: '#aaa',
@@ -82,10 +82,11 @@ const styles = (theme) => ({
 
     albumInfo: {
       backgroundColor: '#212122',
-      padding: '5px 15px',
-      margin: '15px',
+      padding: '2px',
+      margin: '7px',
       borderRadius: 10,
-      width: '1500px'
+      width: '3000px',
+      height: '150px'
     },
 
     starRating:{
@@ -101,11 +102,11 @@ const styles = (theme) => ({
       flexDirection: 'row',
       justifyContent: 'left',
       alignItems: 'center',
-      margin: '0 0 10px 0',
+      margin: '2px 0 5px 0',
     },
 
     faves: {
-      fontSize: 20,
+      fontSize: 15,
       fontWeight: 300,
       color: 'rgb(112, 110, 110)',
     },
@@ -120,7 +121,7 @@ const styles = (theme) => ({
       flexDirection: 'row',
       justifyContent: 'left',
       alignItems: 'center',
-      margin:'5px',
+      margin:'0px',
     }
 });
 
@@ -215,8 +216,8 @@ export class activity extends Component {
     alignItems="flex-start"> 
 
         < WriteReview title = 'Titanic Rising' year = '2019' albumCover = {titanicRising} review = 'Good Stuff' faves = 'Movies' user = 'Owen Cox' rate = '5' classes = {classes}/>
-        < WriteReview title = 'In Rainbows' year = '2007' albumCover = {inrainbows} review = 'Overrated garbage!!' faves = 'Nothing' user = 'Mochi' rate = '4' classes = {classes}/>
-        < WriteReview title = 'Closer' year = '1980' albumCover = {closer} review = 'Such a Classic!' faves = 'Closer idk didnt listen' user = 'Jared' rate = '1' classes = {classes}/>
+        < WriteReview title = 'In Rainbows' year = '2007' albumCover = {inrainbows} review = 'Overrated garbage!!' faves = 'Nothing' user = 'Mochi' rate = '1' classes = {classes}/>
+        < WriteReview title = 'Closer' year = '1980' albumCover = {closer} review = 'Such a Classic!' faves = 'Closer idk didnt listen' user = 'Jared' rate = '4' classes = {classes}/>
         {/* < displayStars rating = '5' classes = {classes}/> */}
     </Grid>
     );
