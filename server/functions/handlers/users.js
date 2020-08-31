@@ -272,3 +272,32 @@ exports.getAuthenticatedUser = (request, response) => {
       });
     });
 };
+
+//Get any users details
+exports.getUserFavAlbums = (request, response) => {
+  let albums = [];
+  db.collection(`/users/${request.params.handle}/favAlbums`)
+    .get()
+    .then((data) => {
+      if (data.empty) {
+        return response.json(albums)
+      } else {
+        data.forEach( doc => {
+          albums.push({
+            id: doc.id,
+            artist: doc.data().artist,
+            albumName: doc.data().albumName
+          })
+        })
+        return response.json({
+          albums: albums
+          })
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      return response.status(400).json({
+        error: err
+      });
+    });
+};

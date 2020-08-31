@@ -16,7 +16,8 @@ const {
   signup,
   uploadImage,
   getUserDetails,
-  getAuthenticatedUser
+  getAuthenticatedUser,
+  getUserFavAlbums
 } = require('./handlers/users');
 
 const {
@@ -38,6 +39,8 @@ app.post('/login', login);
 app.post('/user/image', FBAuth, uploadImage);
 app.get('/user/:handle', getUserDetails);
 app.get('/user', FBAuth, getAuthenticatedUser);
+app.get('/user/:handle/favAlbums', getUserFavAlbums);
+
 
 //album routes
 app.get('/albums', getAllAlbums);
