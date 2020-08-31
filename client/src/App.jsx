@@ -37,6 +37,9 @@ const appStyles = {
     },
     switch: {
         position: 'relative'
+    },
+    header: {
+        display: 'flex',
     }
 };
 
@@ -62,12 +65,14 @@ function App(props) {
             <Provider store={store}>
                 <Router>
                     <Grid container spacing={1} style={appStyles.container}>
-                        <Grid item sm={2} xs={2}>
-                            <UserAvatar />
+                        <Grid item sm={2} xs={2}>\
                             <NavBar />
                         </Grid>
                         <Grid item sm={7} xs={7}>
-                            <SearchBar />
+                            <div style={appStyles.header}>
+                                <SearchBar />
+                                <UserAvatar />
+                            </div>
                             <Switch style={appStyles.switch}>
                                 <Route exact path="/" component={home} />
                                 <Route
