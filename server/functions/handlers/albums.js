@@ -349,3 +349,31 @@ exports.addAlbumReview = (request, response) => {
       });
     })
 }
+
+exports.favAlbum= (request, response) => {
+  const newFavAlbum = {
+    createdAt: new Date().toISOString(),
+    albumName: request.params.name,
+    artist: request.params.artist
+  }
+
+  db.collection(`/users/${request.user.handle}/favAlbums`)
+    .where('artist', '==', request.params.artist)
+    .where('albumName', '==', request.params.name)
+    .get()
+    .then((data) => {
+      if (data.empty) { // If album isn't there, add it
+        return db.collection(`/users/${request.user.handle}/favAlbums`).add(newFavAlbum)
+      }
+    })
+    .then(() => {
+      response.json(
+        newFavAlbum)
+    })
+    .catch(err => {
+      console.log(err);
+      response.status(500).json({
+        error: 'Something Went Wrong'
+      });
+    })
+};

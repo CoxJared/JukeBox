@@ -29,7 +29,8 @@ const {
   getUserAlbumRating,
   getAllReviews,
   getAlbumReviews,
-  addAlbumReview
+  addAlbumReview,
+  favAlbum 
 } = require('./handlers/albums');
 
 
@@ -54,6 +55,8 @@ app.get('/album/:artist/:name/rating/:user', getUserAlbumRating);
 app.get('/reviews', getAllReviews);
 app.get('/album/:artist/:name/reviews', getAlbumReviews);
 app.post('/album/:artist/:name/review', FBAuth, addAlbumReview);
+
+app.post('/album/:artist/:name/fav', FBAuth, favAlbum);
 
 
 exports.api = functions.https.onRequest(app);
