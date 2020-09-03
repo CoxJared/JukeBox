@@ -385,6 +385,7 @@ exports.addListenLater= (request, response) => {
     artist: request.params.artist
   }
 
+  console.log("ADD LISTEN LATER");
   db.collection(`/users/${request.user.handle}/listenLater`)
     .where('artist', '==', request.params.artist)
     .where('albumName', '==', request.params.name)

@@ -10,7 +10,9 @@ import {
   LOADING_REVIEWS,
   SET_REVIEWS,
   SET_ALBUM_ERRORS,
-  LIKE_ALBUM
+  LIKE_ALBUM,
+  HEARD_ALBUM,
+  ADD_LISTEN_LATER
 } from '../types';
 
 const initialState = {
@@ -125,6 +127,14 @@ export default function (state = initialState, action) {
             }
         };
       case LIKE_ALBUM:
+        return {
+          ...state,
+        };
+      case HEARD_ALBUM:
+        return {
+          ...state,
+        };
+      case ADD_LISTEN_LATER:
         return {
           ...state,
         };

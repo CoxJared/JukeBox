@@ -59,8 +59,8 @@ app.get('/album/:artist/:name/reviews', getAlbumReviews);
 app.post('/album/:artist/:name/review', FBAuth, addAlbumReview);
 
 app.post('/album/:artist/:name/fav', FBAuth, favAlbum);
-app.post('/album/:artist/:name/listenLater', FBAuth, addListenLater);
 app.post('/album/:artist/:name/heard', FBAuth, addListened);
+app.post('/album/:artist/:name/listenLater', FBAuth, addListenLater);
 
 
 exports.api = functions.https.onRequest(app);

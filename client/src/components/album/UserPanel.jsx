@@ -2,7 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-    likeAlbum
+    likeAlbum,
+    heardAlbum,
+    addListenLater
 } from '../../redux/actions/albumActions';
 import { connect } from 'react-redux';
 
@@ -45,9 +47,15 @@ export class UserPanel extends Component {
         };
         this.addToHeard = this.addToHeard.bind(this);
         this.likeAlbum = this.likeAlbum.bind(this);
+        this.addToLater = this.addToLater.bind(this);
     }
 
     addToHeard(){
+        const album = {
+            name: this.props.albumName,
+            artist: this.props.artist
+        };
+        this.props.heardAlbum(album);
     }
 
     likeAlbum() {
@@ -59,7 +67,11 @@ export class UserPanel extends Component {
     }
 
     addToLater() {
-
+        const album = {
+            name: this.props.albumName,
+            artist: this.props.artist
+        };
+        this.props.addListenLater(album);
     }
 
     render() {
@@ -82,9 +94,10 @@ export class UserPanel extends Component {
                     className={classes.action_button}
                     onClick={this.likeAlbum}
                 >
-                    <span><FiHeart/>Like</span>
+                    <span><FiHeart/>Fav</span>
                 </div>
-                <div className={classes.action_button}>
+                <div className={classes.action_button}
+                    onClick={this.addToLater}>
                     <span><FiClock/>Later</span>
                 </div>
             </Grid>
@@ -100,10 +113,9 @@ const mapStateToProps=  (state) => ({
     user: state.user,
     albums:state.albums
 });
-const mapActionsToProps = (state) => ({
-    likeAlbum: state.likeAlbum
-});
 
 export default connect(mapStateToProps, {
-    likeAlbum
+    likeAlbum,
+    heardAlbum,
+    addListenLater
 }) (withStyles(styles)(UserPanel));

@@ -21,6 +21,8 @@ export const LOADING_REVIEWS = 'LOADING_REVIEWS';
 export const SET_REVIEWS = 'SET_REVIEWS';
 export const SET_ALBUM_ERRORS = 'SET_ALBUM_ERRORS';
 export const LIKE_ALBUM = 'LIKE_ALBUM';
+export const HEARD_ALBUM = 'HEARD_ALBUM';
+export const ADD_LISTEN_LATER = 'ADD_LISTEN_LATER';
 
 //ui reducers
 export const SET_ERRORS = 'SET_ERRORS';

@@ -13,7 +13,9 @@ import {
     LOADING_REVIEWS,
     SET_REVIEWS,
     SET_ALBUM_ERRORS,
-    LIKE_ALBUM
+    LIKE_ALBUM,
+    HEARD_ALBUM,
+    ADD_LISTEN_LATER
 } from '../types';
 import axios from 'axios';
 
@@ -177,9 +179,35 @@ export const likeAlbum = (album) => (dispatch) => {
             });
         })
         .catch((err) => {
+            console.error(err);
+        });
+}
+
+export const heardAlbum = (album) => (dispatch) => {
+    axios
+        .post(`/album/${album.artist}/${album.name}/heard`, album)
+        .then((response) => {
             dispatch({
-                type: SET_ERRORS,
-                payload: err.response.data
+                type: HEARD_ALBUM,
+                payload: response.data
             });
+        })
+        .catch((err) => {
+            console.error(err);
+        });
+}
+
+export const addListenLater= (album) => (dispatch) => {
+    console.log("LISTEN LATER");
+    axios
+        .post(`/album/${album.artist}/${album.name}/listenLater`, album)
+        .then((response) => {
+            dispatch({
+                type: ADD_LISTEN_LATER,
+                payload: response.data
+            });
+        })
+        .catch((err) => {
+            console.error(err);
         });
 }
