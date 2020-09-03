@@ -377,3 +377,60 @@ exports.favAlbum= (request, response) => {
       });
     })
 };
+
+exports.addListenLater= (request, response) => {
+  const newAlbum = {
+    createdAt: new Date().toISOString(),
+    albumName: request.params.name,
+    artist: request.params.artist
+  }
+
+  db.collection(`/users/${request.user.handle}/listenLater`)
+    .where('artist', '==', request.params.artist)
+    .where('albumName', '==', request.params.name)
+    .get()
+    .then((data) => {
+      if (data.empty) { // If album isn't there, add it
+        return db.collection(`/users/${request.user.handle}/listenLater`).add(newAlbum)
+      }
+    })
+    .then(() => {
+      response.json(
+        newAlbum)
+    })
+    .catch(err => {
+      console.log(err);
+      response.status(500).json({
+        error: 'Something Went Wrong'
+      });
+    })
+};
+
+exports.addListened= (request, response) => {
+  const newAlbum = {
+    createdAt: new Date().toISOString(),
+    albumName: request.params.name,
+    artist: request.params.artist
+  }
+
+  db.collection(`/users/${request.user.handle}/listenedList`)
+    .where('artist', '==', request.params.artist)
+    .where('albumName', '==', request.params.name)
+    .get()
+    .then((data) => {
+      if (data.empty) { // If album isn't there, add it
+        return db.collection(`/users/${request.user.handle}/listenedList`).add(newAlbum)
+      }
+    })
+    .then(() => {
+      response.json(
+        newAlbum)
+    })
+    .catch(err => {
+      console.log(err);
+      response.status(500).json({
+        error: 'Something Went Wrong'
+      });
+    })
+};
+
