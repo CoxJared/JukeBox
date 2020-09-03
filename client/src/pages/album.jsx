@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import AlbumSkeleton from '../components/skeletons/AlbumSkeleton';
+import UserPanel from '../components/album/UserPanel';
 import ReviewForm from '../components/album/ReviewForm';
 import { Link } from 'react-router-dom';
 
@@ -230,6 +231,10 @@ export class album extends Component {
                             </Grid>
                             <Grid item xs={6}>
                                 <UserRating
+                                    albumName={this.props.location.state.album}
+                                    artist={this.props.location.state.artist}
+                                /> 
+                                <UserPanel
                                     albumName={this.props.location.state.album}
                                     artist={this.props.location.state.artist}
                                 />
