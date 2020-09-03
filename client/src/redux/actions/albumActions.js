@@ -12,7 +12,8 @@ import {
     LOADING_RATINGS,
     LOADING_REVIEWS,
     SET_REVIEWS,
-    SET_ALBUM_ERRORS
+    SET_ALBUM_ERRORS,
+    LIKE_ALBUM
 } from '../types';
 import axios from 'axios';
 
@@ -164,4 +165,21 @@ export const addAlbumReview = (album, body) => (dispatch) => {
         .catch(err => {
             console.error(err);
         })
+}
+
+export const likeAlbum = (album) => (dispatch) => {
+    axios
+        .post(`/album/${album.artist}/${album.name}/fav`, album)
+        .then((response) => {
+            dispatch({
+                type: LIKE_ALBUM,
+                payload: response.data
+            });
+        })
+        .catch((err) => {
+            dispatch({
+                type: SET_ERRORS,
+                payload: err.response.data
+            });
+        });
 }

@@ -9,7 +9,8 @@ import {
   LOADING_RATING,
   LOADING_REVIEWS,
   SET_REVIEWS,
-  SET_ALBUM_ERRORS
+  SET_ALBUM_ERRORS,
+  LIKE_ALBUM
 } from '../types';
 
 const initialState = {
@@ -122,7 +123,11 @@ export default function (state = initialState, action) {
               ...state.errors,
               album: action.payload
             }
-        }
+        };
+      case LIKE_ALBUM:
+        return {
+          ...state,
+        };
         default:
           return state;
   }

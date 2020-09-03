@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
 import {
-    getUserAlbumRating,
-    submitUserAlbumRating
+    likeAlbum
 } from '../../redux/actions/albumActions';
 import { connect } from 'react-redux';
 
@@ -16,8 +15,6 @@ import Grid from '@material-ui/core/Grid';
 const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
-//        text_align: 'c<FiHeadphones/>enter',
-        // right: 0/,
         width: 300,
         // border-radius: '50px',
         marginTop: '5px',
@@ -47,21 +44,18 @@ export class UserPanel extends Component {
             artist: this.props.artist
         };
         this.addToHeard = this.addToHeard.bind(this);
-    }
-
-    componentDidMount() {
-        console.log("MOUNTERD");
-        console.log(this.props)
+        this.likeAlbum = this.likeAlbum.bind(this);
     }
 
     addToHeard(){
-        // this.props.albumName
-        console.log(this.state);
-        // this.props.artist
     }
 
-    addToLike() {
-
+    likeAlbum() {
+        const album = {
+            name: this.props.albumName,
+            artist: this.props.artist
+        };
+        this.props.likeAlbum(album);
     }
 
     addToLater() {
@@ -84,7 +78,10 @@ export class UserPanel extends Component {
                     <FiHeadphones/>
                     <span >Heard</span>
                 </div>
-                <div className={classes.action_button}>
+                <div 
+                    className={classes.action_button}
+                    onClick={this.likeAlbum}
+                >
                     <span><FiHeart/>Like</span>
                 </div>
                 <div className={classes.action_button}>
@@ -104,11 +101,9 @@ const mapStateToProps=  (state) => ({
     albums:state.albums
 });
 const mapActionsToProps = (state) => ({
-    getUserAlbumRating: state.getUserAlbumRating,
-    submitUserAlbumRating: state.submitUserAlbumRating
+    likeAlbum: state.likeAlbum
 });
 
 export default connect(mapStateToProps, {
-    getUserAlbumRating,
-    submitUserAlbumRating
+    likeAlbum
 }) (withStyles(styles)(UserPanel));
