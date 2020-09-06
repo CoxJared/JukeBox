@@ -198,7 +198,6 @@ export const heardAlbum = (album) => (dispatch) => {
 }
 
 export const addListenLater= (album) => (dispatch) => {
-    console.log("LISTEN LATER");
     axios
         .post(`/album/${album.artist}/${album.name}/listenLater`, album)
         .then((response) => {

@@ -9,6 +9,7 @@ import {
 import { connect } from 'react-redux';
 
 import { FiClock, FiHeart, FiHeadphones} from "react-icons/fi";
+import {IconContext} from "react-icons";
 import withStyles from '@material-ui/core/styles/withStyles';
 
 // MUI
@@ -18,23 +19,27 @@ const styles = (theme) => ({
     ...theme.styleSpreading,
     container: {
         width: 300,
-        // border-radius: '50px',
+        height: 80,
+        justifyContent: 'center',
         marginTop: '5px',
         marginRight: '5px',
         borderRadius: '10px',
-        backgroundColor: '#9ab',
+        backgroundColor: '#737475',
     },
     action_button:{
-        text_align: 'center',
-        // border: '5px solid #ee3e80',
-        height: 40,
+        textAlign: 'center',
         width: 80,
-        padding: '0 auto 3px auto',
-        margin: '3px auto 3px',
+        padding: '5px auto 5px auto',
+        // margin: '5px auto 5px',
         cursor: 'pointer',
         min_width: 50,
         max_width: 300,
-        max_height: 60,
+    },
+    button_text: {
+        fontSize: '20px',
+        fontWeight: 'bold',
+        color: '#acadad',
+
     },
 });
 
@@ -43,7 +48,10 @@ export class UserPanel extends Component {
         super(props);
         this.state = {
             albumName: this.props.albumName,
-            artist: this.props.artist
+            artist: this.props.artist,
+            hasHeard: 0,
+            hasFav: 0,
+            hasLater: 0
         };
         this.addToHeard = this.addToHeard.bind(this);
         this.likeAlbum = this.likeAlbum.bind(this);
@@ -84,22 +92,35 @@ export class UserPanel extends Component {
                 alignItems="center"
                 className={classes.container} 
             >
+                <IconContext.Provider value={{color: '#acadad', height:'50px'}}>
                 <div className={classes.action_button}
                     onClick={this.addToHeard}
                 >
-                    <FiHeadphones/>
-                    <span >Heard</span>
+                    { (this.state.hasHeard) ?
+                        <FiHeadphones size={48} style={{ fill: '#e9e950'}}/> :
+                        <FiHeadphones size={48} />
+                    }
+                    <p className={classes.button_text}>Heard</p>
                 </div>
                 <div 
                     className={classes.action_button}
                     onClick={this.likeAlbum}
                 >
-                    <span><FiHeart/>Fav</span>
+                    { (this.state.hasFav) ?
+                        <FiHeart size={48} style={{ fill: '#e9e950'}}/> :
+                        <FiHeart size={48} />
+                    }
+                    <p className={classes.button_text}>Fav</p>
                 </div>
-                <div className={classes.action_button}
-                    onClick={this.addToLater}>
-                    <span><FiClock/>Later</span>
+                    <div className={classes.action_button}
+                        onClick={this.addToLater}>
+                        { (this.state.hasLater) ?
+                            <FiClock size={48} style={{ fill: '#e9e950'}}/> :
+                            <FiClock size={48} />
+                        }
+                        <p className={classes.button_text}> Later</p>
                 </div>
+                </IconContext.Provider>
             </Grid>
         );
     }

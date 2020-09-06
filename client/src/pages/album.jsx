@@ -230,14 +230,14 @@ export class album extends Component {
                                 </Typography>
                             </Grid>
                             <Grid item xs={6}>
-                                <UserRating
-                                    albumName={this.props.location.state.album}
-                                    artist={this.props.location.state.artist}
-                                /> 
                                 <UserPanel
                                     albumName={this.props.location.state.album}
                                     artist={this.props.location.state.artist}
                                 />
+                                <UserRating
+                                    albumName={this.props.location.state.album}
+                                    artist={this.props.location.state.artist}
+                                /> 
                             </Grid>
                         </Grid>
                     </Paper>
