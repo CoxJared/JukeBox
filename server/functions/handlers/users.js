@@ -286,7 +286,7 @@ exports.getUserFavAlbums = (request, response) => {
           albums.push({
             id: doc.id,
             artist: doc.data().artist,
-            albumName: doc.data().albumName
+            name: doc.data().albumName
           })
         })
         return response.json({

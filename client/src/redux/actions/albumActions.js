@@ -15,7 +15,9 @@ import {
     SET_ALBUM_ERRORS,
     LIKE_ALBUM,
     HEARD_ALBUM,
-    ADD_LISTEN_LATER
+    ADD_LISTEN_LATER,
+    LOADING_FAV_ALBUMS,
+    GET_FAV_ALBUMS
 } from '../types';
 import axios from 'axios';
 
@@ -210,3 +212,18 @@ export const addListenLater= (album) => (dispatch) => {
             console.error(err);
         });
 }
+
+export const getFavAlbums= (handle) => (dispatch) => {
+    dispatch({
+      type: LOADING_FAV_ALBUMS
+    });
+
+    axios
+        .get(`user/${handle}/favAlbums`)
+        .then((response) => {
+            dispatch({
+                type: GET_FAV_ALBUMS,
+                payload: response.data
+            });
+        });
+};

@@ -11,9 +11,11 @@ import dayjs from 'dayjs';
 import relativeTime from 'dayjs/plugin/relativeTime';
 import AlbumGrid from '../components/albums/AlbumGrid';
 
+// redux
+import {
+    getFavAlbums,
+} from '../redux/actions/albumActions';
 import { connect } from 'react-redux';
-
-const _api_key = process.env.REACT_APP_LASTFM_API_KEY;
 
 const styles = (theme) => ({
     ...theme.styleSpreading,
@@ -47,9 +49,12 @@ export class user extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            name: 'testing',
-            fav_albums: []
+            name: 'testing'
         }
+    }
+
+    componentDidMount() {
+        this.props.getFavAlbums('gcox')
     }
 
     render() {
@@ -58,7 +63,11 @@ export class user extends Component {
             user: { credentials: user },
             classes
         } = this.props;
-        console.log(this.props.user.credentials);
+
+        let favAlbums = [];
+        if (this.props.albums.favAlbums !== undefined) {
+            favAlbums = this.props.albums.favAlbums.albums;
+        }
         return (
             <div className={classes.container}>
                 <Grid
@@ -80,6 +89,7 @@ export class user extends Component {
                     </Paper>
                 </Grid>
                 <AlbumShowcase albums={jaredPicks} title="Favourites" />
+                <AlbumShowcase albums={favAlbums} title="Favourite Albums" />
                 <AlbumGrid title="My Music" albums={albums} />
             </div>
         );
@@ -92,7 +102,10 @@ user.propTypes = {
 };
 
 const mapStateToProps = (state) => ({
-    user: state.user
+    user: state.user,
+    albums: state.albums
 });
 
-export default connect(mapStateToProps, null)(withStyles(styles)(user));
+export default connect(mapStateToProps, {
+    getFavAlbums,
+})(withStyles(styles)(user));
